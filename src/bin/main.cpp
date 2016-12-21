@@ -8,7 +8,8 @@ using namespace sf;
 
 int main(int argc, char const *argv[]) {
     RenderWindow window(VideoMode(800, 800), "Tank", Style::Close);
-    Tank *tank = new Tank();
+    Tank *tank(NULL);
+    tank = new Tank();
 
     while (window.isOpen())
     {
@@ -16,9 +17,6 @@ int main(int argc, char const *argv[]) {
         while (window.pollEvent(event))
         {
             if (event.type == Event::Closed) {
-                delete tank;
-
-                tank = NULL;
 
                 window.close();
             }
@@ -29,6 +27,8 @@ int main(int argc, char const *argv[]) {
         window.draw(*tank);
     }
 
+    delete tank;
+    tank = NULL;
 
     return 0;
 }
