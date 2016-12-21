@@ -12,6 +12,7 @@ int main(int argc, char const *argv[]) {
     tank = new Tank(); //Creates a new Tank
     window.draw(*tank);
     tank->setPosition(400, 400);
+    sf::Vector2f v1(2.f, 0.f);
 
     while (window.isOpen())
     {
@@ -26,6 +27,7 @@ int main(int argc, char const *argv[]) {
 
         window.clear(Color(74, 102, 36));
         window.draw(*tank);
+        tank->setPosition(tank->getPosition() - v1);
         window.display();
     }
 
