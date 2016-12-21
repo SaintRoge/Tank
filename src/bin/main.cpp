@@ -11,8 +11,7 @@ int main(int argc, char const *argv[]) {
     Tank *tank(NULL);
     tank = new Tank(); //Creates a new Tank
     window.draw(*tank);
-    tank->setPosition(400, 400);
-    sf::Vector2f v1(2.f, 0.f);
+    tank->setPosition(700, 400);
 
     while (window.isOpen())
     {
@@ -25,9 +24,18 @@ int main(int argc, char const *argv[]) {
             }
         }
 
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+            // while the left arrow is pressed the tank is moving
+            tank->move(3.f);
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+            // while the left arrow is pressed the tank is moving
+            tank->move(-2.f);
+        }
+
         window.clear(Color(74, 102, 36));
         window.draw(*tank);
-        tank->setPosition(tank->getPosition() - v1);
         window.display();
     }
 

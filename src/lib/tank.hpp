@@ -14,12 +14,19 @@ public:
 	 * Set the Tank Sprite texture
 	 * Returns nothing
 	 */
-	sf::Vector2f move(sf::Vector2f direction);
+	sf::Vector2f move(float speed);
+	/*
+	 * Needs speed and direction
+	 * The Tank moves
+	 * Returns his position
+	 */
 
 private:
 	sf::Texture m_texture;
 
 	std::string m_img;
+
+	float m_TankSpeed;
 };
 
 #endif //TANK_HPP
