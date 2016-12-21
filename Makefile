@@ -6,9 +6,9 @@ app = Tank
 lib = -lsfml-graphics -lsfml-window -lsfml-system
 CXX = g++
 RM = rm -rf
-SRC = src/
+SRC = src/bin/
 
-all: main.o functions.o 
+all: main.o functions.o tank.o
 		$(CXX) $^ -o $(app) $(lib)
 		@echo "Finished building: $^"
 		@echo "Build finished. You are ready to use $(app) :-)"
