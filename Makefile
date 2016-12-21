@@ -3,7 +3,7 @@
 .SUFFIXES:
 
 app = Tank
-lib = -lsfml-graphics -lsfml-window -lsfml-system
+lib = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 CXX = g++
 RM = rm -rf
 SRC = src/bin/
