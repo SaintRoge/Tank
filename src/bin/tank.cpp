@@ -3,7 +3,7 @@
 Tank::Tank() {
   	m_img = "img/Tank-GTAA.png";
 	  
-	if (!m_texture.loadFromFile(m_img, sf::IntRect(-100, -100, 255, 160))) {
+	if (!m_texture.loadFromFile(m_img, sf::IntRect(0, 0, 255, 160))) {
 	    std::cout << "Sorry, " << m_img << " can't be loaded." << std::endl;
 	} else {
 		std::cout << m_img << " has been loaded." << std::endl;

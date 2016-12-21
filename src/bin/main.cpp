@@ -11,6 +11,7 @@ int main(int argc, char const *argv[]) {
     Tank *tank(NULL);
     tank = new Tank();
     window.draw(*tank);
+    tank->setPosition(400, 400);
 
     while (window.isOpen())
     {
@@ -25,6 +26,7 @@ int main(int argc, char const *argv[]) {
 
         window.clear(Color(74, 102, 36));
         window.draw(*tank);
+        tank->setRotation(tank->getRotation() + 7.f);
         window.display();
     }
 
