@@ -8,8 +8,8 @@ class Tank : public sf::Sprite {
 public:
 	Tank();
 	~Tank();
-	bool setImg(std::string img);
-	bool setTexture(sf::Texture *texture);
+	bool setTankImg(sf::Texture *texture, std::string img);
+	void setTankTexture(sf::Texture *texture);
 
 private:
 	sf::Texture m_texture;
