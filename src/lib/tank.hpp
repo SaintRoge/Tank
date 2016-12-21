@@ -9,6 +9,11 @@ public:
 	Tank();
 	~Tank();
 	void setTankTexture(sf::Texture const& texture);
+	/* 
+	 * Needs texture
+	 * Set the Tank Sprite texture
+	 * Returns nothing
+	 */
 
 private:
 	sf::Texture m_texture;
