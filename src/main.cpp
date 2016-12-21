@@ -6,18 +6,25 @@
 using namespace sf;
 
 int main(int argc, char const *argv[]) {
-    sf::RenderWindow window(sf::VideoMode(800, 800), "Tank");
+    sf::RenderWindow window(sf::VideoMode(800, 800), "Tank", sf::Style::Close | sf::Style::Resize);
 
-    const std::string img("../img/Tank-GTAA.png");
+    window.clear(sf::Color(74, 102, 36));
+
+    const std::string img("img/Tank-GTAA.png");
     sf::Texture texture;
 
-    if (!texture.loadFromFile(img, sf::IntRect(10, 10, 32, 32))) {
+    if (!texture.loadFromFile(img, sf::IntRect(0, 0, 32, 32))) {
 	    std::cout << "Sorry, " << img << " can't be load" << std::endl;
 	}
 
-	if (!texture.create(200, 200)) {
+	if (!texture.create(145, 229)) {
 	    std::cout << "Sorry, the texture can't be created" << std::endl;
 	}
+
+	sf::Sprite sprite;
+	sprite.setTexture(texture);
+	sprite.setOrigin(sf::Vector2f(-500, -300));
+	sprite.rotate(15);
 
     while (window.isOpen())
     {
@@ -28,8 +35,9 @@ int main(int argc, char const *argv[]) {
                 window.close();
         }
 
-        window.clear(sf::Color(74, 102, 36));
+        //window.clear(sf::Color(74, 102, 36));
         window.display();
+        window.draw(sprite);
     }
 
     return 0;
