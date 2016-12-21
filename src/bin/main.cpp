@@ -26,12 +26,12 @@ int main(int argc, char const *argv[]) {
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
             // while the left arrow is pressed the tank is moving
-            tank->move(3.f);
+            tank->move(true);
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
             // while the left arrow is pressed the tank is moving
-            tank->move(-2.f);
+            tank->move(false);
         }
 
         window.clear(Color(74, 102, 36));
