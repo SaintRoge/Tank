@@ -16,7 +16,7 @@ int main(int argc, char const *argv[]) {
                 window.close();
         }
 
-        window.clear();
+        window.clear(sf::Color(59, 255, 0));
         window.display();
     }
 
