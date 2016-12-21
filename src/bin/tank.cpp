@@ -4,7 +4,7 @@ Tank::Tank() {
   	m_img = "img/Tank-GTAA.png";
 	  
 	if (!setTankImg(&m_texture, m_img)) {
-	    std::cout << "Sorry, " << m_img << " can't be load" << std::endl;
+	    std::cout << "Sorry, " << m_img << " can't be loaded" << std::endl;
 	}
 
 	if (!m_texture.create(145, 229)) {
@@ -15,6 +15,7 @@ Tank::Tank() {
 }
 
 Tank::~Tank() {
+
 }	
 
 bool Tank::setTankImg(sf::Texture *texture, std::string img) {
