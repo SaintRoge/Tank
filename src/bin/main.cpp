@@ -10,6 +10,7 @@ int main(int argc, char const *argv[]) {
     RenderWindow window(VideoMode(800, 800), "Tank", Style::Close);
     Tank *tank(NULL);
     tank = new Tank();
+    window.draw(*tank);
 
     while (window.isOpen())
     {
@@ -23,8 +24,8 @@ int main(int argc, char const *argv[]) {
         }
 
         window.clear(Color(74, 102, 36));
-        window.display();
         window.draw(*tank);
+        window.display();
     }
 
     delete tank;
