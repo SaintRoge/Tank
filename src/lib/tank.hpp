@@ -9,6 +9,7 @@ public:
 	Tank();
 	~Tank();
 	void setTankTexture(sf::Texture const& texture);
+	const sf::Vector2f move(sf::Vector2f direction);
 
 private:
 	sf::Texture m_texture;
