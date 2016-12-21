@@ -19,3 +19,7 @@ Tank::~Tank() {
 void Tank::setTankTexture(sf::Texture const& texture) {
 	setTexture(texture);
 }
+
+sf::Vector2f move(sf::Vector2f direction) {
+
+}
