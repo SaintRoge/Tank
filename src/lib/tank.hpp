@@ -10,6 +10,11 @@ public:
 	~Tank();
 	void setTankTexture(sf::Texture const& texture);
 	const sf::Vector2f move(sf::Vector2f direction);
+	/* 
+	 * Needs texture
+	 * Set the Tank Sprite texture
+	 * Returns nothing
+	 */
 
 private:
 	sf::Texture m_texture;

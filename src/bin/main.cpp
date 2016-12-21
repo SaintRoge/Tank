@@ -9,7 +9,7 @@ using namespace sf;
 int main(int argc, char const *argv[]) {
     RenderWindow window(VideoMode(800, 800), "Tank", Style::Close);
     Tank *tank(NULL);
-    tank = new Tank();
+    tank = new Tank(); //Creates a new Tank
     window.draw(*tank);
     tank->setPosition(400, 400);
 
