@@ -6,26 +6,32 @@ app = Tank
 lib = -lsfml-graphics -lsfml-window -lsfml-system
 CXX = g++
 RM = rm -rf
-SRC = "src/"
+SRC = src/
 
 all: main.o functions.o 
 		$(CXX) $^ -o $(app) $(lib)
+		@echo "Finished building: $^"
 		@echo "Build finished. You are ready to use $(app) :-)"
 
 %.o: $(SRC)%.cpp
-		$(CXX) -c $< -o $@  
+		$(CXX) -c $< -o $@
+		@echo "Finished building: $^"   
 
 clean:
 		$(RM) *.o 
+		@echo "All project useless files/folders have been deleted"
 
 mrproper: clean
-		$(RM) $(app)  
+		$(RM) $(app)
+		@echo "All project files/folders have been deleted"  
 
 install: 
-		sudo apt-get install libsfml-dev
+		sudo apt-get install libsfml-dev build-essential
+		@echo "The SFML lib and the c++ builder have been installed"
 		make all
 
 run: all
+		@echo "Trying to start $(app)..."
 		./$(app)
 
 pro: all clean run
