@@ -7,15 +7,15 @@
 using namespace sf;
 
 int main(int argc, char const *argv[]) {
-    sf::RenderWindow window(sf::VideoMode(800, 800), "Tank", sf::Style::Close);
+    RenderWindow window(VideoMode(800, 800), "Tank", Style::Close);
     Tank *tank = new Tank();
 
     while (window.isOpen())
     {
-        sf::Event event;
+        Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed) {
+            if (event.type == Event::Closed) {
                 delete tank;
 
                 tank = NULL;
@@ -24,7 +24,7 @@ int main(int argc, char const *argv[]) {
             }
         }
 
-        window.clear(sf::Color(74, 102, 36));
+        window.clear(Color(74, 102, 36));
         window.display();
         window.draw(*tank);
     }
