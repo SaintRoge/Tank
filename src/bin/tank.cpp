@@ -9,6 +9,11 @@ Tank::Tank() {
 
 	m_fireTime = sf::seconds(1.f);
 
+	m_overTankEnabled = false;
+
+	m_overTankSprite = new sf::Sprite();
+	m_overTankSprite = this;
+
 	m_ammo = 10;
 
   	m_img = "img/Tank-GTAA.png";
@@ -41,7 +46,21 @@ void Tank::move(bool up) {
 		setPosition(getPosition() - sf::Vector2f(0.f, m_upSpeed));
 	} else if (!up && getPosition().y - m_downSpeed < (float)m_windowResolutionY - m_TankYSize){
 		setPosition(getPosition() - sf::Vector2f(0.f, m_downSpeed));
-	} 
+	} else if (up && getPosition().y - m_upSpeed <= 0.f) {
+		overMove(true);
+		setPosition(getPosition() - sf::Vector2f(0.f, m_upSpeed));
+	} else {
+		overMove(false);
+		setPosition(getPosition() - sf::Vector2f(0.f, m_downSpeed));
+	}
+}
+
+void Tank::overMove(bool up) {
+	if (up) { // Moves up
+		//setTextureRect()
+	} else {
+
+	}
 }
 
 bool Tank::ifFire() {
@@ -50,8 +69,7 @@ bool Tank::ifFire() {
 			m_fireClock.restart();
 			fire();
 			return true;
-		}
-		else {
+		} else {
 			m_outOfAmmoMusic.play();
 			std::cout << "Recharge !" << std::endl;
 			return false;
@@ -74,6 +92,10 @@ bool Tank::ifAmmo() {
 	}
 }
 
+bool Tank::isOverEnabled() {
+	return m_overTankEnabled;
+}
+
 void Tank::fire() {
 	m_fireMusic.play();
 	m_ammo--;
@@ -84,3 +106,6 @@ void Tank::setWindowResolution(int x, int y) {
 	m_windowResolutionY = y;
 }
 
+sf::Sprite* Tank::getOverSprite() const {
+	return m_overTankSprite;
+}

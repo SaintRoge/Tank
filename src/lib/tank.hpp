@@ -12,18 +12,21 @@ public:
 
 ///////////////////////////////////////////////////////////////////////
 
-	void setTankTexture(sf::Texture const& texture);
-	/* 
-	 * Needs texture
-	 * Set the Tank Sprite texture
-	 * Returns nothing
-	 */
-	void move(bool up);
+	void move(bool const up);
 	/*
-	 * Needs speed and direction
+	 * Needs direction
 	 * The Tank moves
 	 * Returns nothing
 	 */
+	void overMove(bool const up);
+	/*
+	 * Needs direction
+	 * Move your tank to the opposite side when it comes out the borders
+	 * Returns nothing
+	 */
+
+///////////////////////////////////////////////////////////////////////
+
 	bool ifFire();
 	/*
 	 * Needs nothing
@@ -36,10 +39,27 @@ public:
 	 * Says if you have ammo
 	 * Returns false if you haven not ammo
 	 */
+	bool isOverEnabled();
+	/*
+	 * Needs nothing
+	 * Says if the over tank mode is enabled
+	 * Returns it value
+	 */
 
 ///////////////////////////////////////////////////////////////////////
 
-	void setWindowResolution(int x, int y);
+	sf::Sprite* getOverSprite() const;
+
+///////////////////////////////////////////////////////////////////////
+
+	void setTankTexture(sf::Texture const& texture);
+	/* 
+	 * Needs texture
+	 * Set the Tank Sprite texture
+	 * Returns nothing
+	 */
+
+	void setWindowResolution(int const x, const int y);
 	/* 
 	 * Needs window resolution (x and y)
 	 * Set it
@@ -56,6 +76,9 @@ protected:
 
 private:
 	sf::Texture m_texture;
+	//sf::Texture m_overTankTexture;
+
+	sf::Sprite *m_overTankSprite;
 
 	sf::Music m_fireMusic;
 	sf::Music m_outOfAmmoMusic;
@@ -73,6 +96,8 @@ private:
 
 	float m_upSpeed;
 	float m_downSpeed;
+
+	bool m_overTankEnabled; //If the Tank is out the borders
 };
 
 #endif //TANK_HPP
