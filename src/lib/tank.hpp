@@ -18,7 +18,7 @@ public:
 	 * The Tank moves
 	 * Returns nothing
 	 */
-	void overMove(bool const up);
+	void overMove(bool const up, bool const reverse);
 	/*
 	 * Needs direction
 	 * Move your tank to the opposite side when it comes out the borders
@@ -39,7 +39,7 @@ public:
 	 * Says if you have ammo
 	 * Returns false if you haven not ammo
 	 */
-	bool isOverEnabled();
+	bool isOverEnabled() const;
 	/*
 	 * Needs nothing
 	 * Says if the over tank mode is enabled
@@ -48,7 +48,7 @@ public:
 
 ///////////////////////////////////////////////////////////////////////
 
-	sf::Sprite* getOverSprite() const;
+	sf::Sprite getOverSprite() const;
 	/*
 	 * Needs nothing
 	 * Gives you the Over Sprite
