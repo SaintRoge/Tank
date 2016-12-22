@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 
 #include "../lib/functions.hpp"
@@ -7,11 +8,22 @@
 using namespace sf;
 
 int main(int argc, char const *argv[]) {
-    RenderWindow window(VideoMode(800, 800), "Tank", Style::Close);
+    RenderWindow window(VideoMode(1200, 800), "Tank", Style::Close);
+
+    sf::Music music;
+
+    if (!music.openFromFile("snd/Red.wav")) {
+        std::cout << "Sorry, the music can't be loaded" << std::endl;
+    } else {
+        std::cout << "The music have been loaded" << std::endl;
+    }
+
     Tank *tank(NULL);
     tank = new Tank(); //Creates a new Tank
     window.draw(*tank);
-    tank->setPosition(700, 400);
+    tank->setPosition(900, 400);
+
+    music.play();
 
     while (window.isOpen())
     {

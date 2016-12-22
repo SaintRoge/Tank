@@ -1,6 +1,7 @@
 #include "../lib/tank.hpp"
 
 Tank::Tank() {
+
 	m_leftSpeed = 3.f;
 	m_rightSpeed = -2.f;
 
