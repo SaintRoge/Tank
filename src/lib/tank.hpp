@@ -2,6 +2,7 @@
 #define TANK_HPP
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 
 class Tank : public sf::Sprite {
@@ -55,6 +56,9 @@ protected:
 
 private:
 	sf::Texture m_texture;
+	sf::Music m_fireMusic;
+	sf::Time m_fireTime;
+	sf::Clock m_fireClock;
 
 	std::string m_img;
 

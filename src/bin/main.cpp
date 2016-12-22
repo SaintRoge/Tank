@@ -13,15 +13,13 @@ int main(int argc, char const *argv[]) {
 
     RenderWindow window(VideoMode(windowSizeX, windowSizeY), "Tank", Style::Close);
 
-    bool ifFire(true);
-
     sf::Music music;
-    music.play();
 
     if (!music.openFromFile("snd/Red.wav")) {
         std::cout << "Sorry, the music can't be loaded" << std::endl;
     } else {
-        std::cout << "The music have been loaded" << std::endl;
+        std::cout << "The music has been loaded" << std::endl;
+        music.play();
     }
 
     Tank *tank(NULL);
@@ -49,17 +47,10 @@ int main(int argc, char const *argv[]) {
             tank->move(false);
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-            if (ifFire) {
-
-                if (!tank->ifFire()) {
-                    ifFire = false;
-                } else { // Shoot
-                    std::cout << "Fire !" << std::endl;
-                }
-
-            } else {
-                std::cout << "Have no ammo !" << std::endl; 
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) { // Space bar pressed
+            if (!tank->ifFire()) {
+            } else { // Shoot
+                std::cout << "Fire !" << std::endl;
             }
         }
 

@@ -7,9 +7,17 @@ Tank::Tank() {
 	m_TankXSize = 255;
 	m_TankYSize = 160;
 
+	m_fireTime = sf::seconds(1.f);
+
 	m_ammo = 10;
 
   	m_img = "img/Tank-GTAA.png";
+
+  	if (!m_fireMusic.openFromFile("snd/fire.wav")) {
+        std::cout << "Sorry, the sounds can't be loaded" << std::endl;
+    } else {
+        std::cout << "The sounds have been loaded" << std::endl;
+    }
 	  
 	if (!m_texture.loadFromFile(m_img, sf::IntRect(0, 0, m_TankXSize, m_TankXSize))) {
 	    std::cout << "Sorry, " << m_img << " can't be loaded." << std::endl;
@@ -38,9 +46,17 @@ void Tank::move(bool up) {
 
 bool Tank::ifFire() {
 	if (ifAmmo()) {
-		fire();
-		return true;
+		if (m_fireClock.getElapsedTime() >= m_fireTime) {
+			m_fireClock.restart();
+			fire();
+			return true;
+		}
+		else {
+			std::cout << "Recharge !" << std::endl;
+			return false;
+		}
 	} else {
+		std::cout << "Have no ammo !" << std::endl;
 		return false;
 	}
 }
@@ -57,6 +73,7 @@ bool Tank::ifAmmo() {
 }
 
 void Tank::fire() {
+	m_fireMusic.play();
 	m_ammo--;
 }
 
