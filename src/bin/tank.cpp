@@ -13,7 +13,7 @@ Tank::Tank() {
 
   	m_img = "img/Tank-GTAA.png";
 
-  	if (!m_fireMusic.openFromFile("snd/fire.wav")) {
+  	if (!m_fireMusic.openFromFile("snd/fire.wav") || !m_outOfAmmoMusic.openFromFile("snd/out-of-ammo.wav")) {
         std::cout << "Sorry, the sounds can't be loaded" << std::endl;
     } else {
         std::cout << "The sounds have been loaded" << std::endl;
@@ -52,11 +52,13 @@ bool Tank::ifFire() {
 			return true;
 		}
 		else {
+			m_outOfAmmoMusic.play();
 			std::cout << "Recharge !" << std::endl;
 			return false;
 		}
 	} else {
-		std::cout << "Have no ammo !" << std::endl;
+		m_outOfAmmoMusic.play();
+		std::cout << "Out of ammo !" << std::endl;
 		return false;
 	}
 }

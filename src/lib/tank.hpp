@@ -56,7 +56,10 @@ protected:
 
 private:
 	sf::Texture m_texture;
+
 	sf::Music m_fireMusic;
+	sf::Music m_outOfAmmoMusic;
+
 	sf::Time m_fireTime;
 	sf::Clock m_fireClock;
 
