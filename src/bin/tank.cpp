@@ -2,8 +2,8 @@
 
 Tank::Tank() {
 
-	m_leftSpeed = 3.f;
-	m_rightSpeed = -2.f;
+	m_upSpeed = 3.f;
+	m_downSpeed = -3.f;
 
   	m_img = "img/Tank-GTAA.png";
 	  
@@ -24,10 +24,14 @@ void Tank::setTankTexture(sf::Texture const& texture) {
 	setTexture(texture);
 }
 
-sf::Vector2f Tank::move(bool forward) {
-	if (forward) {
-		setPosition(getPosition() - sf::Vector2f(m_leftSpeed, 0.f));
+void Tank::move(bool up) {
+	if (up) {
+		setPosition(getPosition() - sf::Vector2f(0.f, m_upSpeed));
 	} else {
-		setPosition(getPosition() - sf::Vector2f(m_rightSpeed, 0.f));
+		setPosition(getPosition() - sf::Vector2f(0.f, m_downSpeed));
 	}
+}
+
+void Tank::fire() {
+
 }

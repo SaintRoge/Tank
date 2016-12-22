@@ -36,14 +36,18 @@ int main(int argc, char const *argv[]) {
             }
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-            // while the left arrow is pressed the tank is moving
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
             tank->move(true);
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-            // while the left arrow is pressed the tank is moving
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
             tank->move(false);
+        }
+
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+            // Shoot
+            tank->fire();
+            std::cout << "Fire !" << std::endl;
         }
 
         window.clear(Color(74, 102, 36));
