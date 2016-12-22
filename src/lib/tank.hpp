@@ -96,6 +96,8 @@ private:
 	sf::Clock m_rechargeClock;
 	sf::Clock m_fireClock;
 
+	sf::Font m_font;
+
 	std::string m_img;
 	std::string m_imgFire;
 
