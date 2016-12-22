@@ -65,7 +65,7 @@ int main(int argc, char const *argv[]) {
             overSprite = tank->getOverSprite();
         }
 
-        window.clear(Color(74, 102, 36));
+        window.clear(Color(62, 96, 0));
 
         if (tank->isOverEnabled()) {
             window.draw(overSprite);
