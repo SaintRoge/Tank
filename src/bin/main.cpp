@@ -8,11 +8,15 @@
 using namespace sf;
 
 int main(int argc, char const *argv[]) {
-    RenderWindow window(VideoMode(1200, 800), "Tank", Style::Close);
+
+    int windowSizeX(1200), windowSizeY(800);
+
+    RenderWindow window(VideoMode(windowSizeX, windowSizeY), "Tank", Style::Close);
 
     bool ifFire(true);
 
     sf::Music music;
+    music.play();
 
     if (!music.openFromFile("snd/Red.wav")) {
         std::cout << "Sorry, the music can't be loaded" << std::endl;
@@ -24,8 +28,7 @@ int main(int argc, char const *argv[]) {
     tank = new Tank(); //Creates a new Tank
     window.draw(*tank);
     tank->setPosition(900, 400);
-
-    music.play();
+    tank->setWindowResolution(windowSizeX, windowSizeY);
 
     while (window.isOpen())
     {

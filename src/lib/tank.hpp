@@ -8,6 +8,9 @@ class Tank : public sf::Sprite {
 public:
 	Tank();
 	~Tank();
+
+///////////////////////////////////////////////////////////////////////
+
 	void setTankTexture(sf::Texture const& texture);
 	/* 
 	 * Needs texture
@@ -32,6 +35,17 @@ public:
 	 * Says if you have ammo
 	 * Returns false if you haven not ammo
 	 */
+
+///////////////////////////////////////////////////////////////////////
+
+	void setWindowResolution(int x, int y);
+	/* 
+	 * Needs window resolution (x and y)
+	 * Set it
+	 * Returns nothing
+	 */
+
+protected:
 	void fire();
 	/*
 	 * Needs nothig
@@ -45,6 +59,10 @@ private:
 	std::string m_img;
 
 	int m_ammo;
+	int m_windowResolutionX;
+	int m_windowResolutionY;
+	int m_TankXSize;
+	int m_TankYSize;
 
 	float m_upSpeed;
 	float m_downSpeed;
