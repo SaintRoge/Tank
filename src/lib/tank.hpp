@@ -33,6 +33,7 @@ public:
 	 * Call fire
 	 * Returns if he can fire
 	 */
+	bool ifRecharge();
 	bool ifAmmo();
 	/*
 	 * Needs nothing
@@ -78,20 +79,25 @@ protected:
 	 * The tank shoot
 	 * Returns nothing
 	 */
+	void recharge();
 
 private:
 	sf::Texture m_texture;
-	//sf::Texture m_overTankTexture;
+	sf::Texture m_textureFire;
 
 	sf::Sprite *m_overTankSprite;
 
 	sf::Music m_fireMusic;
 	sf::Music m_outOfAmmoMusic;
+	sf::Music m_rechargeMusic;
 
 	sf::Time m_fireTime;
+	sf::Time m_rechargeTime;
+	sf::Clock m_rechargeClock;
 	sf::Clock m_fireClock;
 
 	std::string m_img;
+	std::string m_imgFire;
 
 	int m_ammo;
 	int m_windowResolutionX;
@@ -103,6 +109,7 @@ private:
 	float m_downSpeed;
 
 	bool m_overTankEnabled; //If the Tank is out the borders
+	bool m_recharge;
 };
 
 #endif //TANK_HPP

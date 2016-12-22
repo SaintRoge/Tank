@@ -8,29 +8,35 @@ Tank::Tank() {
 	m_TankYSize = 160;
 
 	m_fireTime = sf::seconds(1.f);
+	m_rechargeTime = sf::seconds(0.2f);
 
 	m_overTankEnabled = false;
 
 	m_overTankSprite = new sf::Sprite();
 
+	m_recharge = true;
+
 	m_ammo = 10;
 
   	m_img = "img/Tank-GTAA.png";
+  	m_imgFire = "img/Tank-GTAA-fire.png";
 
-  	if (!m_fireMusic.openFromFile("snd/fire.wav") || !m_outOfAmmoMusic.openFromFile("snd/out-of-ammo.wav")) {
+  	if (!m_fireMusic.openFromFile("snd/fire.wav") || !m_outOfAmmoMusic.openFromFile("snd/out-of-ammo.wav") || !m_rechargeMusic.openFromFile("snd/recharge.wav")) {
         std::cout << "Sorry, the sounds can't be loaded" << std::endl;
     } else {
         std::cout << "The sounds have been loaded" << std::endl;
     }
 	  
-	if (!m_texture.loadFromFile(m_img, sf::IntRect(0, 0, m_TankXSize, m_TankXSize))) {
-	    std::cout << "Sorry, " << m_img << " can't be loaded." << std::endl;
+	if (!m_texture.loadFromFile(m_img, sf::IntRect(0, 0, m_TankXSize, m_TankXSize)) || !m_textureFire.loadFromFile(m_imgFire, sf::IntRect(0, 0, m_TankXSize, m_TankXSize))) {
+	    std::cout << "Sorry, " << m_img << " and " << m_imgFire << "can't be loaded." << std::endl;
 	} else {
-		std::cout << m_img << " has been loaded." << std::endl;
+		std::cout << m_img << " and " << m_imgFire << " have been loaded." << std::endl;
 	}
 
 	setTankTexture(m_texture);
 	m_overTankSprite->setTexture(m_texture);
+
+	m_rechargeClock.restart();
 }
 
 Tank::~Tank() {
@@ -116,13 +122,14 @@ void Tank::overMove(bool up) {
 
 bool Tank::ifFire() {
 	if (ifAmmo()) {
-		if (m_fireClock.getElapsedTime() >= m_fireTime) {
+		if (m_fireClock.getElapsedTime() >= m_fireTime && m_recharge) {
 			m_fireClock.restart();
 			fire();
+			m_recharge = false;
 			return true;
 		} else {
 			m_outOfAmmoMusic.play();
-			std::cout << "Recharge !" << std::endl;
+			std::cout << "Reload before fire !" << std::endl;
 			return false;
 		}
 	} else {
@@ -148,8 +155,32 @@ bool Tank::isOverEnabled() const {
 }
 
 void Tank::fire() {
+	setTankTexture(m_textureFire);
 	m_fireMusic.play();
 	m_ammo--;
+}
+
+bool Tank::ifRecharge() {
+	if (m_ammo > 0 && m_rechargeClock.getElapsedTime() >= m_rechargeTime && !m_recharge) {
+		recharge(); 
+		m_rechargeClock.restart();
+		return true;
+	} else if (m_ammo <= 0) {
+		m_outOfAmmoMusic.play();
+		return false;
+	} else if (m_recharge) {
+		std::cout << "You have arleady reloaded" << std::endl;
+		return false;
+	} else {
+		std::cout << "Wait !" << std::endl;
+		return false;
+	}
+}
+
+void Tank::recharge() {
+	m_rechargeMusic.play();
+	m_recharge = true;
+	setTankTexture(m_texture);
 }
 
 void Tank::setWindowResolution(int x, int y) {

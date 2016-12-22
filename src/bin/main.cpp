@@ -55,6 +55,12 @@ int main(int argc, char const *argv[]) {
             }
         }
 
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+            if (tank->ifRecharge()) {
+                std::cout << "Reload !" << std::endl;
+            } 
+        }
+
         if (tank->isOverEnabled()) {
             overSprite = tank->getOverSprite();
         }
