@@ -20,10 +20,22 @@ public:
 	 * The Tank moves
 	 * Returns nothing
 	 */
-	void fire();
+	bool ifFire();
 	/*
 	 * Needs nothing
-	 * The tank shoots
+	 * Call fire
+	 * Returns if he can fire
+	 */
+	bool ifAmmo();
+	/*
+	 * Needs nothing
+	 * Says if you have ammo
+	 * Returns false if you haven not ammo
+	 */
+	void fire();
+	/*
+	 * Needs nothig
+	 * The tank shoot
 	 * Returns nothing
 	 */
 
@@ -31,6 +43,8 @@ private:
 	sf::Texture m_texture;
 
 	std::string m_img;
+
+	int m_ammo;
 
 	float m_upSpeed;
 	float m_downSpeed;

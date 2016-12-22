@@ -5,6 +5,8 @@ Tank::Tank() {
 	m_upSpeed = 3.f;
 	m_downSpeed = -3.f;
 
+	m_ammo = 10;
+
   	m_img = "img/Tank-GTAA.png";
 	  
 	if (!m_texture.loadFromFile(m_img, sf::IntRect(0, 0, 255, 160))) {
@@ -32,6 +34,27 @@ void Tank::move(bool up) {
 	}
 }
 
-void Tank::fire() {
-
+bool Tank::ifFire() {
+	if (ifAmmo()) {
+		fire();
+		return true;
+	} else {
+		return false;
+	}
 }
+
+bool Tank::ifAmmo() {
+	if (m_ammo == 0) {
+		return false;
+	} else if (m_ammo < 0) {
+		m_ammo = 0;
+		return false;
+	} else {
+		return true;
+	}
+}
+
+void Tank::fire() {
+	m_ammo--;
+}
+

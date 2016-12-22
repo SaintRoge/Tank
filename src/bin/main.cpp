@@ -10,6 +10,8 @@ using namespace sf;
 int main(int argc, char const *argv[]) {
     RenderWindow window(VideoMode(1200, 800), "Tank", Style::Close);
 
+    bool ifFire(true);
+
     sf::Music music;
 
     if (!music.openFromFile("snd/Red.wav")) {
@@ -44,10 +46,18 @@ int main(int argc, char const *argv[]) {
             tank->move(false);
         }
 
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-            // Shoot
-            tank->fire();
-            std::cout << "Fire !" << std::endl;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+            if (ifFire) {
+
+                if (!tank->ifFire()) {
+                    ifFire = false;
+                } else { // Shoot
+                    std::cout << "Fire !" << std::endl;
+                }
+
+            } else {
+                std::cout << "Have no ammo !" << std::endl; 
+            }
         }
 
         window.clear(Color(74, 102, 36));
