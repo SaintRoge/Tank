@@ -20,7 +20,7 @@ int main(int argc, char const *argv[]) {
         std::cout << "Sorry, the music can't be loaded" << std::endl;
     } else {
         std::cout << "The music has been loaded" << std::endl;
-        //music.play();
+        music.play();
     }
 
     Tank *tank(NULL);

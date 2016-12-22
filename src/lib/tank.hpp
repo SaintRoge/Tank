@@ -18,7 +18,7 @@ public:
 	 * The Tank moves
 	 * Returns nothing
 	 */
-	void overMove(bool const up, bool const reverse);
+	void overMove(bool const up);
 	/*
 	 * Needs direction
 	 * Move your tank to the opposite side when it comes out the borders
