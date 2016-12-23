@@ -8,7 +8,7 @@
 
 class Tank : public sf::Sprite {
 public:
-	Tank();
+	Tank(int ammo);
 	~Tank();
 
 ///////////////////////////////////////////////////////////////////////

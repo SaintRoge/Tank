@@ -19,6 +19,7 @@ int main(int argc, char const *argv[]) {
     sf::Sprite overSprite;
 
     sf::Text text;
+    sf::Text outOfAmmoText;
     sf::Font font;
 
     if (!music.openFromFile("snd/Red.wav")) {
@@ -28,17 +29,24 @@ int main(int argc, char const *argv[]) {
         music.play();
     }
 
-    if (!font.loadFromFile("font/Raleway.ttf")) {
+    if (!font.loadFromFile("font/joystix.ttf")) {
         std::cout << "Fonts can't be loaded" << std::endl;
     } else {
         std::cout << "Fonts have been loaded" << std::endl;
         text.setFont(font);
+        outOfAmmoText.setFont(font);
     }
 
     text.setCharacterSize(60);
+    text.setPosition(1060.f, 710.f);
+
+    outOfAmmoText.setString("Out of Ammo !");
+    outOfAmmoText.setColor(sf::Color::Red);
+    outOfAmmoText.setCharacterSize(100);
+    outOfAmmoText.setPosition(90.f, 350.f);
 
     Tank *tank(NULL);
-    tank = new Tank(); //Creates a new Tank
+    tank = new Tank(10); //Creates a new Tank with 10 ammo
     window.draw(*tank);
     tank->setPosition(900, 400);
     tank->setWindowResolution(windowSizeX, windowSizeY);
@@ -60,19 +68,6 @@ int main(int argc, char const *argv[]) {
             tank->move(false);
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) { // Space bar pressed
-            if (!tank->ifFire()) {
-            } else { // Shoot
-                std::cout << "Fire !" << std::endl;
-            }
-        }
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-            if (tank->ifRecharge()) {
-                std::cout << "Reload !" << std::endl;
-            } 
-        }
-
         if (tank->isOverEnabled()) {
             overSprite = tank->getOverSprite();
         }
@@ -86,6 +81,23 @@ int main(int argc, char const *argv[]) {
         }
 
         window.draw(*tank);
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) { // Space bar pressed
+            if (tank->ifFire()) {
+                std::cout << "Fire !" << std::endl;
+            } else if (tank->getAmmo() == 0) { // Shoot
+                window.draw(outOfAmmoText);
+            } 
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+            if (tank->ifRecharge()) {
+                std::cout << "Reload !" << std::endl;
+            } else if (tank->getAmmo() == 0) {
+                window.draw(outOfAmmoText);
+            }
+        }
+
         window.draw(text);
         window.display();
     }

@@ -1,6 +1,6 @@
 #include "../lib/tank.hpp"
 
-Tank::Tank() {
+Tank::Tank(int ammo) {
 
 	m_upSpeed = 7.f;
 	m_downSpeed = -7.f;
@@ -16,7 +16,7 @@ Tank::Tank() {
 
 	m_recharge = true;
 
-	m_ammo = 10;
+	m_ammo = ammo;
 
   	m_img = "img/Tank-GTAA.png";
   	m_imgFire = "img/Tank-GTAA-fire.png";
@@ -140,7 +140,7 @@ bool Tank::ifFire() {
 
 bool Tank::ifAmmo() {
 	if (m_ammo == 0) {
-		return false;
+		return false; 
 	} else if (m_ammo < 0) {
 		m_ammo = 0;
 		return false;
