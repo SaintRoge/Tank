@@ -159,17 +159,21 @@ bool Tank::isOverEnabled() const {
 void Tank::fire() {
 
 	if (getPosition().y + (float)m_TankYSize/2 < 0.f) {
-		m_bullet = new Bullet(sf::Vector2f(getPosition().x - 20.f, m_windowResolutionY - (getPosition().y + (float)m_TankYSize/2)));
+		m_bullet = new Bullet(sf::Vector2f(getPosition().x + 20.f, m_windowResolutionY - (getPosition().y + (float)m_TankYSize/2)));
 	} else if (getPosition().y + (float)m_TankYSize/2 > (float)m_windowResolutionY) {
-		m_bullet = new Bullet(sf::Vector2f(getPosition().x - 20.f, getPosition().y + (float)m_TankYSize/2 - m_windowResolutionY));
+		m_bullet = new Bullet(sf::Vector2f(getPosition().x + 20.f, getPosition().y + (float)m_TankYSize/2 - m_windowResolutionY));
 	} else {
-		m_bullet = new Bullet(sf::Vector2f(getPosition().x - 20.f, getPosition().y + (float)m_TankYSize/2));
+		m_bullet = new Bullet(sf::Vector2f(getPosition().x + 20.f, getPosition().y + (float)m_TankYSize/2));
 	}
 	setTankTexture(m_textureFire);
 	m_overTankSprite->setTexture(m_textureFire);
 	m_ifBullet = true;
 	m_fireMusic.play();
 	m_ammo--;
+}
+
+void Tank::BulletMove() {
+	m_bullet->move();
 }
 
 bool Tank::ifRecharge() {

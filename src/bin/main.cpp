@@ -74,6 +74,7 @@ int main(int argc, char const *argv[]) {
         }
 
         text.setString(std::to_string(tank->getAmmo()));
+        tank->BulletMove();
 
         window.clear(Color(62, 96, 0));
 

@@ -27,6 +27,12 @@ public:
 	 * Move your tank to the opposite side when it comes out the borders
 	 * Returns nothing
 	 */
+	void BulletMove();
+	/*
+	 * Needs nothing
+	 * call move() in m_bullet
+	 * returns nothing
+	 */
 
 ///////////////////////////////////////////////////////////////////////
 

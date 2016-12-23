@@ -11,8 +11,18 @@ public:
 	Bullet(sf::Vector2f position);
 	~Bullet();
 
+	void move();
+	/*
+	 * Needs nothing
+	 * The bullet moves with m_speed speed
+	 * Returns nothing
+	 */
+
 private:
 	sf::Vector2f m_position;
+	sf::Vector2f m_BulletSize;
+
+	float m_speed;
 };
 
 #endif //BULLET_HPP
