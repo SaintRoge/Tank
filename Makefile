@@ -7,14 +7,15 @@ lib = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 CXX = g++
 RM = rm -rf
 SRC = src/bin/
+FLAGS = -std=c++11
 
 all: main.o functions.o tank.o
-		$(CXX) $^ -o $(app) $(lib)
+		$(CXX) $(FLAGS) $^ -o $(app) $(lib)
 		@echo "Finished building: $^"
 		@echo "Build finished. You are ready to use $(app) :-)"
 
 %.o: $(SRC)%.cpp
-		$(CXX) -c $< -o $@
+		$(CXX) $(FLAGS) -c $< -o $@
 		@echo "Finished building: $^"   
 
 clean:

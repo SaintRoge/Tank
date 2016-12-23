@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
+#include <string>
+#include <sstream>
 
 #include "../lib/functions.hpp"
 #include "../lib/tank.hpp"
@@ -16,6 +18,9 @@ int main(int argc, char const *argv[]) {
     sf::Music music;
     sf::Sprite overSprite;
 
+    sf::Text text;
+    sf::Font font;
+
     if (!music.openFromFile("snd/Red.wav")) {
         std::cout << "Sorry, the music can't be loaded" << std::endl;
     } else {
@@ -23,17 +28,24 @@ int main(int argc, char const *argv[]) {
         music.play();
     }
 
+    if (!font.loadFromFile("font/Raleway.ttf")) {
+        std::cout << "Fonts can't be loaded" << std::endl;
+    } else {
+        std::cout << "Fonts have been loaded" << std::endl;
+        text.setFont(font);
+    }
+
+    text.setCharacterSize(60);
+
     Tank *tank(NULL);
     tank = new Tank(); //Creates a new Tank
     window.draw(*tank);
     tank->setPosition(900, 400);
     tank->setWindowResolution(windowSizeX, windowSizeY);
 
-    while (window.isOpen())
-    {
+    while (window.isOpen()) {
         Event event;
-        while (window.pollEvent(event))
-        {
+        while (window.pollEvent(event)) {
             if (event.type == Event::Closed) {
 
                 window.close();
@@ -65,6 +77,8 @@ int main(int argc, char const *argv[]) {
             overSprite = tank->getOverSprite();
         }
 
+        text.setString(std::to_string(tank->getAmmo()));
+
         window.clear(Color(62, 96, 0));
 
         if (tank->isOverEnabled()) {
@@ -72,6 +86,7 @@ int main(int argc, char const *argv[]) {
         }
 
         window.draw(*tank);
+        window.draw(text);
         window.display();
     }
 
@@ -80,3 +95,4 @@ int main(int argc, char const *argv[]) {
 
     return 0;
 }
+

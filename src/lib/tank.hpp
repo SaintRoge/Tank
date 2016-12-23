@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
+#include <string> 
 
 class Tank : public sf::Sprite {
 public:
@@ -34,6 +35,10 @@ public:
 	 * Returns if he can fire
 	 */
 	bool ifRecharge();
+	/* Needs nothing
+	 * Says to you if you can reload
+	 * Returns if you can reload
+	 */
 	bool ifAmmo();
 	/*
 	 * Needs nothing
@@ -54,6 +59,11 @@ public:
 	 * Needs nothing
 	 * Gives you the Over Sprite
 	 * Returns Over Sprite
+	 */
+	int getAmmo() const;
+	/* Needs nothing
+	 * Gives you the number of ammo
+	 * Returns ammo
 	 */
 
 ///////////////////////////////////////////////////////////////////////
@@ -95,8 +105,6 @@ private:
 	sf::Time m_rechargeTime;
 	sf::Clock m_rechargeClock;
 	sf::Clock m_fireClock;
-
-	sf::Font m_font;
 
 	std::string m_img;
 	std::string m_imgFire;

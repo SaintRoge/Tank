@@ -21,16 +21,10 @@ Tank::Tank() {
   	m_img = "img/Tank-GTAA.png";
   	m_imgFire = "img/Tank-GTAA-fire.png";
 
-  	if (!m_font.loadFromFile("font/Raleway.ttf")) {
-	    std::cout << "Fonts can't be loaded" << std::endl;
-	} else {
-		std::cout << "Fonts have been loaded" << std::endl;
-	}
-
   	if (!m_fireMusic.openFromFile("snd/fire.wav") || !m_outOfAmmoMusic.openFromFile("snd/out-of-ammo.wav") || !m_rechargeMusic.openFromFile("snd/recharge.wav")) {
-        std::cout << "Sorry, the sounds can't be loaded" << std::endl;
+        std::cout << "Sorry, sounds can't be loaded" << std::endl;
     } else {
-        std::cout << "The sounds have been loaded" << std::endl;
+        std::cout << "Sounds have been loaded" << std::endl;
     }
 	  
 	if (!m_texture.loadFromFile(m_img, sf::IntRect(0, 0, m_TankXSize, m_TankXSize)) || !m_textureFire.loadFromFile(m_imgFire, sf::IntRect(0, 0, m_TankXSize, m_TankXSize))) {
@@ -82,7 +76,6 @@ void Tank::move(bool up) {
 void Tank::overMove(bool up) {
 	if (!m_overTankEnabled) {
 		m_overTankEnabled = true;
-		m_overTankSprite->setTexture(m_texture);
 	}
 
 	if (up) { // Moves up
@@ -162,6 +155,7 @@ bool Tank::isOverEnabled() const {
 
 void Tank::fire() {
 	setTankTexture(m_textureFire);
+	m_overTankSprite->setTexture(m_textureFire);
 	m_fireMusic.play();
 	m_ammo--;
 }
@@ -187,6 +181,7 @@ void Tank::recharge() {
 	m_rechargeMusic.play();
 	m_recharge = true;
 	setTankTexture(m_texture);
+	m_overTankSprite->setTexture(m_texture);
 }
 
 void Tank::setWindowResolution(int x, int y) {
@@ -196,4 +191,8 @@ void Tank::setWindowResolution(int x, int y) {
 
 sf::Sprite Tank::getOverSprite() const {
 	return *m_overTankSprite;
+}
+
+int Tank::getAmmo() const {
+	return m_ammo;
 }
