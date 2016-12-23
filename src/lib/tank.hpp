@@ -6,6 +6,8 @@
 #include <iostream>
 #include <string> 
 
+#include "bullet.hpp"
+
 class Tank : public sf::Sprite {
 public:
 	Tank(int ammo);
@@ -51,6 +53,12 @@ public:
 	 * Says if the over tank mode is enabled
 	 * Returns it value
 	 */
+	bool ifBullet();
+	/*
+	 * Needs nothing
+	 * Says if you can get the bullet
+	 * Returns that
+	 */
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -59,6 +67,12 @@ public:
 	 * Needs nothing
 	 * Gives you the Over Sprite
 	 * Returns Over Sprite
+	 */
+	Bullet getBullet() const;
+	/*
+	 * Needs nothing
+	 * If the bullet exists givs you the bullet
+	 * Returns bullet
 	 */
 	int getAmmo() const;
 	/* Needs nothing
@@ -90,6 +104,11 @@ protected:
 	 * Returns nothing
 	 */
 	void recharge();
+	/*
+	 * Needs nothig
+	 * The tank reload
+	 * Returns nothing
+	 */
 
 private:
 	sf::Texture m_texture;
@@ -109,6 +128,8 @@ private:
 	std::string m_img;
 	std::string m_imgFire;
 
+	Bullet *m_bullet;
+
 	int m_ammo;
 	int m_windowResolutionX;
 	int m_windowResolutionY;
@@ -120,6 +141,7 @@ private:
 
 	bool m_overTankEnabled; //If the Tank is out the borders
 	bool m_recharge;
+	bool m_ifBullet;
 };
 
 #endif //TANK_HPP

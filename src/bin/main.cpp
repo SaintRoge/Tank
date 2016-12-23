@@ -6,6 +6,7 @@
 
 #include "../lib/functions.hpp"
 #include "../lib/tank.hpp"
+#include "../lib/bullet.hpp"
 
 using namespace sf;
 
@@ -79,7 +80,7 @@ int main(int argc, char const *argv[]) {
         if (tank->isOverEnabled()) {
             window.draw(overSprite);
         }
-
+        window.draw(text);
         window.draw(*tank);
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) { // Space bar pressed
@@ -97,8 +98,11 @@ int main(int argc, char const *argv[]) {
                 window.draw(outOfAmmoText);
             }
         }
+        
+        if (tank->ifBullet()) {
+            window.draw(tank->getBullet());
+        }
 
-        window.draw(text);
         window.display();
     }
 

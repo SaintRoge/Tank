@@ -15,8 +15,11 @@ Tank::Tank(int ammo) {
 	m_overTankSprite = new sf::Sprite();
 
 	m_recharge = true;
+	m_ifBullet = false;
 
 	m_ammo = ammo;
+
+	m_bullet = 0;
 
   	m_img = "img/Tank-GTAA.png";
   	m_imgFire = "img/Tank-GTAA-fire.png";
@@ -154,8 +157,17 @@ bool Tank::isOverEnabled() const {
 }
 
 void Tank::fire() {
+
+	if (getPosition().y + (float)m_TankYSize/2 < 0.f) {
+		m_bullet = new Bullet(sf::Vector2f(getPosition().x - 20.f, m_windowResolutionY - (getPosition().y + (float)m_TankYSize/2)));
+	} else if (getPosition().y + (float)m_TankYSize/2 > (float)m_windowResolutionY) {
+		m_bullet = new Bullet(sf::Vector2f(getPosition().x - 20.f, getPosition().y + (float)m_TankYSize/2 - m_windowResolutionY));
+	} else {
+		m_bullet = new Bullet(sf::Vector2f(getPosition().x - 20.f, getPosition().y + (float)m_TankYSize/2));
+	}
 	setTankTexture(m_textureFire);
 	m_overTankSprite->setTexture(m_textureFire);
+	m_ifBullet = true;
 	m_fireMusic.play();
 	m_ammo--;
 }
@@ -177,6 +189,14 @@ bool Tank::ifRecharge() {
 	}
 }
 
+bool Tank::ifBullet() {
+	if (m_ifBullet) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 void Tank::recharge() {
 	m_rechargeMusic.play();
 	m_recharge = true;
@@ -191,6 +211,11 @@ void Tank::setWindowResolution(int x, int y) {
 
 sf::Sprite Tank::getOverSprite() const {
 	return *m_overTankSprite;
+}
+
+Bullet Tank::getBullet() const {
+	return *m_bullet;
+
 }
 
 int Tank::getAmmo() const {
