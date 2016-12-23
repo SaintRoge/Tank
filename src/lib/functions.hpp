@@ -9,6 +9,11 @@
 
 #include "enemies.hpp"
 
-Enemies generateEnemies(int quantity);
+sf::Texture randomTexture();
+/*
+ * Needs nothing
+ * Creates a random enemie texture
+ * Returns it
+ */
 
 #endif //FUNCTIONS

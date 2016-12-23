@@ -11,13 +11,6 @@ public:
 	Enemies();
 	~Enemies();
 
-	void setTexture(sf::Texture const& texture);
-	/*
-	 * Needs texture
-	 * Set this texture to the enemie
-	 * Returns nothing
-	 */
-
 private:
 
 };

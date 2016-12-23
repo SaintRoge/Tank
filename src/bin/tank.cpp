@@ -2,8 +2,8 @@
 
 Tank::Tank(int ammo) {
 
-	m_upSpeed = 7.f;
-	m_downSpeed = -7.f;
+	m_upSpeed = 8.f;
+	m_downSpeed = -8.f;
 	m_TankXSize = 255;
 	m_TankYSize = 160;
 
@@ -12,7 +12,7 @@ Tank::Tank(int ammo) {
 
 	m_overTankEnabled = false;
 
-	m_overTankSprite = new sf::Sprite();
+	m_overTankSprite = new sf::Sprite(); 
 
 	m_recharge = true;
 	m_ifBullet = false;
@@ -184,7 +184,7 @@ bool Tank::ifRecharge() {
 		std::cout << "You have arleady reloaded" << std::endl;
 		return false;
 	} else {
-		std::cout << "Wait !" << std::endl;
+		std::cout << "Wait !" << std::endl; 
 		return false;
 	}
 }

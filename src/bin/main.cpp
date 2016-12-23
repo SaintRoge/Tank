@@ -3,6 +3,9 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <stdio.h>      
+#include <stdlib.h>     
+#include <time.h> 
 
 #include "../lib/functions.hpp"
 #include "../lib/tank.hpp"
@@ -14,15 +17,28 @@ using namespace sf;
 int main(int argc, char const *argv[]) {
 
     int windowSizeX(1200), windowSizeY(800);
+    int enemiesNumber(6);
 
     RenderWindow window(VideoMode(windowSizeX, windowSizeY), "Tank", Style::Close);
 
     sf::Music music;
     sf::Sprite overSprite;
 
+    srand (time(NULL));
+
     sf::Text text;
     sf::Text outOfAmmoText;
     sf::Font font;
+
+    sf::Texture textureArray[enemiesNumber];
+    Enemies enemiesArray[enemiesNumber];
+
+    for (int i(0); i < enemiesNumber; i++) {
+        textureArray[i] = randomTexture();
+        enemiesArray[i] = Enemies();
+        enemiesArray[i].setTexture(textureArray[i]);
+        enemiesArray[i].setPosition(std::rand() % (windowSizeX - windowSizeX/2 + 1), std::rand() % (windowSizeY - 99));
+    }
 
     if (!music.openFromFile("snd/Red.wav")) {
         std::cout << "Sorry, the music can't be loaded" << std::endl;
@@ -81,8 +97,13 @@ int main(int argc, char const *argv[]) {
         if (tank->isOverEnabled()) {
             window.draw(overSprite);
         }
-        window.draw(text);
+
+        for (int j(0); j < enemiesNumber; j++) {
+            window.draw(enemiesArray[j]);
+        }
+
         window.draw(*tank);
+        window.draw(text);
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) { // Space bar pressed
             if (tank->ifFire()) {
