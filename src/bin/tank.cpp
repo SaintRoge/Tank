@@ -94,8 +94,6 @@ void Tank::overMove(bool up) {
 			);
 
 			m_overTankSprite->setPosition(getPosition().x, (float)m_windowResolutionY + getPosition().y);
-
-			//std::cout << m_overTankSprite->getTextureRect().height << "   " << m_overTankSprite->getPosition().y << "    " << std::endl;
 		} else {
 			setPosition(sf::Vector2f(getPosition().x, (float)m_windowResolutionY - m_TankYSize));
 		}
@@ -112,8 +110,6 @@ void Tank::overMove(bool up) {
 				);
 
 			m_overTankSprite->setPosition(getPosition().x, 0);
-
-			//std::cout << m_overTankSprite->getTextureRect().height << "   " << m_overTankSprite->getPosition().y << std::endl;
 		} else {
 			setPosition(getPosition().x, 0.f);
 		}

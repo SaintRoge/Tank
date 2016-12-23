@@ -74,7 +74,6 @@ int main(int argc, char const *argv[]) {
         }
 
         text.setString(std::to_string(tank->getAmmo()));
-        tank->BulletMove();
 
         window.clear(Color(62, 96, 0));
 
@@ -102,7 +101,10 @@ int main(int argc, char const *argv[]) {
         
         if (tank->ifBullet()) {
             window.draw(tank->getBullet());
+            tank->BulletMove();
         }
+
+        window.draw(text);
 
         window.display();
     }
