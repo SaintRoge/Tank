@@ -8,6 +8,6 @@ Enemies::~Enemies() {
 	
 }
 
-Enemies::setTexture(sf::Texture const& texture) {
+void Enemies::setTexture(sf::Texture const& texture) {
 	setTexture(texture);
 }
