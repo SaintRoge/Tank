@@ -7,6 +7,7 @@
 #include "../lib/functions.hpp"
 #include "../lib/tank.hpp"
 #include "../lib/bullet.hpp"
+#include "../lib/ennemies.hpp"
 
 using namespace sf;
 

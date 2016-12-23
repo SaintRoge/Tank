@@ -7,6 +7,7 @@
 #include <string> 
 
 #include "bullet.hpp"
+#include "ennemies.hpp"
 
 class Tank : public sf::Sprite {
 public:

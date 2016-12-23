@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include "ennemies.hpp"
 #include <iostream>
 #include <string>
 
