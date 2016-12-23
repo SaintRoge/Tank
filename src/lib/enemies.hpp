@@ -10,6 +10,11 @@ class Enemies : public sf::Sprite {
 public:
 	Enemies();
 	~Enemies();
+
+	void setTexture(sf::Texture const& texture);
+
+private:
+
 };
 
 #endif //ENNEMIES_HPP
