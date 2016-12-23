@@ -6,6 +6,9 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-	
+
+#include "enemies.hpp"
+
+Enemies generateEnemies(int quantity);
 
 #endif //FUNCTIONS
