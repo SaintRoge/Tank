@@ -9,7 +9,7 @@ RM = rm -rf
 SRC = src/bin/
 FLAGS = -std=c++11
 
-all: main.o functions.o tank.o bullet.o ennemies.o
+all: main.o functions.o tank.o bullet.o enemies.o
 		$(CXX) $(FLAGS) $^ -o $(app) $(lib)
 		@echo "Finished building: $^"
 		@echo "Build finished. You are ready to use $(app) :-)"

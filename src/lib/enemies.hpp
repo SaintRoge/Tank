@@ -6,10 +6,10 @@
 #include <iostream>
 #include <string>
 
-class Ennemies : public sf::Sprite {
+class Enemies : public sf::Sprite {
 public:
-	Ennemies();
-	~Ennemies();
+	Enemies();
+	~Enemies();
 };
 
 #endif //ENNEMIES_HPP
