@@ -4,7 +4,7 @@ Game::Game(sf::RenderWindow *window) {
 	m_window = window;
 
 	m_windowSize = m_window->getSize();
-    m_enemiesNumber = 10;
+    m_enemiesNumber = 15;
     m_enemiesScore = 0;
 
     srand(time(NULL));
@@ -93,6 +93,19 @@ void Game::start() {
 	        if (!m_enemiesArray[j].isDead()) {
 	        	    m_window->draw(m_enemiesArray[j]);
 	        	    m_enemiesArray[j].move();
+                    if (m_tank->ifBullet()) {
+                        if (
+                            m_enemiesArray[j].getPosition().x + 100.f >= m_tank->getBullet().getPosition().x 
+                            && 
+                            m_tank->getBullet().getPosition().y >= m_enemiesArray[j].getPosition().y + m_tank->getBullet().getSize().y
+                            &&
+                            m_tank->getBullet().getPosition().y <= m_enemiesArray[j].getPosition().y + 100.f
+                            ) {
+
+                            m_enemiesArray[j].killEnemies();
+                            
+                        }
+                    }
 	    	} else {
 	    	    m_enemiesScore += m_enemiesArray[j].getScore();
 	    	    Enemies enemie;

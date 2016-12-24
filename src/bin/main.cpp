@@ -39,12 +39,12 @@ int main(int argc, char const *argv[]) {
     playButton.setString("  Play");
     playButton.setFont(font);
     playButton.setCharacterSize(60);
-    playButton.setPosition(500.f, 250.f);
+    playButton.setPosition(430.f, 250.f);
 
     quitButton.setString("  Quit");
     quitButton.setFont(font);
     quitButton.setCharacterSize(60);
-    quitButton.setPosition(500.f, 500.f);
+    quitButton.setPosition(430.f, 400.f);
 
     Game game(&window);
 
