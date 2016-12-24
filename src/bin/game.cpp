@@ -15,7 +15,7 @@ Game::Game(sf::RenderWindow *window) {
         m_textureArray.push_back(randomTexture());
         m_enemiesArray.push_back(Enemies());
         m_enemiesArray[i].setTexture(m_textureArray[i]);
-        m_enemiesArray[i].setPosition(-(std::rand() % (m_windowSize.x/2) + 1), std::rand() % (m_windowSize.y - 100) + 1);
+        m_enemiesArray[i].setPosition(-(std::rand() % 100 + 1), std::rand() % (m_windowSize.y - 100) + 1);
     }
 
     if (!m_music.openFromFile("snd/Red.wav")) {
@@ -30,8 +30,12 @@ Game::Game(sf::RenderWindow *window) {
         std::cout << "Fonts have been loaded" << std::endl;
         m_text.setFont(m_font);
         m_outOfAmmoText.setFont(m_font);
+        m_scoreText.setFont(m_font);
     }
 
+    m_scoreText.setCharacterSize(30);
+    m_scoreText.setPosition(40.f, m_window->getSize().y - 60.f);
+    m_scoreText.setString("Score : " + std::to_string(m_score));
     m_text.setCharacterSize(60);
     m_text.setPosition(m_window->getSize().x - 140.f, m_window->getSize().y - 90.f);
 
@@ -67,12 +71,14 @@ void Game::start() {
                 m_window->setView(sf::View(visibleArea));
                 m_tank->setWindowResolution(m_window->getSize().x, m_window->getSize().y);
                 m_text.setPosition(m_window->getSize().x - 140.f, m_window->getSize().y - 90.f);
+                m_scoreText.setPosition(40.f, m_window->getSize().y - 60.f);
             }
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
             m_tank->move(true);
         }
+
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
             m_tank->move(false);
@@ -84,6 +90,7 @@ void Game::start() {
             view.setCenter(m_window->getView().getCenter().x - m_viewSpeed, m_window->getView().getCenter().y);
             m_window->setView(view);
             m_text.setPosition(m_text.getPosition().x - m_viewSpeed, m_text.getPosition().y);
+            m_scoreText.setPosition(m_scoreText.getPosition().x - m_viewSpeed, m_scoreText.getPosition().y);
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && m_window->getView().getCenter().x + m_viewSpeed <= (float)m_window->getSize().x/2) {
@@ -92,6 +99,7 @@ void Game::start() {
             view.setCenter(m_window->getView().getCenter().x + m_viewSpeed, m_window->getView().getCenter().y);
             m_window->setView(view);
             m_text.setPosition(m_text.getPosition().x + m_viewSpeed, m_text.getPosition().y);
+            m_scoreText.setPosition(m_scoreText.getPosition().x + m_viewSpeed, m_scoreText.getPosition().y);
         }
 
         if (m_tank->isOverEnabled()) {
@@ -107,7 +115,6 @@ void Game::start() {
         }
 
         m_window->draw(*m_tank);
-        m_window->draw(m_text);
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) { // Space bar pressed
             if (m_tank->ifFire()) {
@@ -126,6 +133,8 @@ void Game::start() {
                     if (
                         m_enemiesArray[j].getPosition().x + 100.f >= m_tank->getBullet().getPosition().x 
                         && 
+                        m_enemiesArray[j].getPosition().x <= m_tank->getBullet().getPosition().x + m_tank->getBullet().getSize().x
+                        &&
                         m_tank->getBullet().getPosition().y >= m_enemiesArray[j].getPosition().y + m_tank->getBullet().getSize().y
                         &&
                         m_tank->getBullet().getPosition().y <= m_enemiesArray[j].getPosition().y + 100.f
@@ -133,6 +142,8 @@ void Game::start() {
 
                         m_enemiesArray[j].killEnemies();
                         std::cout << j << "Killed" << std::endl;
+                        m_score++;
+                        m_scoreText.setString("Score : " + std::to_string(m_score));
                         m_tank->killBullet();
                     }
                 }
@@ -147,6 +158,7 @@ void Game::start() {
         }
 
         m_window->draw(m_text);
+        m_window->draw(m_scoreText);
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
             if (m_tank->ifRecharge()) {

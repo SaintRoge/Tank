@@ -44,6 +44,7 @@ private:
 
 	sf::Text m_text;
 	sf::Text m_outOfAmmoText;
+	sf::Text m_scoreText;
 	sf::Font m_font;
 
 	sf::Music m_music;
