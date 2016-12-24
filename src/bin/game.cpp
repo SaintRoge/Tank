@@ -75,6 +75,10 @@ void Game::start() {
             }
         }
 
+        if (m_enemiesScore >= m_maximumEnemiesScore) {
+            gameover();
+        }
+
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
             m_tank->move(true);
         }
@@ -176,4 +180,8 @@ void Game::start() {
 
     delete m_tank;
     m_tank = NULL;
+}
+
+void Game::gameover() {
+
 }

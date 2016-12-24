@@ -26,11 +26,18 @@ public:
 	 * Starts the game
 	 * Returns nothing
 	 */
+	void gameover();
+	/*
+	 * Needs nothing
+	 * The game is over
+	 * Returns nothing
+	 */
   
 private:
 	int m_enemiesNumber;
 	int m_enemiesScore;
 	int m_score;
+	int m_maximumEnemiesScore;
 	float m_viewSpeed;
 
 	Tank *m_tank;
