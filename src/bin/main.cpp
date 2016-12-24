@@ -18,8 +18,34 @@ using namespace sf;
 int main(int argc, char const *argv[]) {
 
     RenderWindow window(VideoMode(1200, 800), "Tank", sf::Style::Close);
-    Game game(&window);
-    game.start();
+
+    Text playButton;
+    Font font;
+
+    font.loadFromFile("font/joystix.ttf");
+
+    playButton.setString("Play");
+    playButton.setFont(font);
+    playButton.setCharacterSize(60);
+    playButton.setPosition(500.f, 300.f);
+
+    while (window.isOpen()) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+
+                window.close();
+            }
+        }
+
+        window.clear();
+        window.draw(playButton);
+        window.display();
+
+    }
+
+    /*Game game(&window);
+    game.start();*/
 
     return 0;
 }
