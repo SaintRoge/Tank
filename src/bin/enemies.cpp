@@ -1,7 +1,7 @@
 #include "../lib/enemies.hpp"
 
 Enemies::Enemies() {
-  	m_speed = 2.f;
+  	m_speed = 5.f;
 	m_isDead = false;
 	m_score = 0;
 	m_windowSize.x = 1200;

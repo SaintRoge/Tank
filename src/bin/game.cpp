@@ -14,8 +14,8 @@ Game::Game(sf::RenderWindow *window) {
     for (int i(0); i < m_enemiesNumber; i++) {
         m_textureArray.push_back(randomTexture());
         m_enemiesArray.push_back(Enemies());
+        m_enemiesArray[i].setPosition(-(std::rand() % (int)m_window->getSize().x + 1), std::rand() % (m_windowSize.y - 100) + 1);
         m_enemiesArray[i].setTexture(m_textureArray[i]);
-        m_enemiesArray[i].setPosition(-(std::rand() % 100 + 1), std::rand() % (m_windowSize.y - 100) + 1);
     }
 
     if (!m_music.openFromFile("snd/Red.wav")) {
@@ -116,14 +116,6 @@ void Game::start() {
 
         m_window->draw(*m_tank);
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) { // Space bar pressed
-            if (m_tank->ifFire()) {
-                std::cout << "Fire !" << std::endl;
-            } else if (m_tank->getAmmo() == 0) { // Shoot
-                m_window->draw(m_outOfAmmoText);
-            } 
-		}
-
 		for (int j(0); j < m_enemiesNumber; j++) {
 	        if (!m_enemiesArray[j].isDead()) {
                 m_enemiesArray[j].setWindowSize(m_window->getSize());
@@ -148,7 +140,10 @@ void Game::start() {
                     }
                 }
 	    	} else {
-
+                m_enemiesScore += m_enemiesArray[j].getScore();
+                m_enemiesArray[j] = Enemies();
+                m_enemiesArray[j].setPosition(-(std::rand() % (int)m_window->getSize().x + 1), std::rand() % (m_windowSize.y - 100) + 1);
+                m_enemiesArray[j].setTexture(m_textureArray[j]);
 		  	}
         }
         
@@ -159,6 +154,14 @@ void Game::start() {
 
         m_window->draw(m_text);
         m_window->draw(m_scoreText);
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) { // Space bar pressed
+            if (m_tank->ifFire()) {
+                std::cout << "Fire !" << std::endl;
+            } else if (m_tank->getAmmo() == 0) { // Shoot
+                m_window->draw(m_outOfAmmoText);
+            } 
+        }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
             if (m_tank->ifRecharge()) {
