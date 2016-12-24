@@ -18,6 +18,7 @@ int main(int argc, char const *argv[]) {
 
     int windowSizeX(1200), windowSizeY(800);
     int enemiesNumber(6);
+    int enemiesScore(0);
 
     RenderWindow window(VideoMode(windowSizeX, windowSizeY), "Tank", Style::Close);
 
@@ -122,6 +123,7 @@ int main(int argc, char const *argv[]) {
 	    window.draw(enemiesArray[j]);
 	    enemiesArray[j].move();
 	  } else {
+	    enemiesScore += enemiesArray[j].getScore();
 	    Enemies enemie;
 	    enemie.setTexture(textureArray[rand() % enemiesNumber]);
 	    enemie.setPosition(-(std::rand() % (windowSizeX + windowSizeX/2 + 1)), std::rand() % (windowSizeY - 99));

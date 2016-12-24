@@ -17,7 +17,7 @@ public:
 	 * The enemie moves
 	 * Returns nothing
 	 */
-  void deleteEnemies();
+  void killEnemies();
          /*
           * Needs nothing
 	  * Delete this
@@ -32,9 +32,21 @@ public:
 	   * Says to you if the enemie is dead
 	   * Returns that
 	   */
+
+  /////////////////////////////////////////////////
+
+  int getScore() const;
+          /*
+           * Needs noyhing
+	   * Says to you the enemie score
+	   * Returns that
+	   */
+  
   
 private:
   int m_speed;
+  int m_score;
+  
   bool m_isDead; 
 };
 
