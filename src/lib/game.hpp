@@ -1,5 +1,5 @@
-#ifndef GAME_HPP
-#define GAME_HPP
+#ifndef GAME_HPP_INCLUDED
+#define GAME_HPP_INCLUDED
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
@@ -9,6 +9,7 @@
 #include <stdio.h>      
 #include <stdlib.h>     
 #include <time.h>
+#include <vector>
 
 #include "functions.hpp"
 #include "tank.hpp"
@@ -17,11 +18,29 @@
 
 class Game {
 public:
-	Game();
+	Game(sf::RenderWindow *window);
 	~Game();
   
 private:
+	int m_enemiesNumber;
+	int m_enemiesScore;
 
+	Tank *m_tank;
+
+	std::vector<sf::Texture> m_textureArray;
+	std::vector<Enemies> m_enemiesArray;
+
+	sf::RenderWindow *m_window;
+
+	sf::Sprite m_overSprite;
+
+	sf::Text m_text;
+	sf::Text m_outOfAmmoText;
+	sf::Font m_font;
+
+	sf::Music m_music;
+
+	sf::Vector2u m_windowSize;
 };
 
 #endif

@@ -1,133 +1,121 @@
 #include "../lib/game.hpp"
 
-Game::Game() {
-	int windowSizeX(1200), windowSizeY(800);
-    int enemiesNumber(6);
-    int enemiesScore(0);
+Game::Game(sf::RenderWindow *window) {
+	m_window = window;
 
-    sf::RenderWindow window(sf::VideoMode(windowSizeX, windowSizeY), "Tank", sf::Style::Close);
+	m_windowSize = m_window->getSize();
+    m_enemiesNumber = 2;
+    m_enemiesScore = 0;
 
-    sf::Music music;
-    sf::Sprite overSprite;
+    srand(time(NULL));
 
-    srand (time(NULL));
-
-    sf::Text text;
-    sf::Text outOfAmmoText;
-    sf::Font font;
-
-    sf::Texture textureArray[enemiesNumber];
-    Enemies enemiesArray[enemiesNumber];
-
-    for (int i(0); i < enemiesNumber; i++) {
-        textureArray[i] = randomTexture();
-        enemiesArray[i] = Enemies();
-        enemiesArray[i].setTexture(textureArray[i]);
-        enemiesArray[i].setPosition(-(std::rand() % (windowSizeX -  windowSizeX/2 + 1)), std::rand() % (windowSizeY - 99));
+    for (int i(0); i < m_enemiesNumber; i++) {
+        m_textureArray.push_back(randomTexture());
+        m_enemiesArray.push_back(Enemies());
+        m_enemiesArray[i].setTexture(m_textureArray[i]);
+        m_enemiesArray[i].setPosition(-(std::rand() % (m_windowSize.x - m_windowSize.x/2 + 1)), std::rand() % (m_windowSize.y - 99));
     }
 
-    if (!music.openFromFile("snd/Red.wav")) {
-        std::cout << "Sorry, the music can't be loaded" << std::endl;
+    if (!m_music.openFromFile("snd/Red.wav")) {
+        std::cout << "Sorry, the m_music can't be loaded" << std::endl;
     } else {
-        std::cout << "The music has been loaded" << std::endl;
-        music.play();
+        std::cout << "The m_music has been loaded" << std::endl;
+        m_music.play();
     }
 
-    if (!font.loadFromFile("font/joystix.ttf")) {
+    if (!m_font.loadFromFile("font/joystix.ttf")) {
         std::cout << "Fonts can't be loaded" << std::endl;
     } else {
         std::cout << "Fonts have been loaded" << std::endl;
-        text.setFont(font);
-        outOfAmmoText.setFont(font);
+        m_text.setFont(m_font);
+        m_outOfAmmoText.setFont(m_font);
     }
 
-    text.setCharacterSize(60);
-    text.setPosition(1060.f, 710.f);
+    m_text.setCharacterSize(60);
+    m_text.setPosition(1060.f, 710.f);
 
-    outOfAmmoText.setString("Out of Ammo !");
-    outOfAmmoText.setColor(sf::Color::Red);
-    outOfAmmoText.setCharacterSize(100);
-    outOfAmmoText.setPosition(90.f, 350.f);
+    m_outOfAmmoText.setString("Out of Ammo !");
+    m_outOfAmmoText.setColor(sf::Color::Red);
+    m_outOfAmmoText.setCharacterSize(100);
+    m_outOfAmmoText.setPosition(90.f, 350.f);
 
-    Tank *tank(NULL);
-    tank = new Tank(10); //Creates a new Tank with 10 ammo
-    window.draw(*tank);
-    tank->setPosition(900, 400);
-    tank->setWindowResolution(windowSizeX, windowSizeY);
+    m_tank = new Tank(10); //Creates a new Tank with 10 ammo
+    m_tank->setPosition(900, 400);
+    m_tank->setWindowResolution(m_windowSize.x, m_windowSize.y);
 
-    while (window.isOpen()) {
+    while (m_window->isOpen()) {
         sf::Event event;
-        while (window.pollEvent(event)) {
+        while (m_window->pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
 
-                window.close();
+                m_window->close();
             }
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-            tank->move(true);
+            m_tank->move(true);
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-            tank->move(false);
+            m_tank->move(false);
         }
 
-        if (tank->isOverEnabled()) {
-            overSprite = tank->getOverSprite();
+        if (m_tank->isOverEnabled()) {
+            m_overSprite = m_tank->getOverSprite();
         }
 
-        text.setString(std::to_string(tank->getAmmo()));
+        m_text.setString(std::to_string(m_tank->getAmmo()));
 
-        window.clear(sf::Color(62, 96, 0));
+        m_window->clear(sf::Color(62, 96, 0));
 
-        if (tank->isOverEnabled()) {
-            window.draw(overSprite);
+        if (m_tank->isOverEnabled()) {
+            m_window->draw(m_overSprite);
         }
 
-        window.draw(*tank);
-        window.draw(text);
+        m_window->draw(*m_tank);
+        m_window->draw(m_text);
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) { // Space bar pressed
-            if (tank->ifFire()) {
+            if (m_tank->ifFire()) {
                 std::cout << "Fire !" << std::endl;
-            } else if (tank->getAmmo() == 0) { // Shoot
-                window.draw(outOfAmmoText);
+            } else if (m_tank->getAmmo() == 0) { // Shoot
+                m_window->draw(m_outOfAmmoText);
             } 
-	}
+		}
 	
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-            if (tank->ifRecharge()) {
+            if (m_tank->ifRecharge()) {
                 std::cout << "Reload !" << std::endl;
-            } else if (tank->getAmmo() == 0) {
-                window.draw(outOfAmmoText);
+            } else if (m_tank->getAmmo() == 0) {
+                m_window->draw(m_outOfAmmoText);
             }
         }
 
-	for (int j(0); j < enemiesNumber; j++) {
-        if (!enemiesArray[j].isDead()) {
-        	    window.draw(enemiesArray[j]);
-        	    enemiesArray[j].move();
-    	} else {
-    	    enemiesScore += enemiesArray[j].getScore();
-    	    Enemies enemie;
-    	    enemie.setTexture(textureArray[rand() % enemiesNumber]);
-    	    enemie.setPosition(-(std::rand() % (windowSizeX + windowSizeX/2 + 1)), std::rand() % (windowSizeY - 99));
-	        enemiesArray[j] = enemie;
-	  }
+		for (int j(0); j < m_enemiesNumber; j++) {
+	        if (!m_enemiesArray[j].isDead()) {
+	        	    m_window->draw(m_enemiesArray[j]);
+	        	    m_enemiesArray[j].move();
+	    	} else {
+	    	    m_enemiesScore += m_enemiesArray[j].getScore();
+	    	    Enemies enemie;
+	    	    enemie.setTexture(m_textureArray[rand() % m_enemiesNumber]);
+	    	    enemie.setPosition(-(std::rand() % (m_windowSize.x + m_windowSize.x/2 + 1)), std::rand() % (m_windowSize.y - 99));
+		        m_enemiesArray[j] = enemie;
+		  	}
         }
         
-        if (tank->ifBullet()) {
-            window.draw(tank->getBullet());
-            tank->BulletMove();
+        if (m_tank->ifBullet()) {
+            m_window->draw(m_tank->getBullet());
+            m_tank->BulletMove();
         }
 
-        window.draw(text);
+        m_window->draw(m_text);
 
-        window.display();
+        m_window->display();
     }
 
-    delete tank;
-    tank = NULL;
+    delete m_tank;
+    m_tank = NULL;
 }
 
 Game::~Game() {

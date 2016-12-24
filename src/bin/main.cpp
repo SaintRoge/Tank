@@ -17,7 +17,8 @@ using namespace sf;
 
 int main(int argc, char const *argv[]) {
 
-    Game game();
+    RenderWindow window(VideoMode(1200, 800), "Tank", sf::Style::Close);
+    Game game(&window);
 
     return 0;
 }
