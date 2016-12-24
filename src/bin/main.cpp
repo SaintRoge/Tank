@@ -19,6 +19,7 @@ int main(int argc, char const *argv[]) {
 
     RenderWindow window(VideoMode(1200, 800), "Tank", sf::Style::Close);
     Game game(&window);
+    game.start();
 
     return 0;
 }

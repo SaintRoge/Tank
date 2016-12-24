@@ -20,6 +20,12 @@ class Game {
 public:
 	Game(sf::RenderWindow *window);
 	~Game();
+	void start();
+	/*
+	 * Needs nothing
+	 * Starts the game
+	 * Returns nothing
+	 */
   
 private:
 	int m_enemiesNumber;

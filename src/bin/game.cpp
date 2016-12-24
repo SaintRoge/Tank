@@ -4,7 +4,7 @@ Game::Game(sf::RenderWindow *window) {
 	m_window = window;
 
 	m_windowSize = m_window->getSize();
-    m_enemiesNumber = 2;
+    m_enemiesNumber = 10;
     m_enemiesScore = 0;
 
     srand(time(NULL));
@@ -42,7 +42,13 @@ Game::Game(sf::RenderWindow *window) {
     m_tank = new Tank(10); //Creates a new Tank with 10 ammo
     m_tank->setPosition(900, 400);
     m_tank->setWindowResolution(m_windowSize.x, m_windowSize.y);
+}
 
+Game::~Game() {
+
+}
+
+void Game::start() {
     while (m_window->isOpen()) {
         sf::Event event;
         while (m_window->pollEvent(event)) {
@@ -82,14 +88,6 @@ Game::Game(sf::RenderWindow *window) {
                 m_window->draw(m_outOfAmmoText);
             } 
 		}
-	
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-            if (m_tank->ifRecharge()) {
-                std::cout << "Reload !" << std::endl;
-            } else if (m_tank->getAmmo() == 0) {
-                m_window->draw(m_outOfAmmoText);
-            }
-        }
 
 		for (int j(0); j < m_enemiesNumber; j++) {
 	        if (!m_enemiesArray[j].isDead()) {
@@ -111,13 +109,17 @@ Game::Game(sf::RenderWindow *window) {
 
         m_window->draw(m_text);
 
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+            if (m_tank->ifRecharge()) {
+                std::cout << "Reload !" << std::endl;
+            } else if (m_tank->getAmmo() == 0) {
+                m_window->draw(m_outOfAmmoText);
+            }
+        }
+
         m_window->display();
     }
 
     delete m_tank;
     m_tank = NULL;
-}
-
-Game::~Game() {
-
 }
