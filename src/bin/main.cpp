@@ -37,7 +37,7 @@ int main(int argc, char const *argv[]) {
         textureArray[i] = randomTexture();
         enemiesArray[i] = Enemies();
         enemiesArray[i].setTexture(textureArray[i]);
-        enemiesArray[i].setPosition(std::rand() % (windowSizeX - windowSizeX/2 + 1), std::rand() % (windowSizeY - 99));
+        enemiesArray[i].setPosition(-(std::rand() % (windowSizeX -  windowSizeX/2 + 1)), std::rand() % (windowSizeY - 99));
     }
 
     if (!music.openFromFile("snd/Red.wav")) {
@@ -98,10 +98,6 @@ int main(int argc, char const *argv[]) {
             window.draw(overSprite);
         }
 
-        for (int j(0); j < enemiesNumber; j++) {
-            window.draw(enemiesArray[j]);
-        }
-
         window.draw(*tank);
         window.draw(text);
 
@@ -111,14 +107,26 @@ int main(int argc, char const *argv[]) {
             } else if (tank->getAmmo() == 0) { // Shoot
                 window.draw(outOfAmmoText);
             } 
-        }
-
+	}
+	
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
             if (tank->ifRecharge()) {
                 std::cout << "Reload !" << std::endl;
             } else if (tank->getAmmo() == 0) {
                 window.draw(outOfAmmoText);
             }
+        }
+
+	for (int j(0); j < enemiesNumber; j++) {
+	  if (!enemiesArray[j].isDead()) {
+	    window.draw(enemiesArray[j]);
+	    enemiesArray[j].move();
+	  } else {
+	    Enemies enemie;
+	    enemie.setTexture(textureArray[rand() % enemiesNumber]);
+	    enemie.setPosition(-(std::rand() % (windowSizeX + windowSizeX/2 + 1)), std::rand() % (windowSizeY - 99));
+	    enemiesArray[j] = enemie;
+	  }
         }
         
         if (tank->ifBullet()) {
