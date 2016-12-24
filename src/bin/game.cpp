@@ -20,7 +20,6 @@ Game::Game(sf::RenderWindow *window) {
         std::cout << "Sorry, the m_music can't be loaded" << std::endl;
     } else {
         std::cout << "The m_music has been loaded" << std::endl;
-        m_music.play();
     }
 
     if (!m_font.loadFromFile("font/joystix.ttf")) {
@@ -49,6 +48,7 @@ Game::~Game() {
 }
 
 void Game::start() {
+	m_music.play();
     while (m_window->isOpen()) {
         sf::Event event;
         while (m_window->pollEvent(event)) {
