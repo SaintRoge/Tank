@@ -148,6 +148,7 @@ private:
 	int m_windowResolutionY;
 	int m_TankXSize;
 	int m_TankYSize;
+	int m_distance;
 
 	float m_upSpeed;
 	float m_downSpeed;

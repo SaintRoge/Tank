@@ -6,6 +6,7 @@ Tank::Tank(int ammo) {
 	m_downSpeed = -8.f;
 	m_TankXSize = 255;
 	m_TankYSize = 160;
+	m_distance = 300;
 
 	m_fireTime = sf::seconds(1.f);
 	m_rechargeTime = sf::seconds(0.2f);
@@ -93,9 +94,9 @@ void Tank::overMove(bool up) {
 				)
 			);
 
-			m_overTankSprite->setPosition(getPosition().x, (float)m_windowResolutionY + getPosition().y);
+			m_overTankSprite->setPosition(m_windowResolutionX - m_distance, (float)m_windowResolutionY + getPosition().y);
 		} else {
-			setPosition(sf::Vector2f(getPosition().x, (float)m_windowResolutionY - m_TankYSize));
+			setPosition(sf::Vector2f(m_windowResolutionX - m_distance, (float)m_windowResolutionY - m_TankYSize));
 		}
 	} else {
 		if (getPosition().y < m_windowResolutionY) {
@@ -109,9 +110,9 @@ void Tank::overMove(bool up) {
 					)
 				);
 
-			m_overTankSprite->setPosition(getPosition().x, 0);
+			m_overTankSprite->setPosition(m_windowResolutionX - m_distance, 0);
 		} else {
-			setPosition(getPosition().x, 0.f);
+			setPosition(m_windowResolutionX - m_distance, 0.f);
 		}
 	}
 	
@@ -155,11 +156,11 @@ bool Tank::isOverEnabled() const {
 void Tank::fire() {
 
 	if (getPosition().y + (float)m_TankYSize/2 < 0.f) {
-		m_bullet = new Bullet(sf::Vector2f(getPosition().x + 20.f, m_windowResolutionY + (getPosition().y + (float)m_TankYSize/2)));
+		m_bullet = new Bullet(sf::Vector2f(m_windowResolutionX - m_distance + 20.f, m_windowResolutionY + (getPosition().y + (float)m_TankYSize/2)));
 	} else if (getPosition().y + (float)m_TankYSize/2 > (float)m_windowResolutionY) {
-		m_bullet = new Bullet(sf::Vector2f(getPosition().x + 20.f, getPosition().y + (float)m_TankYSize/2 - m_windowResolutionY));
+		m_bullet = new Bullet(sf::Vector2f(m_windowResolutionX - m_distance + 20.f, getPosition().y + (float)m_TankYSize/2 - m_windowResolutionY));
 	} else {
-		m_bullet = new Bullet(sf::Vector2f(getPosition().x + 20.f, getPosition().y + (float)m_TankYSize/2));
+		m_bullet = new Bullet(sf::Vector2f(m_windowResolutionX - m_distance + 20.f, getPosition().y + (float)m_TankYSize/2));
 	}
 	setTankTexture(m_textureFire);
 	m_overTankSprite->setTexture(m_textureFire);
@@ -212,6 +213,7 @@ void Tank::recharge() {
 void Tank::setWindowResolution(int const x, int const y) {
 	m_windowResolutionX = x;
 	m_windowResolutionY = y;
+	setPosition(m_windowResolutionX - m_distance, getPosition().y);
 }
 
 sf::Sprite Tank::getOverSprite() const {

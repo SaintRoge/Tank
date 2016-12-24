@@ -6,6 +6,7 @@ Game::Game(sf::RenderWindow *window) {
 	m_windowSize = m_window->getSize();
     m_enemiesNumber = 5;
     m_enemiesScore = 0;
+    m_viewSpeed = 25.f;
 
     srand(time(NULL));
 
@@ -13,7 +14,7 @@ Game::Game(sf::RenderWindow *window) {
         m_textureArray.push_back(randomTexture());
         m_enemiesArray.push_back(Enemies());
         m_enemiesArray[i].setTexture(m_textureArray[i]);
-        m_enemiesArray[i].setPosition(std::rand() % (m_windowSize.x/2) + 1, std::rand() % (m_windowSize.y - 100) + 1);
+        m_enemiesArray[i].setPosition(-(std::rand() % (m_windowSize.x/2) + 1), std::rand() % (m_windowSize.y - 100) + 1);
     }
 
     if (!m_music.openFromFile("snd/Red.wav")) {
@@ -31,7 +32,7 @@ Game::Game(sf::RenderWindow *window) {
     }
 
     m_text.setCharacterSize(60);
-    m_text.setPosition(1060.f, 710.f);
+    m_text.setPosition(m_window->getSize().x - 140.f, m_window->getSize().y - 90.f);
 
     m_outOfAmmoText.setString("Out of Ammo !");
     m_outOfAmmoText.setColor(sf::Color::Red);
@@ -39,7 +40,7 @@ Game::Game(sf::RenderWindow *window) {
     m_outOfAmmoText.setPosition(90.f, 350.f);
 
     m_tank = new Tank(10); //Creates a new Tank with 10 ammo
-    m_tank->setPosition(m_windowSize.x - 300, 400);
+    m_tank->setPosition(0, 400);
     m_tank->setWindowResolution(m_window->getSize().x, m_window->getSize().y);
 }
 
@@ -64,7 +65,7 @@ void Game::start() {
                 sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
                 m_window->setView(sf::View(visibleArea));
                 m_tank->setWindowResolution(m_window->getSize().x, m_window->getSize().y);
-                m_tank->setPosition(m_windowSize.x - 300, m_tank->getPosition().y);
+                m_text.setPosition(m_window->getSize().x - 140.f, m_window->getSize().y - 90.f);
             }
         }
 
@@ -74,6 +75,20 @@ void Game::start() {
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
             m_tank->move(false);
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+            sf::FloatRect visibleArea(0, 0, m_window->getSize().x, m_window->getSize().y);
+            sf::View view = sf::View(visibleArea);
+            view.setCenter(m_window->getView().getCenter().x - m_viewSpeed, m_window->getView().getCenter().y);
+            m_window->setView(view);
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && m_window->getView().getCenter().x + m_viewSpeed <= (float)m_window->getSize().x/2) {
+            sf::FloatRect visibleArea(0, 0, m_window->getSize().x, m_window->getSize().y);
+            sf::View view = sf::View(visibleArea);
+            view.setCenter(m_window->getView().getCenter().x + m_viewSpeed, m_window->getView().getCenter().y);
+            m_window->setView(view);
         }
 
         if (m_tank->isOverEnabled()) {
@@ -101,22 +116,23 @@ void Game::start() {
 
 		for (int j(0); j < m_enemiesNumber; j++) {
 	        if (!m_enemiesArray[j].isDead()) {
-	        	    m_window->draw(m_enemiesArray[j]);
-	        	    m_enemiesArray[j].move();
-                    if (m_tank->ifBullet()) {
-                        if (
-                            m_enemiesArray[j].getPosition().x + 100.f >= m_tank->getBullet().getPosition().x 
-                            && 
-                            m_tank->getBullet().getPosition().y >= m_enemiesArray[j].getPosition().y + m_tank->getBullet().getSize().y
-                            &&
-                            m_tank->getBullet().getPosition().y <= m_enemiesArray[j].getPosition().y + 100.f
-                            ) {
+                m_enemiesArray[j].setWindowSize(m_window->getSize());
+        	    m_window->draw(m_enemiesArray[j]);
+        	    m_enemiesArray[j].move();
+                if (m_tank->ifBullet()) {
+                    if (
+                        m_enemiesArray[j].getPosition().x + 100.f >= m_tank->getBullet().getPosition().x 
+                        && 
+                        m_tank->getBullet().getPosition().y >= m_enemiesArray[j].getPosition().y + m_tank->getBullet().getSize().y
+                        &&
+                        m_tank->getBullet().getPosition().y <= m_enemiesArray[j].getPosition().y + 100.f
+                        ) {
 
-                            m_enemiesArray[j].killEnemies();
-                            std::cout << j << "Killed" << std::endl;
-                            m_tank->killBullet();
-                        }
+                        m_enemiesArray[j].killEnemies();
+                        std::cout << j << "Killed" << std::endl;
+                        m_tank->killBullet();
                     }
+                }
 	    	} else {
 
 		  	}

@@ -41,6 +41,15 @@ public:
 	 * Says to you the enemie score
 	 * Returns that
 	 */
+
+  /////////////////////////////////////////////////
+
+  	void setWindowSize(sf::Vector2u size);
+  	/*
+  	 * Needs size
+  	 * Set it
+  	 * Returns nothing
+  	 */
   
   
 private:
@@ -48,6 +57,8 @@ private:
 	int m_score;
 	  
 	bool m_isDead; 
+
+	sf::Vector2u m_windowSize;
 };
 
 #endif //ENNEMIES_HPP

@@ -4,6 +4,8 @@ Enemies::Enemies() {
   	m_speed = 2.f;
 	m_isDead = false;
 	m_score = 0;
+	m_windowSize.x = 1200;
+	m_windowSize.y = 800;
 }
 
 Enemies::~Enemies() {
@@ -11,7 +13,7 @@ Enemies::~Enemies() {
 }
 
 void Enemies::move() {
-  	if (getPosition().x > 1100.f) {
+  	if (getPosition().x > m_windowSize.x - 100) {
    		 m_score++;
     	killEnemies();
   	}
@@ -26,6 +28,10 @@ bool Enemies::isDead() {
   	return m_isDead;
 }
 
-int Enemies:: getScore() const {
+void Enemies::setWindowSize(sf::Vector2u size) {
+	m_windowSize = size;
+}
+
+int Enemies::getScore() const {
   	return m_score;
 }
