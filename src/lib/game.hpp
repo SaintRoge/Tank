@@ -30,6 +30,7 @@ public:
 private:
 	int m_enemiesNumber;
 	int m_enemiesScore;
+	int m_score;
 	float m_viewSpeed;
 
 	Tank *m_tank;

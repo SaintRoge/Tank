@@ -7,6 +7,7 @@ Game::Game(sf::RenderWindow *window) {
     m_enemiesNumber = 5;
     m_enemiesScore = 0;
     m_viewSpeed = 25.f;
+    m_score = 0;
 
     srand(time(NULL));
 
