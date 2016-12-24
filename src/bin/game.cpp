@@ -83,6 +83,7 @@ void Game::start() {
             sf::View view = sf::View(visibleArea);
             view.setCenter(m_window->getView().getCenter().x - m_viewSpeed, m_window->getView().getCenter().y);
             m_window->setView(view);
+            m_text.setPosition(m_text.getPosition().x - m_viewSpeed, m_text.getPosition().y);
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && m_window->getView().getCenter().x + m_viewSpeed <= (float)m_window->getSize().x/2) {
@@ -90,6 +91,7 @@ void Game::start() {
             sf::View view = sf::View(visibleArea);
             view.setCenter(m_window->getView().getCenter().x + m_viewSpeed, m_window->getView().getCenter().y);
             m_window->setView(view);
+            m_text.setPosition(m_text.getPosition().x + m_viewSpeed, m_text.getPosition().y);
         }
 
         if (m_tank->isOverEnabled()) {
