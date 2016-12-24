@@ -4,7 +4,7 @@ Game::Game(sf::RenderWindow *window) {
 	m_window = window;
 
 	m_windowSize = m_window->getSize();
-    m_enemiesNumber = 15;
+    m_enemiesNumber = 5;
     m_enemiesScore = 0;
 
     srand(time(NULL));
@@ -13,7 +13,7 @@ Game::Game(sf::RenderWindow *window) {
         m_textureArray.push_back(randomTexture());
         m_enemiesArray.push_back(Enemies());
         m_enemiesArray[i].setTexture(m_textureArray[i]);
-        m_enemiesArray[i].setPosition(-(std::rand() % (m_windowSize.x - m_windowSize.x/2 + 1)), std::rand() % (m_windowSize.y - 99));
+        m_enemiesArray[i].setPosition(std::rand() % (m_windowSize.x/2) + 1, std::rand() % (m_windowSize.y - 100) + 1);
     }
 
     if (!m_music.openFromFile("snd/Red.wav")) {
@@ -39,8 +39,8 @@ Game::Game(sf::RenderWindow *window) {
     m_outOfAmmoText.setPosition(90.f, 350.f);
 
     m_tank = new Tank(10); //Creates a new Tank with 10 ammo
-    m_tank->setPosition(900, 400);
-    m_tank->setWindowResolution(m_windowSize.x, m_windowSize.y);
+    m_tank->setPosition(m_windowSize.x - 300, 400);
+    m_tank->setWindowResolution(m_window->getSize().x, m_window->getSize().y);
 }
 
 Game::~Game() {
@@ -49,12 +49,22 @@ Game::~Game() {
 
 void Game::start() {
 	m_music.play();
+    sf::View minimap;
+    minimap.setSize(sf::Vector2f(m_windowSize.x, m_windowSize.y));
+    minimap.setViewport(sf::FloatRect(0.75f, 0, 0.25f, 0.25f));
+
     while (m_window->isOpen()) {
         sf::Event event;
         while (m_window->pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
 
                 m_window->close();
+            }
+            if (event.type == sf::Event::Resized) {
+                sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+                m_window->setView(sf::View(visibleArea));
+                m_tank->setWindowResolution(m_window->getSize().x, m_window->getSize().y);
+                m_tank->setPosition(m_windowSize.x - 300, m_tank->getPosition().y);
             }
         }
 
@@ -103,15 +113,12 @@ void Game::start() {
                             ) {
 
                             m_enemiesArray[j].killEnemies();
-                            
+                            std::cout << j << "Killed" << std::endl;
+                            m_tank->killBullet();
                         }
                     }
 	    	} else {
-	    	    m_enemiesScore += m_enemiesArray[j].getScore();
-	    	    Enemies enemie;
-	    	    enemie.setTexture(m_textureArray[rand() % m_enemiesNumber]);
-	    	    enemie.setPosition(-(std::rand() % (m_windowSize.x + m_windowSize.x/2 + 1)), std::rand() % (m_windowSize.y - 99));
-		        m_enemiesArray[j] = enemie;
+
 		  	}
         }
         
@@ -126,7 +133,7 @@ void Game::start() {
             if (m_tank->ifRecharge()) {
                 std::cout << "Reload !" << std::endl;
             } else if (m_tank->getAmmo() == 0) {
-                m_window->draw(m_outOfAmmoText);
+                m_window->draw(m_outOfAmmoText); 
             }
         }
 

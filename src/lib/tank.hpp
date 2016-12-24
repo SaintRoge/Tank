@@ -31,8 +31,14 @@ public:
 	void BulletMove();
 	/*
 	 * Needs nothing
-	 * call move() in m_bullet
-	 * returns nothing
+	 * Calls move() in m_bullet
+	 * Returns nothing
+	 */
+	void killBullet();
+	/*
+	 * Needs nothing
+	 * Destroys the bullet
+	 * Returns nothing
 	 */
 
 ///////////////////////////////////////////////////////////////////////

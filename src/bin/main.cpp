@@ -17,7 +17,7 @@ using namespace sf;
 
 int main(int argc, char const *argv[]) {
 
-    RenderWindow window(VideoMode(1200, 800), "Tank", sf::Style::Close);
+    RenderWindow window(VideoMode(1200, 800), "Tank", sf::Style::Close | sf::Style::Resize);
 
     Text playButton;
     Text quitButton;
@@ -54,6 +54,10 @@ int main(int argc, char const *argv[]) {
             if (event.type == sf::Event::Closed) {
 
                 window.close();
+            }
+            if (event.type == sf::Event::Resized) {
+                sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+                window.setView(sf::View(visibleArea));
             }
         }
 

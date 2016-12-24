@@ -51,7 +51,7 @@ void Tank::setTankTexture(sf::Texture const& texture) {
 }
 
 void Tank::move(bool up) {
-	if (up && getPosition().y - m_upSpeed > 0.f && getPosition().y - m_downSpeed < (float)m_windowResolutionY - m_TankYSize) {
+	if (up && getPosition().y - m_upSpeed > 0.f && getPosition().y < (float)m_windowResolutionY - m_TankYSize) {
 		setPosition(getPosition() - sf::Vector2f(0.f, m_upSpeed));
 		if (m_overTankEnabled) {
 			m_overTankEnabled = false;
@@ -209,7 +209,7 @@ void Tank::recharge() {
 	m_overTankSprite->setTexture(m_texture);
 }
 
-void Tank::setWindowResolution(int x, int y) {
+void Tank::setWindowResolution(int const x, int const y) {
 	m_windowResolutionX = x;
 	m_windowResolutionY = y;
 }
@@ -225,4 +225,9 @@ Bullet Tank::getBullet() const {
 
 int Tank::getAmmo() const {
 	return m_ammo;
+}
+
+void Tank::killBullet() {
+	delete m_bullet;
+	m_ifBullet = false;
 }
