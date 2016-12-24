@@ -40,6 +40,8 @@ private:
 	int m_maximumEnemiesScore;
 	float m_viewSpeed;
 
+	bool m_ifArraySet;
+
 	Tank *m_tank;
 
 	std::vector<sf::Texture> m_textureArray;
@@ -55,6 +57,7 @@ private:
 	sf::Font m_font;
 
 	sf::Music m_music;
+	sf::Music m_deadMusic;
 
 	sf::Vector2u m_windowSize;
 };

@@ -29,7 +29,7 @@ public:
 
   /////////////////////////////////////////////////
 
-  	bool isDead();
+  	bool isDead() const;
     /*
      * Needs nothing
      * Says to you if the enemie is dead

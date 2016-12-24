@@ -2,7 +2,7 @@
 
 Enemies::Enemies() {
 	srand(time(NULL));
-  	m_speed = (float) (std::rand() % 926 + 75)/100;
+  	m_speed = (float) (std::rand() % 1000 + 100)/100;
 	m_isDead = false;
 	m_score = 0;
 	m_windowSize.x = 1200;
@@ -25,7 +25,7 @@ void Enemies::killEnemies() {
  	 m_isDead = true;
 }
 
-bool Enemies::isDead() {
+bool Enemies::isDead() const {
   	return m_isDead;
 }
 

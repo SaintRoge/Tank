@@ -4,11 +4,13 @@ Game::Game(sf::RenderWindow *window) {
 	m_window = window;
 
 	m_windowSize = m_window->getSize();
-    m_enemiesNumber = 1;
+    m_enemiesNumber = 4;
     m_enemiesScore = 0;
     m_viewSpeed = 25.f;
     m_score = 0;
     m_maximumEnemiesScore = 3;
+
+    m_ifArraySet = false;
 
     srand(time(NULL));
 
@@ -20,9 +22,15 @@ Game::Game(sf::RenderWindow *window) {
     }
 
     if (!m_music.openFromFile("snd/Red.wav")) {
-        std::cout << "Sorry, the m_music can't be loaded" << std::endl;
+        std::cout << "Sorry, the music can't be loaded" << std::endl;
     } else {
-        std::cout << "The m_music has been loaded" << std::endl;
+        std::cout << "The music has been loaded" << std::endl;
+    }
+
+    if (!m_deadMusic.openFromFile("snd/dead.wav")) {
+        std::cout << "Sorry, the music can't be loaded" << std::endl;
+    } else {
+        std::cout << "The music has been loaded" << std::endl;
     }
 
     if (!m_font.loadFromFile("font/joystix.ttf")) {
@@ -130,7 +138,7 @@ void Game::start() {
         m_window->draw(*m_tank);
 
 		for (int j(0); j < m_enemiesNumber; j++) {
-	        if (!m_enemiesArray[j].isDead()) {
+	        if (!m_enemiesArray[j].isDead() && m_ifArraySet) {
                 m_enemiesArray[j].setWindowSize(m_window->getSize());
         	    m_window->draw(m_enemiesArray[j]);
         	    m_enemiesArray[j].move();
@@ -148,6 +156,7 @@ void Game::start() {
                         m_enemiesArray[j].killEnemies();
                         std::cout << j << "Killed" << std::endl;
                         m_score++;
+                        m_deadMusic.play();
                         m_tank->setAmmo(m_tank->getAmmo() + std::rand() % 2 + 1);
                         m_scoreText.setString("Score : " + std::to_string(m_score));
                         m_tank->killBullet();
@@ -158,6 +167,7 @@ void Game::start() {
                 m_enemiesArray[j] = Enemies();
                 m_enemiesArray[j].setPosition(-(std::rand() % (int)m_window->getSize().x + 1), std::rand() % (m_windowSize.y - 100) + 1);
                 m_enemiesArray[j].setTexture(m_textureArray[j]);
+                m_ifArraySet = true;
 		  	}
         }
         

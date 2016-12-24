@@ -2,8 +2,8 @@
 
 Tank::Tank(int ammo) {
 
-	m_upSpeed = 8.f;
-	m_downSpeed = -8.f;
+	m_upSpeed = 12.f;
+	m_downSpeed = -12.f;
 	m_TankXSize = 255;
 	m_TankYSize = 160;
 	m_distance = 300;
