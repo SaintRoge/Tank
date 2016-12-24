@@ -233,3 +233,7 @@ void Tank::killBullet() {
 	delete m_bullet;
 	m_ifBullet = false;
 }
+
+void Tank::setAmmo(int const ammo) {
+	m_ammo = ammo;
+}

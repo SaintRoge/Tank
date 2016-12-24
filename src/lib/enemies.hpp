@@ -5,6 +5,9 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 #include <string>
+#include <stdio.h>      
+#include <stdlib.h>     
+#include <time.h>
 
 class Enemies : public sf::Sprite {
 public:

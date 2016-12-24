@@ -4,10 +4,11 @@ Game::Game(sf::RenderWindow *window) {
 	m_window = window;
 
 	m_windowSize = m_window->getSize();
-    m_enemiesNumber = 5;
+    m_enemiesNumber = 1;
     m_enemiesScore = 0;
     m_viewSpeed = 25.f;
     m_score = 0;
+    m_maximumEnemiesScore = 3;
 
     srand(time(NULL));
 
@@ -77,6 +78,14 @@ void Game::start() {
 
         if (m_enemiesScore >= m_maximumEnemiesScore) {
             gameover();
+            std::cout << "Haaa you looser !" << std::endl;
+            break;
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) { // Space bar pressed
+            gameover();
+            std::cout << "Haaa you looser !" << std::endl;
+            break;
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
@@ -139,6 +148,7 @@ void Game::start() {
                         m_enemiesArray[j].killEnemies();
                         std::cout << j << "Killed" << std::endl;
                         m_score++;
+                        m_tank->setAmmo(m_tank->getAmmo() + std::rand() % 2 + 1);
                         m_scoreText.setString("Score : " + std::to_string(m_score));
                         m_tank->killBullet();
                     }
@@ -183,5 +193,5 @@ void Game::start() {
 }
 
 void Game::gameover() {
-
+    m_music.stop();
 }

@@ -1,7 +1,8 @@
 #include "../lib/enemies.hpp"
 
 Enemies::Enemies() {
-  	m_speed = 5.f;
+	srand(time(NULL));
+  	m_speed = (float) (std::rand() % 926 + 75)/100;
 	m_isDead = false;
 	m_score = 0;
 	m_windowSize.x = 1200;

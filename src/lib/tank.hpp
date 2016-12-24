@@ -101,10 +101,15 @@ public:
 	 * Set the Tank Sprite texture
 	 * Returns nothing
 	 */
-
 	void setWindowResolution(int const x, const int y);
 	/* 
 	 * Needs window resolution (x and y)
+	 * Set it
+	 * Returns nothing
+	 */
+	void setAmmo(int const ammo);
+	/*
+	 * Needs ammo
 	 * Set it
 	 * Returns nothing
 	 */

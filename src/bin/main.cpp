@@ -46,7 +46,7 @@ int main(int argc, char const *argv[]) {
     quitButton.setCharacterSize(60);
     quitButton.setPosition(430.f, 400.f);
 
-    Game game(&window);
+    Game *game = new Game(&window);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -82,11 +82,11 @@ int main(int argc, char const *argv[]) {
 
         if (Keyboard::isKeyPressed(Keyboard::Return)) {
             if (playSelect) {
-                game.start();
+                game->start();
+                game = new Game(&window);
             } else {
                 window.close();
             }
-            break;
         }
 
         window.clear();
