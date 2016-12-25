@@ -11,6 +11,7 @@ Game::Game(sf::RenderWindow *window) {
     m_maximumEnemiesScore = 3;
 
     m_ifArraySet = false;
+    m_gameover = false;
 
     srand(time(NULL));
 
@@ -18,7 +19,8 @@ Game::Game(sf::RenderWindow *window) {
     m_deadHeart.loadFromFile("img/life1.png", sf::IntRect(0, 0, 52, 45));
 
     for (int i(0); i < m_enemiesNumber; i++) {
-        m_textureArray.push_back(randomTexture());
+        m_namesArray.push_back("yourself");
+        m_textureArray.push_back(randomTexture(i));
         m_enemiesArray.push_back(Enemies());
         m_enemiesArray[i].setPosition(-(std::rand() % (int)m_window->getSize().x + 1), std::rand() % (m_windowSize.y - 100) + 1);
         m_enemiesArray[i].setTexture(m_textureArray[i]);
@@ -91,19 +93,19 @@ void Game::start() {
                 m_life1.setPosition(m_window->getSize().x - 250.f, 10.f);
                 m_life2.setPosition(m_window->getSize().x - 185.f, 10.f);
                 m_life3.setPosition(m_window->getSize().x - 120.f, 10.f);    
+                m_gameoverText.setPosition(30, m_window->getSize().y/2 - 100.f);
             }
         }
 
-        if (m_enemiesScore >= m_maximumEnemiesScore) {
+        if (m_enemiesScore >= m_maximumEnemiesScore && !m_gameover) {
             gameover();
             std::cout << "Haaa you looser !" << std::endl;
-            break;
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) { // Space bar pressed
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && !m_gameover) { // Space bar pressed
+            m_killer = "yourself";
             gameover();
             std::cout << "Haaa you looser !" << std::endl;
-            break;
         }
 
         if (m_enemiesScore == 0) {
@@ -191,9 +193,11 @@ void Game::start() {
                     }
                 }
 	    	} else {
+                m_killer = m_namesArray[j];
                 m_enemiesScore += m_enemiesArray[j].getScore();
                 m_enemiesArray[j] = Enemies();
                 m_enemiesArray[j].setPosition(-(std::rand() % (int)m_window->getSize().x + 1), std::rand() % (m_windowSize.y - 100) + 1);
+                m_textureArray[j] = randomTexture(j);
                 m_enemiesArray[j].setTexture(m_textureArray[j]);
                 m_ifArraySet = true;
 		  	}
@@ -226,6 +230,16 @@ void Game::start() {
             }
         }
 
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::O) && m_gameover) {
+            break;
+        }
+
+        if (m_gameover) {
+            m_window->clear();
+            m_window->draw(m_gameoverText);
+            m_window->draw(m_scoreText);
+        }
+
         m_window->display();
     }
 
@@ -235,4 +249,18 @@ void Game::start() {
 
 void Game::gameover() {
     m_music.stop();
+    m_gameoverText.setCharacterSize(50);
+    m_gameoverText.setPosition(30, m_window->getSize().y/2 - 100.f);
+    m_gameoverText.setString("Haaa you looser\nyou were killed by " + m_killer + "\n! Press 'O' to continue...");
+    m_gameoverText.setFont(m_font);
+    m_gameover = true;
+}
+
+sf::Texture Game::randomTexture(int id) {
+    sf::Texture texture;
+    std::string imgArray[] = {"boutin", "Fillon", "macron", "valls", "juppe"};
+    m_namesArray[id] = imgArray[std::rand() % (sizeof(imgArray)/sizeof(*imgArray))];
+    texture.loadFromFile("img/" + m_namesArray[id] + ".png", sf::IntRect(0, 0, 100, 100));
+    return texture;
+
 }

@@ -32,6 +32,12 @@ public:
 	 * The game is over
 	 * Returns nothing
 	 */
+	sf::Texture randomTexture(int id);
+	/*
+	 * Needs id
+	 * Creates a random enemie texture
+	 * Returns it
+	 */
   
 private:
 	int m_enemiesNumber;
@@ -41,11 +47,15 @@ private:
 	float m_viewSpeed;
 
 	bool m_ifArraySet;
+	bool m_gameover;
 
 	Tank *m_tank;
 
+	std::string m_killer;
+
 	std::vector<sf::Texture> m_textureArray;
 	std::vector<Enemies> m_enemiesArray;
+	std::vector<std::string> m_namesArray;
 
 	sf::RenderWindow *m_window;
 
@@ -54,6 +64,7 @@ private:
 	sf::Text m_text;
 	sf::Text m_outOfAmmoText;
 	sf::Text m_scoreText;
+	sf::Text m_gameoverText;
 	sf::Font m_font;
 
 	sf::Sprite m_life1;
