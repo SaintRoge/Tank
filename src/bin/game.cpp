@@ -95,7 +95,7 @@ void Game::start() {
                 m_life1.setPosition(m_window->getSize().x - 250.f, 10.f);
                 m_life2.setPosition(m_window->getSize().x - 185.f, 10.f);
                 m_life3.setPosition(m_window->getSize().x - 120.f, 10.f);    
-                m_gameoverText.setPosition(30, m_window->getSize().y/2 - 100.f);
+                m_gameoverText.setPosition(30, m_window->getSize().y/2 - 200.f);
             }
         }
 
@@ -191,7 +191,9 @@ void Game::start() {
                         ) {
 
                         std::cout << j << m_namesArray[j] << " Killed" << std::endl;
-                        if (m_namesArray[j] == "boutin" || m_namesArray[j] == "macron" || m_namesArray[j] == "Filloche") {
+                        if (m_namesArray[j] == "martine") {
+                            m_score += 10;
+                        } else if (m_namesArray[j] == "boutin" || m_namesArray[j] == "macron" || m_namesArray[j] == "Filloche") {
                             m_score += 5;
                         } else if (m_namesArray[j] == "melenchon") {
                             m_score += 4;
@@ -269,7 +271,7 @@ void Game::start() {
 void Game::gameover() {
     m_music.stop();
     m_gameoverText.setCharacterSize(50);
-    m_gameoverText.setPosition(30, m_window->getSize().y/2 - 100.f);
+    m_gameoverText.setPosition(30, m_window->getSize().y/2 - 200.f);
     m_gameoverText.setString("Haaa you loser\nyou were killed by " + m_killer + "!\nyou survived " + std::to_string(m_gameClock.getElapsedTime().asSeconds()) + " seconds.\nPress 'O' to continue...");
     m_gameoverText.setFont(m_font);
     m_gameover = true;
@@ -277,7 +279,7 @@ void Game::gameover() {
 
 sf::Texture Game::randomTexture(int id) {
     sf::Texture texture;
-    std::string imgArray[] = {"boutin", "Fillon", "macron", "valls", "juppe", "marine", "melenchon", "sarkozy", "cope", "hollande", "filloche", "cazeneuve"};
+    std::string imgArray[] = {"boutin", "Fillon", "macron", "valls", "juppe", "marine", "melenchon", "sarkozy", "cope", "hollande", "filloche", "cazeneuve", "martine"};
     m_namesArray[id] = imgArray[std::rand() % (sizeof(imgArray)/sizeof(*imgArray))];
     texture.loadFromFile("img/" + m_namesArray[id] + ".png", sf::IntRect(0, 0, 100, 100));
     return texture;
