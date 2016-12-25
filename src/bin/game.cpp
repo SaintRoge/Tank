@@ -4,13 +4,12 @@ Game::Game(sf::RenderWindow *window) {
 	m_window = window;
 
 	m_windowSize = m_window->getSize();
-    m_enemiesNumber = 4;
+    m_enemiesNumber = 6;
     m_enemiesScore = 0;
     m_viewSpeed = 25.f;
     m_score = 0;
     m_maximumEnemiesScore = 3;
 
-    m_ifArraySet = false;
     m_gameover = false;
 
     srand(time(NULL));
@@ -24,6 +23,7 @@ Game::Game(sf::RenderWindow *window) {
         m_enemiesArray.push_back(Enemies());
         m_enemiesArray[i].setPosition(-(std::rand() % (int)m_window->getSize().x + 1), std::rand() % (m_windowSize.y - 100) + 1);
         m_enemiesArray[i].setTexture(m_textureArray[i]);
+
     }
 
     if (!m_music.openFromFile("snd/Red.wav")) {
@@ -142,6 +142,9 @@ void Game::start() {
             m_window->setView(view);
             m_text.setPosition(m_text.getPosition().x - m_viewSpeed, m_text.getPosition().y);
             m_scoreText.setPosition(m_scoreText.getPosition().x - m_viewSpeed, m_scoreText.getPosition().y);
+            m_life1.setPosition(m_life1.getPosition().x - m_viewSpeed, m_life1.getPosition().y);
+            m_life2.setPosition(m_life2.getPosition().x - m_viewSpeed, m_life2.getPosition().y);
+            m_life3.setPosition(m_life3.getPosition().x - m_viewSpeed, m_life3.getPosition().y); 
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && m_window->getView().getCenter().x + m_viewSpeed <= (float)m_window->getSize().x/2) {
@@ -151,6 +154,9 @@ void Game::start() {
             m_window->setView(view);
             m_text.setPosition(m_text.getPosition().x + m_viewSpeed, m_text.getPosition().y);
             m_scoreText.setPosition(m_scoreText.getPosition().x + m_viewSpeed, m_scoreText.getPosition().y);
+            m_life1.setPosition(m_life1.getPosition().x + m_viewSpeed, m_life1.getPosition().y);
+            m_life2.setPosition(m_life2.getPosition().x + m_viewSpeed, m_life2.getPosition().y);
+            m_life3.setPosition(m_life3.getPosition().x + m_viewSpeed, m_life3.getPosition().y);             
         }
 
         if (m_tank->isOverEnabled()) {
@@ -168,7 +174,7 @@ void Game::start() {
         m_window->draw(*m_tank);
 
 		for (int j(0); j < m_enemiesNumber; j++) {
-	        if (!m_enemiesArray[j].isDead() && m_ifArraySet) {
+	        if (!m_enemiesArray[j].isDead()) {
                 m_enemiesArray[j].setWindowSize(m_window->getSize());
         	    m_window->draw(m_enemiesArray[j]);
         	    m_enemiesArray[j].move();
@@ -199,7 +205,6 @@ void Game::start() {
                 m_enemiesArray[j].setPosition(-(std::rand() % (int)m_window->getSize().x + 1), std::rand() % (m_windowSize.y - 100) + 1);
                 m_textureArray[j] = randomTexture(j);
                 m_enemiesArray[j].setTexture(m_textureArray[j]);
-                m_ifArraySet = true;
 		  	}
         }
         
@@ -258,7 +263,7 @@ void Game::gameover() {
 
 sf::Texture Game::randomTexture(int id) {
     sf::Texture texture;
-    std::string imgArray[] = {"boutin", "Fillon", "macron", "valls", "juppe"};
+    std::string imgArray[] = {"boutin", "Fillon", "macron", "valls", "juppe", "marine", "melenchon", "sarkozy", "cope"};
     m_namesArray[id] = imgArray[std::rand() % (sizeof(imgArray)/sizeof(*imgArray))];
     texture.loadFromFile("img/" + m_namesArray[id] + ".png", sf::IntRect(0, 0, 100, 100));
     return texture;

@@ -5,7 +5,7 @@ Bullet::Bullet(sf::Vector2f position) {
 	m_BulletSize.x = 20.f;
 	m_BulletSize.y = 10.f;
 
-	m_speed = 20.f;
+	m_speed = 30.f;
 
 	setFillColor(sf::Color::Red);
 	setPosition(m_position.x, m_position.y - m_BulletSize.y/2 );

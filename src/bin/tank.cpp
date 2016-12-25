@@ -123,6 +123,7 @@ bool Tank::ifFire() {
 	if (ifAmmo()) {
 		if (m_fireClock.getElapsedTime() >= m_fireTime && m_recharge) {
 			m_fireClock.restart();
+			m_rechargeClock.restart();
 			fire();
 			m_recharge = false;
 			return true;

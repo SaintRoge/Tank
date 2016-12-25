@@ -46,7 +46,6 @@ private:
 	int m_maximumEnemiesScore;
 	float m_viewSpeed;
 
-	bool m_ifArraySet;
 	bool m_gameover;
 
 	Tank *m_tank;
