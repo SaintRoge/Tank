@@ -56,6 +56,13 @@ private:
 	sf::Text m_scoreText;
 	sf::Font m_font;
 
+	sf::Sprite m_life1;
+	sf::Sprite m_life2;
+	sf::Sprite m_life3;
+
+	sf::Texture m_aliveHeart;
+	sf::Texture m_deadHeart;
+
 	sf::Music m_music;
 	sf::Music m_deadMusic;
 

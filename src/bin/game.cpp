@@ -14,6 +14,9 @@ Game::Game(sf::RenderWindow *window) {
 
     srand(time(NULL));
 
+    m_aliveHeart.loadFromFile("img/life2.png", sf::IntRect(0, 0, 52, 45));
+    m_deadHeart.loadFromFile("img/life1.png", sf::IntRect(0, 0, 52, 45));
+
     for (int i(0); i < m_enemiesNumber; i++) {
         m_textureArray.push_back(randomTexture());
         m_enemiesArray.push_back(Enemies());
@@ -56,6 +59,10 @@ Game::Game(sf::RenderWindow *window) {
     m_tank = new Tank(10); //Creates a new Tank with 10 ammo
     m_tank->setPosition(0, 400);
     m_tank->setWindowResolution(m_window->getSize().x, m_window->getSize().y);
+
+    m_life1.setPosition(m_window->getSize().x - 250.f, 10.f);
+    m_life2.setPosition(m_window->getSize().x - 185.f, 10.f);
+    m_life3.setPosition(m_window->getSize().x - 120.f, 10.f);
 }
 
 Game::~Game() {
@@ -81,6 +88,9 @@ void Game::start() {
                 m_tank->setWindowResolution(m_window->getSize().x, m_window->getSize().y);
                 m_text.setPosition(m_window->getSize().x - 140.f, m_window->getSize().y - 90.f);
                 m_scoreText.setPosition(40.f, m_window->getSize().y - 60.f);
+                m_life1.setPosition(m_window->getSize().x - 250.f, 10.f);
+                m_life2.setPosition(m_window->getSize().x - 185.f, 10.f);
+                m_life3.setPosition(m_window->getSize().x - 120.f, 10.f);    
             }
         }
 
@@ -94,6 +104,24 @@ void Game::start() {
             gameover();
             std::cout << "Haaa you looser !" << std::endl;
             break;
+        }
+
+        if (m_enemiesScore == 0) {
+            m_life1.setTexture(m_aliveHeart);
+            m_life2.setTexture(m_aliveHeart);
+            m_life3.setTexture(m_aliveHeart);
+        } else if (m_enemiesScore == 1) {
+            m_life1.setTexture(m_aliveHeart);
+            m_life2.setTexture(m_aliveHeart);
+            m_life3.setTexture(m_deadHeart);
+        } else if (m_enemiesScore == 2) {
+            m_life1.setTexture(m_aliveHeart);
+            m_life2.setTexture(m_deadHeart);
+            m_life3.setTexture(m_deadHeart);            
+        } else {
+            m_life1.setTexture(m_deadHeart); 
+            m_life2.setTexture(m_deadHeart); 
+            m_life3.setTexture(m_deadHeart);                                     
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
@@ -146,9 +174,9 @@ void Game::start() {
                     if (
                         m_enemiesArray[j].getPosition().x + 100.f >= m_tank->getBullet().getPosition().x 
                         && 
-                        m_enemiesArray[j].getPosition().x <= m_tank->getBullet().getPosition().x + m_tank->getBullet().getSize().x
+                        m_enemiesArray[j].getPosition().x <= m_tank->getBullet().getPosition().x 
                         &&
-                        m_tank->getBullet().getPosition().y >= m_enemiesArray[j].getPosition().y + m_tank->getBullet().getSize().y
+                        m_tank->getBullet().getPosition().y + m_tank->getBullet().getSize().y >= m_enemiesArray[j].getPosition().y 
                         &&
                         m_tank->getBullet().getPosition().y <= m_enemiesArray[j].getPosition().y + 100.f
                         ) {
@@ -178,6 +206,9 @@ void Game::start() {
 
         m_window->draw(m_text);
         m_window->draw(m_scoreText);
+        m_window->draw(m_life1);
+        m_window->draw(m_life2);
+        m_window->draw(m_life3);
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) { // Space bar pressed
             if (m_tank->ifFire()) {
