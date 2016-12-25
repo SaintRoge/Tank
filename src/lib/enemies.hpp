@@ -53,6 +53,13 @@ public:
   	 * Set it
   	 * Returns nothing
   	 */
+  	void setSpeed(float speed);
+	/*
+	 * Needs speed
+	 * Set it
+	 * Returns nothing 
+	 */
+
   
   
 private:

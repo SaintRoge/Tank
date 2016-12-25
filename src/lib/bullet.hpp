@@ -19,6 +19,15 @@ public:
 	 * Returns nothing
 	 */
 
+////////////////////////////////////////////////////////////////
+
+	void setSpeed(float speed);
+	/*
+	 * Needs speed
+	 * Set it
+	 * Returns nothing 
+	 */
+
 private:
 	sf::Vector2f m_position;
 	sf::Vector2f m_BulletSize;

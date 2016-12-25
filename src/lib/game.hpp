@@ -60,6 +60,8 @@ private:
 
 	sf::Sprite m_overSprite;
 
+	sf::Clock m_gameClock;
+
 	sf::Text m_text;
 	sf::Text m_outOfAmmoText;
 	sf::Text m_scoreText;

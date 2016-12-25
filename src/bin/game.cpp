@@ -23,6 +23,7 @@ Game::Game(sf::RenderWindow *window) {
         m_enemiesArray.push_back(Enemies());
         m_enemiesArray[i].setPosition(-(std::rand() % (int)m_window->getSize().x + 1), std::rand() % (m_windowSize.y - 100) + 1);
         m_enemiesArray[i].setTexture(m_textureArray[i]);
+        m_enemiesArray[i].setSpeed((float)(std::rand() % 2 + 1));
 
     }
 
@@ -72,6 +73,7 @@ Game::~Game() {
 }
 
 void Game::start() {
+    m_gameClock.restart();
 	m_music.play();
     sf::View minimap;
     minimap.setSize(sf::Vector2f(m_windowSize.x, m_windowSize.y));
@@ -162,7 +164,6 @@ void Game::start() {
         if (m_tank->isOverEnabled()) {
             m_overSprite = m_tank->getOverSprite();
         }
-
         m_text.setString(std::to_string(m_tank->getAmmo()));
 
         m_window->clear(sf::Color(62, 96, 0));
@@ -189,9 +190,22 @@ void Game::start() {
                         m_tank->getBullet().getPosition().y <= m_enemiesArray[j].getPosition().y + 100.f
                         ) {
 
+                        std::cout << j << m_namesArray[j] << " Killed" << std::endl;
+                        if (m_namesArray[j] == "boutin" || m_namesArray[j] == "macron" || m_namesArray[j] == "Filloche") {
+                            m_score += 5;
+                        } else if (m_namesArray[j] == "melenchon") {
+                            m_score += 4;
+                        } else if (m_namesArray[j] == "valls" || m_namesArray[j] == "juppe") {
+                            m_score += 3;
+                        } else if (m_namesArray[j] == "Fillon") {
+                            m_score += 2;
+                        } else if (m_namesArray[j] == "sarkozy" || m_namesArray[j] == "cope") {
+                            m_score ++;
+                        } else if (m_namesArray[j] == "hollande") {
+                            m_score -= 2;
+                        }
+
                         m_enemiesArray[j].killEnemies();
-                        std::cout << j << "Killed" << std::endl;
-                        m_score++;
                         m_deadMusic.play();
                         m_tank->setAmmo(m_tank->getAmmo() + std::rand() % 2 + 1);
                         m_scoreText.setString("Score : " + std::to_string(m_score));
@@ -256,14 +270,14 @@ void Game::gameover() {
     m_music.stop();
     m_gameoverText.setCharacterSize(50);
     m_gameoverText.setPosition(30, m_window->getSize().y/2 - 100.f);
-    m_gameoverText.setString("Haaa you looser\nyou were killed by " + m_killer + "\n! Press 'O' to continue...");
+    m_gameoverText.setString("Haaa you loser\nyou were killed by " + m_killer + "!\nyou survived " + std::to_string(m_gameClock.getElapsedTime().asSeconds()) + " seconds.\nPress 'O' to continue...");
     m_gameoverText.setFont(m_font);
     m_gameover = true;
 }
 
 sf::Texture Game::randomTexture(int id) {
     sf::Texture texture;
-    std::string imgArray[] = {"boutin", "Fillon", "macron", "valls", "juppe", "marine", "melenchon", "sarkozy", "cope"};
+    std::string imgArray[] = {"boutin", "Fillon", "macron", "valls", "juppe", "marine", "melenchon", "sarkozy", "cope", "hollande", "filloche", "cazeneuve"};
     m_namesArray[id] = imgArray[std::rand() % (sizeof(imgArray)/sizeof(*imgArray))];
     texture.loadFromFile("img/" + m_namesArray[id] + ".png", sf::IntRect(0, 0, 100, 100));
     return texture;
