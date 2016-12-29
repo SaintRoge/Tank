@@ -102,6 +102,7 @@ int main(int argc, char const *argv[]) {
         if (Keyboard::isKeyPressed(Keyboard::Return)) {
             if (playSelect) {
                 game = new Game(&window);
+                std::cout << "Start !" << std::endl;
                 game->start();
                 window.setView(View(FloatRect(0, 0, window.getSize().x, window.getSize().y)));
             } else {

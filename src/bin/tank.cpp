@@ -253,10 +253,22 @@ void Tank::setAmmo(int const ammo) {
 	m_ammo = ammo;
 }
 
+bool Tank::ifReloaded() const {
+	return m_recharge;
+}
+
 sf::Time Tank::getElapsedFireClockTime() const {
 	return m_fireClock.getElapsedTime();
 }
 
+sf::Time Tank::getElapsedReloadClockTime() const {
+	return m_rechargeClock.getElapsedTime();
+}
+
 sf::Time Tank::getFireTime() const {
 	return m_fireTime;
+}
+
+sf::Time Tank::getReloadTime() const {
+	return m_rechargeTime;
 }

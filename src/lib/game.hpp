@@ -79,6 +79,7 @@ private:
 	sf::Clock m_fullScreenClock;
 
 	sf::Time m_fireTime;
+	sf::Time m_reloadTime;
 
 	sf::Text m_text;
 	sf::Text m_outOfAmmoText;

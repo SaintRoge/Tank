@@ -89,9 +89,16 @@ public:
 	 * Returns bullet
 	 */
 	int getAmmo() const;
-	/* Needs nothing
+	/* 
+	 * Needs nothing
 	 * Gives you the number of ammo
 	 * Returns ammo
+	 */
+	bool ifReloaded() const;
+	/*
+	 * Needs nothing
+	 * Says to you if the Tank is reloaded
+	 * Returns it
 	 */
 	sf::Time getElapsedFireClockTime() const;
 	/*
@@ -99,10 +106,22 @@ public:
 	 * Gives to you the number of fire clock time elapsed
 	 * Returns it
 	 */
+	sf::Time getElapsedReloadClockTime() const;
+	/*
+	 * Needs nothing
+	 * Gives to you the number of reload clock time elapsed
+	 * Returns it
+	 */
 	sf::Time getFireTime() const;
 	/*
 	 * Needs nothing
 	 * Gives you the fire time
+	 * Returns it
+	 */
+	sf::Time getReloadTime() const;
+	/*
+	 * Needs nothing
+	 * Gives you the reload time
 	 * Returns it
 	 */
 

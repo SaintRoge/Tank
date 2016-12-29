@@ -81,6 +81,7 @@ Game::Game(sf::RenderWindow *window) {
     m_tank->setWindowResolution(m_window->getSize().x, m_window->getSize().y);
 
     m_fireTime = m_tank->getFireTime();
+    m_reloadTime = m_tank->getReloadTime();
 
     m_life1.setPosition(m_window->getSize().x - 250.f, 10.f);
     m_life2.setPosition(m_window->getSize().x - 185.f, 10.f);
@@ -272,7 +273,7 @@ void Game::start() {
             } 
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) && m_tank->getElapsedReloadClockTime() >= m_reloadTime && !m_tank->ifReloaded()) {
             if (m_tank->ifRecharge()) {
                 std::cout << "Reload !" << std::endl;
             } else if (m_tank->getAmmo() == 0) {
