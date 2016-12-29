@@ -3,6 +3,8 @@
 Game::Game(sf::RenderWindow *window) {
 	m_window = window;
 
+    m_fullScreenClock.restart();
+
     std::ifstream file("speedCoef.txt");
 
     if (file) {
@@ -21,6 +23,7 @@ Game::Game(sf::RenderWindow *window) {
     m_maximumEnemiesScore = 3;
 
     m_gameover = false;
+    m_fullScreen = false;
 
     srand(time(NULL));
 
@@ -97,15 +100,7 @@ void Game::start() {
                 m_window->close();
             }
             if (event.type == sf::Event::Resized) {
-                sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
-                m_window->setView(sf::View(visibleArea));
-                m_tank->setWindowResolution(m_window->getSize().x, m_window->getSize().y);
-                m_text.setPosition(m_window->getSize().x - 140.f, m_window->getSize().y - 90.f);
-                m_scoreText.setPosition(40.f, m_window->getSize().y - 60.f);
-                m_life1.setPosition(m_window->getSize().x - 250.f, 10.f);
-                m_life2.setPosition(m_window->getSize().x - 185.f, 10.f);
-                m_life3.setPosition(m_window->getSize().x - 120.f, 10.f);    
-                m_gameoverText.setPosition(30, m_window->getSize().y/2 - 200.f);
+                resize();
             }
         }
 
@@ -118,6 +113,18 @@ void Game::start() {
             m_killer = "yourself";
             gameover();
             std::cout << "Haaa you looser !" << std::endl;
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11) && m_fullScreenClock.getElapsedTime() >= sf::seconds(2.f)) {
+            if (m_fullScreen) {
+                m_fullScreenClock.restart();
+                m_window->create(sf::VideoMode(1200, 800), "Tank", sf::Style::Close | sf::Style::Resize);
+                m_fullScreen = false;
+            } else { 
+                m_fullScreenClock.restart();
+                m_window->create(sf::VideoMode(1200, 800), "Tank", sf::Style::Close | sf::Style::Resize | sf::Style::Fullscreen);
+                m_fullScreen = true;
+            }
         }
 
         if (m_enemiesScore == 0) {
@@ -285,6 +292,18 @@ void Game::gameover() {
     m_gameoverText.setString("Haaa you loser\nyou were killed by " + m_killer + "!\nyou survived " + std::to_string(m_gameClock.getElapsedTime().asSeconds()) + " seconds.\nPress 'O' to continue...");
     m_gameoverText.setFont(m_font);
     m_gameover = true;
+}
+
+void Game::resize() {
+    m_visibleArea = sf::FloatRect(0, 0, m_window->getSize().x, m_window->getSize().y);
+    m_window->setView(sf::View(m_visibleArea));
+    m_tank->setWindowResolution(m_window->getSize().x, m_window->getSize().y);
+    m_text.setPosition(m_window->getSize().x - 140.f, m_window->getSize().y - 90.f);
+    m_scoreText.setPosition(40.f, m_window->getSize().y - 60.f);
+    m_life1.setPosition(m_window->getSize().x - 250.f, 10.f);
+    m_life2.setPosition(m_window->getSize().x - 185.f, 10.f);
+    m_life3.setPosition(m_window->getSize().x - 120.f, 10.f);    
+    m_gameoverText.setPosition(30, m_window->getSize().y/2 - 200.f);
 }
 
 sf::Texture Game::randomTexture(int id) {

@@ -18,7 +18,7 @@ using namespace sf;
 
 int main(int argc, char const *argv[]) {
 
-    RenderWindow window(VideoMode(1200, 800), "Tank", sf::Style::Close | sf::Style::Resize);
+    RenderWindow window(VideoMode(1200, 800), "Tank", Style::Close | Style::Resize);
 
     Text playButton;
     Text quitButton;
@@ -59,6 +59,7 @@ int main(int argc, char const *argv[]) {
             if (event.type == sf::Event::Resized) {
                 sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
                 window.setView(sf::View(visibleArea));
+                game->resize();
             }
         }
 
@@ -83,8 +84,8 @@ int main(int argc, char const *argv[]) {
 
         if (Keyboard::isKeyPressed(Keyboard::Return)) {
             if (playSelect) {
-                game->start();
                 game = new Game(&window);
+                game->start();
             } else {
                 window.close();
             }
