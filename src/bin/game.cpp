@@ -262,7 +262,7 @@ void Game::start() {
             m_window->draw(m_normalViewText);
         } 
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) { // Space bar pressed
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && m_tank->getElapsedFireClockTime() >= sf::seconds(1.f)) { // Space bar pressed
             if (m_tank->ifFire()) { // Shoots
                 std::cout << "Fire !" << std::endl;
             } else if (m_tank->getAmmo() == 0) { 

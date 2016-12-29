@@ -252,3 +252,7 @@ void Tank::killBullet() {
 void Tank::setAmmo(int const ammo) {
 	m_ammo = ammo;
 }
+
+sf::Time Tank::getElapsedFireClockTime() const {
+	return m_fireClock.getElapsedTime();
+}

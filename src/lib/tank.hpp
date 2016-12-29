@@ -93,6 +93,12 @@ public:
 	 * Gives you the number of ammo
 	 * Returns ammo
 	 */
+	sf::Time getElapsedFireClockTime() const;
+	/*
+	 * Needs nothing
+	 * Gives to you the number of fire clock time elapsed
+	 * Returns it
+	 */
 
 ///////////////////////////////////////////////////////////////////////
 
