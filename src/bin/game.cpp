@@ -319,6 +319,7 @@ void Game::resize() {
     m_life2.setPosition(m_window->getSize().x - 185.f, 10.f);
     m_life3.setPosition(m_window->getSize().x - 120.f, 10.f);    
     m_gameoverText.setPosition(30, m_window->getSize().y/2 - 200.f);
+    m_normalViewText.setPosition(40.f, 20.f);
 }
 
 sf::Texture Game::randomTexture(int id) {
