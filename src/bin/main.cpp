@@ -6,6 +6,7 @@
 #include <stdio.h>      
 #include <stdlib.h>     
 #include <time.h> 
+#include <fstream>
 
 #include "../lib/functions.hpp"
 #include "../lib/tank.hpp"

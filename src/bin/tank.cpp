@@ -4,6 +4,20 @@ Tank::Tank(int ammo) {
 
 	m_upSpeed = 12.f;
 	m_downSpeed = -12.f;
+
+	std::ifstream file("speedCoef.txt");
+
+	if (file) {
+		std::string speedCoef;
+		std::getline(file, speedCoef);
+		m_speedCoef = std::stof(speedCoef);
+		m_upSpeed *= m_speedCoef;
+		m_downSpeed *= m_speedCoef;
+
+	} else {
+		std::cout << "Oh shit, you can't open the file !" << std::endl;
+	}
+
 	m_TankXSize = 255;
 	m_TankYSize = 160;
 	m_distance = 300;

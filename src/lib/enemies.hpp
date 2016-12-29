@@ -8,6 +8,7 @@
 #include <stdio.h>      
 #include <stdlib.h>     
 #include <time.h>
+#include <fstream>
 
 class Enemies : public sf::Sprite {
 public:
@@ -65,6 +66,8 @@ public:
 private:
 	int m_speed;
 	int m_score;
+
+	float m_speedCoef;
 	  
 	bool m_isDead; 
 

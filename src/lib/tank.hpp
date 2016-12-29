@@ -5,6 +5,7 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 #include <string> 
+#include <fstream>
 
 #include "bullet.hpp"
 #include "enemies.hpp"
@@ -157,6 +158,7 @@ private:
 
 	float m_upSpeed;
 	float m_downSpeed;
+	float m_speedCoef;
 
 	bool m_overTankEnabled; //If the Tank is out the borders
 	bool m_recharge;

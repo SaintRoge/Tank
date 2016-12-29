@@ -10,6 +10,7 @@
 #include <stdlib.h>     
 #include <time.h>
 #include <vector>
+#include <fstream>
 
 #include "functions.hpp"
 #include "tank.hpp"
@@ -44,7 +45,9 @@ private:
 	int m_enemiesScore;
 	int m_score;
 	int m_maximumEnemiesScore;
+
 	float m_viewSpeed;
+	float m_speedCoef;
 
 	bool m_gameover;
 

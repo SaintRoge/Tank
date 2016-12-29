@@ -3,10 +3,20 @@
 Game::Game(sf::RenderWindow *window) {
 	m_window = window;
 
+    std::ifstream file("speedCoef.txt");
+
+    if (file) {
+        std::string speedCoef;
+        std::getline(file, speedCoef);
+        m_speedCoef = std::stof(speedCoef);
+    } else {
+        std::cout << "Oh shit, you can't open the file !" << std::endl;
+    }
+
 	m_windowSize = m_window->getSize();
     m_enemiesNumber = 6;
     m_enemiesScore = 0;
-    m_viewSpeed = 25.f;
+    m_viewSpeed = 25.f * m_speedCoef;
     m_score = 0;
     m_maximumEnemiesScore = 3;
 

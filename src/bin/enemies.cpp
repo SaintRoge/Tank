@@ -2,6 +2,15 @@
 
 Enemies::Enemies() {
 	srand(time(NULL));
+	std::ifstream file("speedCoef.txt");
+
+    if (file) {
+        std::string speedCoef;
+        std::getline(file, speedCoef);
+        m_speedCoef = std::stof(speedCoef);
+    } else {
+        std::cout << "Oh shit, you can't open the file !" << std::endl;
+    }
   	m_speed = (float) (std::rand() % 1500 + 100)/100;
 	m_isDead = false;
 	m_score = 0;
@@ -18,7 +27,7 @@ void Enemies::move() {
    		 m_score++;
     	killEnemies();
   	}
-  	setPosition(getPosition().x + m_speed, getPosition().y);
+  	setPosition(getPosition().x + m_speed * m_speedCoef, getPosition().y);
 }
 
 void Enemies::killEnemies() {

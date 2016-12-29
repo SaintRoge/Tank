@@ -6,6 +6,7 @@
 #include "enemies.hpp"
 #include <iostream>
 #include <string>
+#include <fstream>
 
 class Bullet : public sf::RectangleShape {
 public:
@@ -33,6 +34,7 @@ private:
 	sf::Vector2f m_BulletSize;
 
 	float m_speed;
+	float m_speedCoef;
 };
 
 #endif //BULLET_HPP
