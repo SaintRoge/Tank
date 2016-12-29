@@ -256,3 +256,7 @@ void Tank::setAmmo(int const ammo) {
 sf::Time Tank::getElapsedFireClockTime() const {
 	return m_fireClock.getElapsedTime();
 }
+
+sf::Time Tank::getFireTime() const {
+	return m_fireTime;
+}

@@ -80,6 +80,8 @@ Game::Game(sf::RenderWindow *window) {
     m_tank->setPosition(0, 400);
     m_tank->setWindowResolution(m_window->getSize().x, m_window->getSize().y);
 
+    m_fireTime = m_tank->getFireTime();
+
     m_life1.setPosition(m_window->getSize().x - 250.f, 10.f);
     m_life2.setPosition(m_window->getSize().x - 185.f, 10.f);
     m_life3.setPosition(m_window->getSize().x - 120.f, 10.f);
@@ -213,7 +215,7 @@ void Game::start() {
                         m_tank->getBullet().getPosition().y <= m_enemiesArray[j].getPosition().y + 100.f
                         ) {
 
-                        std::cout << j << m_namesArray[j] << " Killed" << std::endl;
+                        std::cout << m_namesArray[j] << " Killed" << std::endl;
                         if (m_namesArray[j] == "martine") {
                             m_score += 10;
                         } else if (m_namesArray[j] == "boutin" || m_namesArray[j] == "macron" || m_namesArray[j] == "Filloche") {
@@ -262,7 +264,7 @@ void Game::start() {
             m_window->draw(m_normalViewText);
         } 
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && m_tank->getElapsedFireClockTime() >= sf::seconds(1.f)) { // Space bar pressed
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && m_tank->getElapsedFireClockTime() >= m_fireTime) { // Space bar pressed
             if (m_tank->ifFire()) { // Shoots
                 std::cout << "Fire !" << std::endl;
             } else if (m_tank->getAmmo() == 0) { 

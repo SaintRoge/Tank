@@ -99,6 +99,12 @@ public:
 	 * Gives to you the number of fire clock time elapsed
 	 * Returns it
 	 */
+	sf::Time getFireTime() const;
+	/*
+	 * Needs nothing
+	 * Gives you the fire time
+	 * Returns it
+	 */
 
 ///////////////////////////////////////////////////////////////////////
 

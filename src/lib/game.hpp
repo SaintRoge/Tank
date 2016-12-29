@@ -78,6 +78,8 @@ private:
 	sf::Clock m_gameClock;
 	sf::Clock m_fullScreenClock;
 
+	sf::Time m_fireTime;
+
 	sf::Text m_text;
 	sf::Text m_outOfAmmoText;
 	sf::Text m_scoreText;
