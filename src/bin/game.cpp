@@ -283,10 +283,13 @@ void Game::start() {
             }
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::O) && m_gameover) {
             m_window->setView(sf::View(sf::FloatRect(0, 0, m_window->getSize().x, m_window->getSize().y)));
             resize();
-        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::O) && m_gameover) {
+            break;
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
+            m_window->setView(sf::View(sf::FloatRect(0, 0, m_window->getSize().x, m_window->getSize().y)));
+            resize();            
             break;
         }
 
