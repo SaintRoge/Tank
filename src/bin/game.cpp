@@ -126,10 +126,12 @@ void Game::start() {
             if (m_fullScreen) {
                 m_fullScreenClock.restart();
                 m_window->create(sf::VideoMode(1200, 800), "Tank", sf::Style::Close | sf::Style::Resize);
+                m_window->setMouseCursorVisible(false);
                 m_fullScreen = false;
             } else { 
                 m_fullScreenClock.restart();
                 m_window->create(sf::VideoMode(1200, 800), "Tank", sf::Style::Close | sf::Style::Resize | sf::Style::Fullscreen);
+                m_window->setMouseCursorVisible(false);
                 m_fullScreen = true;
             }
         }
@@ -265,7 +267,7 @@ void Game::start() {
             m_window->draw(m_normalViewText);
         } 
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && m_tank->getElapsedFireClockTime() >= m_fireTime) { // Space bar pressed
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && m_tank->getElapsedFireClockTime() >= m_fireTime && m_tank->ifReloaded()) { // Space bar pressed
             if (m_tank->ifFire()) { // Shoots
                 std::cout << "Fire !" << std::endl;
             } else if (m_tank->getAmmo() == 0) { 
@@ -284,9 +286,7 @@ void Game::start() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
             m_window->setView(sf::View(sf::FloatRect(0, 0, m_window->getSize().x, m_window->getSize().y)));
             resize();
-        }
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::O) && m_gameover) {
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::O) && m_gameover) {
             break;
         }
 

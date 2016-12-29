@@ -20,6 +20,8 @@ int main(int argc, char const *argv[]) {
 
     RenderWindow window(VideoMode(1200, 800), "Tank", Style::Close | Style::Resize);
 
+    window.setMouseCursorVisible(false);
+    
     Text playButton;
     Text quitButton;
 
