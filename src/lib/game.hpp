@@ -82,6 +82,7 @@ private:
 	sf::Text m_outOfAmmoText;
 	sf::Text m_scoreText;
 	sf::Text m_gameoverText;
+	sf::Text m_normalViewText;
 	sf::Font m_font;
 
 	sf::Sprite m_life1;
@@ -93,6 +94,8 @@ private:
 
 	sf::Music m_music;
 	sf::Music m_deadMusic;
+
+	sf::View m_view;
 
 	sf::Vector2u m_windowSize;
 };

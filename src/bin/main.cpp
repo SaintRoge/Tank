@@ -53,15 +53,15 @@ int main(int argc, char const *argv[]) {
     Game *game = new Game(&window);
 
     while (window.isOpen()) {
-        sf::Event event;
+        Event event;
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
+            if (event.type == Event::Closed) {
 
                 window.close();
             }
-            if (event.type == sf::Event::Resized) {
-                sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
-                window.setView(sf::View(visibleArea));
+            if (event.type == Event::Resized) {
+                FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+                window.setView(View(visibleArea));
                 game->resize();
             }
         }
@@ -69,12 +69,12 @@ int main(int argc, char const *argv[]) {
         if (Keyboard::isKeyPressed(Keyboard::F11) && fullScreenClock.getElapsedTime() >= seconds(2.f)) {
             if (fullScreen) {
                 fullScreenClock.restart();
-                window.create(sf::VideoMode(1200, 800), "Tank", sf::Style::Close | sf::Style::Resize);
+                window.create(VideoMode(1200, 800), "Tank", Style::Close | Style::Resize);
                 game->resize();
                 fullScreen = false;       
             } else {
                 fullScreenClock.restart();
-                window.create(sf::VideoMode(1200, 800), "Tank", sf::Style::Close | sf::Style::Resize | sf::Style::Fullscreen);
+                window.create(VideoMode(1200, 800), "Tank", Style::Close | Style::Resize | Style::Fullscreen);
                 game->resize();
                 fullScreen = true;                
             }     
@@ -103,6 +103,7 @@ int main(int argc, char const *argv[]) {
             if (playSelect) {
                 game = new Game(&window);
                 game->start();
+                window.setView(View(FloatRect(0, 0, window.getSize().x, window.getSize().y)));
             } else {
                 window.close();
             }

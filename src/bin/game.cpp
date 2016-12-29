@@ -59,6 +59,7 @@ Game::Game(sf::RenderWindow *window) {
         m_text.setFont(m_font);
         m_outOfAmmoText.setFont(m_font);
         m_scoreText.setFont(m_font);
+        m_normalViewText.setFont(m_font);
     }
 
     m_scoreText.setCharacterSize(30);
@@ -66,6 +67,9 @@ Game::Game(sf::RenderWindow *window) {
     m_scoreText.setString("Score : " + std::to_string(m_score));
     m_text.setCharacterSize(60);
     m_text.setPosition(m_window->getSize().x - 140.f, m_window->getSize().y - 90.f);
+    m_normalViewText.setString("Press 'O' to return to the normal view");
+    m_normalViewText.setCharacterSize(25);
+    m_normalViewText.setPosition(40.f, 20.f);
 
     m_outOfAmmoText.setString("Out of Ammo !");
     m_outOfAmmoText.setColor(sf::Color::Red);
@@ -164,6 +168,7 @@ void Game::start() {
             m_life1.setPosition(m_life1.getPosition().x - m_viewSpeed, m_life1.getPosition().y);
             m_life2.setPosition(m_life2.getPosition().x - m_viewSpeed, m_life2.getPosition().y);
             m_life3.setPosition(m_life3.getPosition().x - m_viewSpeed, m_life3.getPosition().y); 
+            m_normalViewText.setPosition(m_normalViewText.getPosition().x - m_viewSpeed, m_normalViewText.getPosition().y);
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && m_window->getView().getCenter().x + m_viewSpeed <= (float)m_window->getSize().x/2) {
@@ -175,7 +180,8 @@ void Game::start() {
             m_scoreText.setPosition(m_scoreText.getPosition().x + m_viewSpeed, m_scoreText.getPosition().y);
             m_life1.setPosition(m_life1.getPosition().x + m_viewSpeed, m_life1.getPosition().y);
             m_life2.setPosition(m_life2.getPosition().x + m_viewSpeed, m_life2.getPosition().y);
-            m_life3.setPosition(m_life3.getPosition().x + m_viewSpeed, m_life3.getPosition().y);             
+            m_life3.setPosition(m_life3.getPosition().x + m_viewSpeed, m_life3.getPosition().y);        
+            m_normalViewText.setPosition(m_normalViewText.getPosition().x + m_viewSpeed, m_normalViewText.getPosition().y);     
         }
 
         if (m_tank->isOverEnabled()) {
@@ -252,10 +258,14 @@ void Game::start() {
         m_window->draw(m_life2);
         m_window->draw(m_life3);
 
+        if (m_window->getView().getCenter().x < m_window->getSize().x/2) {
+            m_window->draw(m_normalViewText);
+        } 
+
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) { // Space bar pressed
-            if (m_tank->ifFire()) {
+            if (m_tank->ifFire()) { // Shoots
                 std::cout << "Fire !" << std::endl;
-            } else if (m_tank->getAmmo() == 0) { // Shoot
+            } else if (m_tank->getAmmo() == 0) { 
                 m_window->draw(m_outOfAmmoText);
             } 
         }
@@ -266,6 +276,11 @@ void Game::start() {
             } else if (m_tank->getAmmo() == 0) {
                 m_window->draw(m_outOfAmmoText); 
             }
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
+            m_window->setView(sf::View(sf::FloatRect(0, 0, m_window->getSize().x, m_window->getSize().y)));
+            resize();
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::O) && m_gameover) {
@@ -312,5 +327,4 @@ sf::Texture Game::randomTexture(int id) {
     m_namesArray[id] = imgArray[std::rand() % (sizeof(imgArray)/sizeof(*imgArray))];
     texture.loadFromFile("img/" + m_namesArray[id] + ".png", sf::IntRect(0, 0, 100, 100));
     return texture;
-
 }
