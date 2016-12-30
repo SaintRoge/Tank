@@ -72,12 +72,14 @@ int main(int argc, char const *argv[]) {
             if (fullScreen) {
                 fullScreenClock.restart();
                 window.create(VideoMode(1200, 800), "Tank", Style::Close | Style::Resize);
-                game->resize();
+		window.setMouseCursorVisible(false);
+		game->resize();
                 fullScreen = false;       
             } else {
                 fullScreenClock.restart();
                 window.create(VideoMode(1200, 800), "Tank", Style::Close | Style::Resize | Style::Fullscreen);
-                game->resize();
+		window.setMouseCursorVisible(false);
+		game->resize();
                 fullScreen = true;                
             }     
         }
