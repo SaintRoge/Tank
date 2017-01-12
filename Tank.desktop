@@ -1,0 +1,14 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Name=Tank
+GenericName=Tank Game
+
+Exec=Tank
+Path=/opt/Tank/
+Terminal=false
+Icon=/opt/Tank/img/hollande.png
+Type=Application
+Categories=Game
+Categories=GTK;GNOME;Utility;
+

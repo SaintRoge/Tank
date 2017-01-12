@@ -27,8 +27,6 @@ mrproper: clean
 		@echo "All project files/folders have been deleted"  
 
 install: 
-		sudo apt-get install libsfml-dev build-essential
-		@echo "The SFML lib and the c++ builder have been installed"
 		make all
 
 run: all
