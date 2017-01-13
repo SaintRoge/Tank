@@ -8,6 +8,7 @@ CXX = g++
 RM = rm -rf
 SRC = src/bin/
 FLAGS = -std=c++11
+ROOTMESSAGE = "ACHTUNG ! You must be root to do it !"
 
 all: main.o functions.o tank.o bullet.o enemies.o game.o
 		$(CXX) $(FLAGS) $^ -o $(app) $(lib)
@@ -26,12 +27,22 @@ mrproper: clean
 		$(RM) $(app)
 		@echo "All project files/folders have been deleted"  
 
-install: 
+install:
 		make all
+		@echo $(ROOTMESSAGE)
+		cp -r ../Tank /opt/
+		ln -s /opt/Tank/Tank /usr/bin/
+		cp Tank.desktop /usr/share/applications/
+		@echo "Done !"
 
 run: all
 		@echo "Trying to start $(app)..."
 		./$(app)
+
+remove:
+		@echo $(ROOTMESSAGE)
+		$(RM) /usr/bin/Tank /usr/share/applications/Tank.desktop
+		@echo "Done !"
 
 pro: all clean run
 
