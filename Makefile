@@ -27,8 +27,7 @@ mrproper: clean
 		$(RM) $(app)
 		@echo "All project files/folders have been deleted"  
 
-install:
-		make all
+install: all clean
 		@echo $(ROOTMESSAGE)
 		cp -r ../Tank /opt/
 		ln -s /opt/Tank/Tank /usr/bin/
@@ -43,6 +42,9 @@ remove:
 		@echo $(ROOTMESSAGE)
 		$(RM) /usr/bin/Tank /usr/share/applications/Tank.desktop
 		@echo "Done !"
+
+reinstall: remove install
+
 
 pro: all clean run
 

@@ -6,7 +6,9 @@ You only need SFML lib (2.4.1 : http://www.sfml-dev.org/files/SFML-2.4.1-linux-g
 
 ```sh
 $ make all #To build
-$ make install #To install SFML librairies and build
+$ make install #To install 
+$ make remove #To desinstall the app
+$ make reinstall #To reinstall
 $ make mrproper #To rebuild
 $ make clean #To remove useless files 
 $ make run #To make and run
