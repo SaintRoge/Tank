@@ -41,8 +41,22 @@ public:
 
 	int getScore() const;
     /*
-     * Needs noyhing
+     * Needs nothing
 	 * Says to you the enemie score
+	 * Returns that
+	 */
+
+	std::string getName() const;
+	/*
+     * Needs nothing
+	 * Says to you the enemie name
+	 * Returns that
+	 */
+
+	sf::Texture getVTexture() const;
+	/*
+     * Needs nothing
+	 * Says to you the enemie texture
 	 * Returns that
 	 */
 
@@ -59,7 +73,28 @@ public:
 	 * Needs speed
 	 * Set it
 	 * Returns nothing 
-	 */
+	 */ 
+
+  	void setName(std::string name);
+  	/*
+	 * Needs the enemie texture
+	 * Set it
+	 * Returns nothing 
+	 */ 
+
+  	void setVTexture(sf::Texture texture);
+  	/*
+	 * Needs the enemie texture
+	 * Set it
+	 * Returns nothing 
+	 */ 
+
+  	void setScore(int score);
+  	/*
+	 * Needs the enemie score
+	 * Set it
+	 * Returns nothing 
+	 */ 
 
   
   
@@ -71,7 +106,10 @@ private:
 	  
 	bool m_isDead; 
 
+	std::string m_name;
+
 	sf::Vector2u m_windowSize;
+	sf::Texture m_texture;
 };
 
 #endif //ENNEMIES_HPP

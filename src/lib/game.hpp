@@ -65,9 +65,7 @@ private:
 
 	std::string m_killer;
 
-	std::vector<sf::Texture> m_textureArray;
 	std::vector<Enemies> m_enemiesArray;
-	std::vector<std::string> m_namesArray;
 
 	sf::FloatRect m_visibleArea;
 
@@ -86,6 +84,7 @@ private:
 	sf::Text m_scoreText;
 	sf::Text m_gameoverText;
 	sf::Text m_normalViewText;
+	sf::Text m_secondsText;
 	sf::Font m_font;
 
 	sf::Sprite m_life1;

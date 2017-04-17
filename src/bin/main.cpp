@@ -52,7 +52,11 @@ int main(int argc, char const *argv[]) {
     quitButton.setCharacterSize(60);
     quitButton.setPosition(430.f, 400.f);
 
+    std::cout << "Game instance started" << std::endl;
+
     Game *game = new Game(&window);
+
+    std::cout << "Game created" << std::endl;
 
     while (window.isOpen()) {
         Event event;
