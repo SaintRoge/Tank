@@ -3,6 +3,9 @@
 Game::Game(sf::RenderWindow *window) {
 	m_window = window;
 
+    srand(time(NULL));
+    std::cout << "Srand generated at: " << time(NULL) << std::endl;
+
     m_fullScreenClock.restart();
 
     std::ifstream file("speedCoef.txt");
@@ -25,8 +28,6 @@ Game::Game(sf::RenderWindow *window) {
 
     m_gameover = false;
     m_fullScreen = false;
-
-    srand(time(NULL));
 
     std::cout << "parameters are now updated" << std::endl;
 
@@ -225,14 +226,18 @@ void Game::start() {
                     std::cout << m_enemiesArray[j].getName() << " Killed" << std::endl;
                     m_score += m_enemiesArray[j].getScore();
 
-                    m_enemiesArray[j].killEnemies();
+                    m_enemiesArray[j].killEnemies(true);
                     m_deadMusic.play();
                     m_tank->setAmmo(m_tank->getAmmo() + std::rand() % 2 + 1);
                     m_scoreText.setString("Score : " + std::to_string(m_score));
                     m_tank->killBullet();
                 }
 	    	} else {
-                m_killer = m_enemiesArray[j].getName();
+                if (m_enemiesArray[j].isHumanKill()) {
+
+                } else {
+                    m_killer = m_enemiesArray[j].getName();
+                }
                 randomEnemie(j);
 		  	}
         }
@@ -320,14 +325,14 @@ void Game::randomEnemie(int id) {
     sf::Texture texture;
     std::string imgArray[] = {"boutin", "Fillon", "macron", "valls", "juppe", "marine", "melenchon", "sarkozy", "cope", "hollande", "filloche", "cazeneuve", "martine"};
     int scoreArray[] = {5, 7, 6, 4, 1, 4, 5, -1, 0, -4, 8, 1, 9};
-    int enemieNumber(std::rand() % sizeof(imgArray)/sizeof(*imgArray) - 1);
+    int enemieNumber(std::rand() % sizeof(imgArray)/sizeof(*imgArray));
     m_enemiesArray[id] = Enemies();
     m_enemiesArray[id].setName(imgArray[enemieNumber]);
     m_enemiesArray[id].setScore(scoreArray[enemieNumber]);
     m_enemiesArray[id].setPosition(-(std::rand() % (int)m_window->getSize().x + 1), std::rand() % (m_windowSize.y - 100) + 1);
-    m_enemiesArray[id].setSpeed((float)(std::rand() % 2 + 1));
+    m_enemiesArray[id].setSpeed((float)(std::rand() % 1500 + 100) / 100.f);
     texture.loadFromFile("img/" + m_enemiesArray[id].getName() + ".png", sf::IntRect(0, 0, 100, 100));
     m_textureArray[id] = texture;
     m_enemiesArray[id].setTexture(m_textureArray[id]);
-    std::cout << imgArray[enemieNumber] << " with the number " << enemieNumber << " generated" << std::endl;
+    std::cout << enemieNumber << ": " << imgArray[enemieNumber] << " generated in x: " << m_enemiesArray[id].getPosition().x << " y: " << m_enemiesArray[id].getPosition().y <<  " with the speed of " << m_enemiesArray[id].getSpeed() << std::endl;
 }

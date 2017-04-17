@@ -21,9 +21,9 @@ public:
 	 * The enemie moves
 	 * Returns nothing
 	 */
-  	void killEnemies();
+  	void killEnemies(bool humanKill);
     /*
-     * Needs nothing
+     * Needs the killer
 	 * Delete this
 	 * Returns nothing
 	 */
@@ -36,6 +36,12 @@ public:
      * Says to you if the enemie is dead
      * Returns that
      */
+  	bool isHumanKill() const;
+  	/*
+  	 * Needs nothing
+  	 * Says if the kill was from the user
+  	 * Returns bool
+  	 */
 
   /////////////////////////////////////////////////
 
@@ -43,6 +49,13 @@ public:
     /*
      * Needs nothing
 	 * Says to you the enemie score
+	 * Returns that
+	 */
+
+	float getSpeed() const;
+	/*
+     * Needs nothing
+	 * Says to you the enemie speed
 	 * Returns that
 	 */
 
@@ -85,12 +98,13 @@ public:
   
   
 private:
-	int m_speed;
 	int m_score;
 
 	float m_speedCoef;
+	float m_speed;
 	  
 	bool m_isDead; 
+	bool m_humanKill;
 
 	std::string m_name;
 
