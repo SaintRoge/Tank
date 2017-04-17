@@ -53,13 +53,6 @@ public:
 	 * Returns that
 	 */
 
-	sf::Texture getVTexture() const;
-	/*
-     * Needs nothing
-	 * Says to you the enemie texture
-	 * Returns that
-	 */
-
   /////////////////////////////////////////////////
 
   	void setWindowSize(sf::Vector2u size);
@@ -76,13 +69,6 @@ public:
 	 */ 
 
   	void setName(std::string name);
-  	/*
-	 * Needs the enemie texture
-	 * Set it
-	 * Returns nothing 
-	 */ 
-
-  	void setVTexture(sf::Texture texture);
   	/*
 	 * Needs the enemie texture
 	 * Set it
@@ -109,7 +95,6 @@ private:
 	std::string m_name;
 
 	sf::Vector2u m_windowSize;
-	sf::Texture m_texture;
 };
 
 #endif //ENNEMIES_HPP

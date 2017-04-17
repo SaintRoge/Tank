@@ -49,11 +49,6 @@ void Enemies::setName(std::string name) {
     m_name = name;
 }
 
-void Enemies::setVTexture(sf::Texture texture) {
-    m_texture = texture;
-    setTexture(m_texture);
-}
-
 void Enemies::setScore(int score) {
     m_score = score;
 }
@@ -64,10 +59,6 @@ int Enemies::getScore() const {
 
 std::string Enemies::getName() const {
     return m_name;
-}
-
-sf::Texture Enemies::getVTexture() const {
-    return m_texture;
 }
 
 void Enemies::setSpeed(float speed) {

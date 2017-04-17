@@ -42,7 +42,7 @@ public:
 
 ////////////////////////////////////////////////////////////////////
 
-	sf::Texture randomTexture(int id);
+	void randomEnemie(int id);
 	/*
 	 * Needs id
 	 * Creates a random enemie texture
@@ -65,7 +65,8 @@ private:
 
 	std::string m_killer;
 
-	std::vector<Enemies> m_enemiesArray;
+	Enemies m_enemiesArray[6];
+	sf::Texture m_textureArray[6];
 
 	sf::FloatRect m_visibleArea;
 

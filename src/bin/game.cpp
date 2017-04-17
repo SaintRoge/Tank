@@ -11,6 +11,7 @@ Game::Game(sf::RenderWindow *window) {
         std::string speedCoef;
         std::getline(file, speedCoef);
         m_speedCoef = std::stof(speedCoef);
+        std::cout << "speedCoef file oppened" << std::endl;
     } else {
         std::cout << "Oh shit, you can't open the file !" << std::endl;
     }
@@ -27,15 +28,13 @@ Game::Game(sf::RenderWindow *window) {
 
     srand(time(NULL));
 
+    std::cout << "parameters are now updated" << std::endl;
+
     m_aliveHeart.loadFromFile("img/life2.png", sf::IntRect(0, 0, 52, 45));
     m_deadHeart.loadFromFile("img/life1.png", sf::IntRect(0, 0, 52, 45));
 
     for (int i(0); i < m_enemiesNumber; i++) {
-        m_enemiesArray.push_back(Enemies());
-        m_enemiesArray[i].setVTexture(randomTexture(i));
-        m_enemiesArray[i].setPosition(-(std::rand() % (int)m_window->getSize().x + 1), std::rand() % (m_windowSize.y - 100) + 1);
-        m_enemiesArray[i].setSpeed((float)(std::rand() % 2 + 1));
-
+        randomEnemie(i);
     }
 
     if (!m_music.openFromFile("snd/Red.wav")) {
@@ -211,32 +210,30 @@ void Game::start() {
                 m_enemiesArray[j].setWindowSize(m_window->getSize());
         	    m_window->draw(m_enemiesArray[j]);
         	    m_enemiesArray[j].move();
-                if (m_tank->ifBullet()) {
-                    if (
-                        m_enemiesArray[j].getPosition().x + 100.f >= m_tank->getBullet().getPosition().x 
-                        && 
-                        m_enemiesArray[j].getPosition().x <= m_tank->getBullet().getPosition().x 
-                        &&
-                        m_tank->getBullet().getPosition().y + m_tank->getBullet().getSize().y >= m_enemiesArray[j].getPosition().y 
-                        &&
-                        m_tank->getBullet().getPosition().y <= m_enemiesArray[j].getPosition().y + 100.f
-                        ) {
+                if (
+                    m_tank->ifBullet()
+                    &&
+                    m_enemiesArray[j].getPosition().x + 100.f >= m_tank->getBullet().getPosition().x 
+                    && 
+                    m_enemiesArray[j].getPosition().x <= m_tank->getBullet().getPosition().x 
+                    &&
+                    m_tank->getBullet().getPosition().y + m_tank->getBullet().getSize().y >= m_enemiesArray[j].getPosition().y 
+                    &&
+                    m_tank->getBullet().getPosition().y <= m_enemiesArray[j].getPosition().y + 100.f
+                    ) {
 
-                        std::cout << m_enemiesArray[j].getName() << " Killed" << std::endl;
-                        m_score += m_enemiesArray[j].getScore();
+                    std::cout << m_enemiesArray[j].getName() << " Killed" << std::endl;
+                    m_score += m_enemiesArray[j].getScore();
 
-                        m_enemiesArray[j].killEnemies();
-                        m_deadMusic.play();
-                        m_tank->setAmmo(m_tank->getAmmo() + std::rand() % 2 + 1);
-                        m_scoreText.setString("Score : " + std::to_string(m_score));
-                        m_tank->killBullet();
-                    }
+                    m_enemiesArray[j].killEnemies();
+                    m_deadMusic.play();
+                    m_tank->setAmmo(m_tank->getAmmo() + std::rand() % 2 + 1);
+                    m_scoreText.setString("Score : " + std::to_string(m_score));
+                    m_tank->killBullet();
                 }
 	    	} else {
                 m_killer = m_enemiesArray[j].getName();
-                m_enemiesArray[j] = Enemies();
-                m_enemiesArray[j].setPosition(-(std::rand() % (int)m_window->getSize().x + 1), std::rand() % (m_windowSize.y - 100) + 1);
-                m_enemiesArray[j].setVTexture(randomTexture(j));
+                randomEnemie(j);
 		  	}
         }
         
@@ -319,13 +316,18 @@ void Game::resize() {
     m_normalViewText.setPosition(40.f, 20.f);
 }
 
-sf::Texture Game::randomTexture(int id) {
+void Game::randomEnemie(int id) {
     sf::Texture texture;
     std::string imgArray[] = {"boutin", "Fillon", "macron", "valls", "juppe", "marine", "melenchon", "sarkozy", "cope", "hollande", "filloche", "cazeneuve", "martine"};
     int scoreArray[] = {5, 7, 6, 4, 1, 4, 5, -1, 0, -4, 8, 1, 9};
     int enemieNumber(std::rand() % sizeof(imgArray)/sizeof(*imgArray) - 1);
+    m_enemiesArray[id] = Enemies();
     m_enemiesArray[id].setName(imgArray[enemieNumber]);
     m_enemiesArray[id].setScore(scoreArray[enemieNumber]);
+    m_enemiesArray[id].setPosition(-(std::rand() % (int)m_window->getSize().x + 1), std::rand() % (m_windowSize.y - 100) + 1);
+    m_enemiesArray[id].setSpeed((float)(std::rand() % 2 + 1));
     texture.loadFromFile("img/" + m_enemiesArray[id].getName() + ".png", sf::IntRect(0, 0, 100, 100));
-    return texture;
+    m_textureArray[id] = texture;
+    m_enemiesArray[id].setTexture(m_textureArray[id]);
+    std::cout << imgArray[enemieNumber] << " with the number " << enemieNumber << " generated" << std::endl;
 }
