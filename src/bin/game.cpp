@@ -224,7 +224,6 @@ void Game::start() {
                     ) {
 
                     std::cout << m_enemiesArray[j].getName() << " Killed" << std::endl;
-                    m_score += m_enemiesArray[j].getScore();
 
                     m_enemiesArray[j].killEnemies(true);
                     m_deadMusic.play();
@@ -234,9 +233,10 @@ void Game::start() {
                 }
 	    	} else {
                 if (m_enemiesArray[j].isHumanKill()) {
-
+                    m_score += m_enemiesArray[j].getScore();
                 } else {
                     m_killer = m_enemiesArray[j].getName();
+
                 }
                 randomEnemie(j);
 		  	}
@@ -283,7 +283,6 @@ void Game::start() {
         } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
             m_window->setView(sf::View(sf::FloatRect(0, 0, m_window->getSize().x, m_window->getSize().y)));
             resize();            
-            break;
         }
 
         if (m_gameover) {
