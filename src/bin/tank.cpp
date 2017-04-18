@@ -2,8 +2,8 @@
 
 Tank::Tank(int ammo) {
 
-	m_upSpeed = 12.f;
-	m_downSpeed = -12.f;
+	m_upSpeed = 15.f;
+	m_downSpeed = -15.f;
 
 	std::ifstream file("speedCoef.txt");
 

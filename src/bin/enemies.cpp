@@ -25,7 +25,6 @@ Enemies::~Enemies() {
 
 void Enemies::move() {
   	if (getPosition().x > m_windowSize.x - 100) {
-   		m_score++;
     	killEnemies(false);
   	} else {
         setPosition(getPosition().x + m_speed, getPosition().y);
