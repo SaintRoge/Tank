@@ -152,16 +152,16 @@ void Game::start() {
             m_life1.setTexture(m_aliveHeart);
             m_life2.setTexture(m_deadHeart);
             m_life3.setTexture(m_deadHeart);            
-        } else {
+        } else if (m_enemiesScore >= 3 && !m_gameover) {
             m_life1.setTexture(m_deadHeart); 
             m_life2.setTexture(m_deadHeart); 
-            m_life3.setTexture(m_deadHeart);                                     
+            m_life3.setTexture(m_deadHeart); 
+            gameover();                                   
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
             m_tank->move(true);
         }
-
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
             m_tank->move(false);
@@ -227,16 +227,16 @@ void Game::start() {
 
                     m_enemiesArray[j].killEnemies(true);
                     m_deadMusic.play();
-                    m_tank->setAmmo(m_tank->getAmmo() + std::rand() % 2 + 1);
-                    m_scoreText.setString("Score : " + std::to_string(m_score));
-                    m_tank->killBullet();
                 }
 	    	} else {
                 if (m_enemiesArray[j].isHumanKill()) {
+                    m_tank->setAmmo(m_tank->getAmmo() + std::rand() % 2 + 1);
+                    m_scoreText.setString("Score : " + std::to_string(m_score));
+                    m_tank->killBullet();
                     m_score += m_enemiesArray[j].getScore();
                 } else {
                     m_killer = m_enemiesArray[j].getName();
-
+                    m_enemiesScore++;
                 }
                 randomEnemie(j);
 		  	}
