@@ -47,7 +47,7 @@ bool Enemies::isHumanKill() const {
 }
 
 void Enemies::setWindowSize(sf::Vector2u size) {
-	   m_windowSize = size;
+    m_windowSize = size;
 }
 
 void Enemies::setName(std::string name) {
