@@ -2,8 +2,8 @@
 
 Tank::Tank(int ammo) {
 
-	m_upSpeed = 15.f;
-	m_downSpeed = -15.f;
+	m_upSpeed = 12.f;
+	m_downSpeed = -12.f;
 
 	std::ifstream file("speedCoef.txt");
 
@@ -22,8 +22,8 @@ Tank::Tank(int ammo) {
 	m_TankYSize = 160;
 	m_distance = 300;
 
-	m_fireTime = sf::seconds(1.f);
-	m_rechargeTime = sf::seconds(0.2f);
+	m_fireTime = sf::seconds(0.6);
+	m_rechargeTime = sf::seconds(0.15);
 
 	m_overTankEnabled = false;
 
