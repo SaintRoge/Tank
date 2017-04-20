@@ -231,7 +231,7 @@ void Game::start() {
                 if (m_enemiesArray[j].isHumanKill()) {
                     m_tank->setAmmo(m_tank->getAmmo() + std::rand() % 2 + 1);
                     m_score -= m_enemiesArray[j].getScore();
-                    m_scoreText.setString((m_score >= 25) ? "HITLEERRR !!! : " + std::to_string(m_score) : (m_score >= 10) ? "Pinochet : " + std::to_string(m_score) : (m_score > 0) ? "Facho : " + std::to_string(m_score) : (m_score == 0) ? "Gros con sans avis : " + std::to_string(m_score) : (m_score <= -25) ? "Meme Marx est moins communiste : " + std::to_string(m_score) : (m_score <= -10) ? "Cocommuniste : " + std::to_string(m_score) : "Gaucho : " + std::to_string(m_score));
+                    m_scoreText.setString((m_score >= 10) ? "Hitler : " + std::to_string(m_score) : (m_score > 0) ? "Facho : " + std::to_string(m_score) : (m_score == 0) ? "Gros con sans avis : " + std::to_string(m_score) : (m_score <= -10) ? "Coco : " + std::to_string(m_score) : "Gaucho : " + std::to_string(m_score));
                     m_tank->killBullet();
                 } else {
                     m_killer = m_enemiesArray[j].getName();
@@ -321,10 +321,8 @@ void Game::resize() {
 
 void Game::randomEnemie(int id) {
     sf::Texture texture;
-    std::string imgArray[] = {"boutin", "fillon", "macron", "valls", "juppe", "marine", "melenchon", "sarkozy", "cope", "hollande", "filoche", "cazeneuve", "martine", "dupont-aignan", 
-    "asselineau", "lassalle", "poutou", "arthaud", "hamon", "cheminade", "jean-marie", "collard", "lemaire", "montebourg", "jadot", "bayrou", "poisson", "morano", "benhamias", "lesquen",
-    "kosciusko-morizet", "strauss-kahn", "rugy", "zemmour", "ciotti", "estrosi", "place", "sapin", "el-khomri", "st-josse", "royal", "le-roux"};
-    int scoreArray[] = {7, 5, -5, 1, 2, 8, -7, 5, 3, -4, -8, -4, -6, 6, 7, 0, -8, -9, -3, -2, 10, 9, 3, -4, -3, 0, 8, 8, -6, 9, 1, -4, -1, 9, 5, 8, -5, -4, -3, 0, -4, -3};
+    std::string imgArray[] = {"boutin", "Fillon", "macron", "valls", "juppe", "marine", "melenchon", "sarkozy", "cope", "hollande", "filoche", "cazeneuve", "martine", "dupont-aignan", "asselineau", "lassalle", "poutou", "arthaud", "hamon", "cheminade"};
+    int scoreArray[] = {7, 5, -5, 1, 2, 8, -7, 5, 3, -4, -8, -4, -6, 6, 7, 0, -8, -9, -3, -2};
     int enemieNumber(std::rand() % sizeof(imgArray)/sizeof(*imgArray));
     m_enemiesArray[id] = Enemies();
     m_enemiesArray[id].setName(imgArray[enemieNumber]);
@@ -335,5 +333,5 @@ void Game::randomEnemie(int id) {
     texture.loadFromFile("img/" + m_enemiesArray[id].getName() + ".png", sf::IntRect(0, 0, 100, 100));
     m_textureArray[id] = texture;
     m_enemiesArray[id].setTexture(m_textureArray[id]);
-    std::cout << enemieNumber << ": " << imgArray[enemieNumber] <<  " with the speed of " << m_enemiesArray[id].getSpeed() << " was generated in x: " << m_enemiesArray[id].getPosition().x << " y: " << m_enemiesArray[id].getPosition().y << std::endl;
+    std::cout << enemieNumber << ": " << imgArray[enemieNumber] <<  " with the speed of " << m_enemiesArray[id].getSpeed() << " and score of " << m_enemiesArray[id].getScore() << " was generated in x: " << m_enemiesArray[id].getPosition().x << " y: " << m_enemiesArray[id].getPosition().y << std::endl;
 }
