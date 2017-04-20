@@ -1,7 +1,6 @@
 #include "../lib/enemies.hpp"
 
 Enemies::Enemies() {
-
 	std::ifstream file("speedCoef.txt");
 
     if (file) {
@@ -12,7 +11,6 @@ Enemies::Enemies() {
         std::cout << "Oh shit, you can't open the file !" << std::endl;
         m_speedCoef = 1;
     }
-
     m_humanKill = false;
   	m_speed = 0;
 	m_isDead = false;
@@ -38,7 +36,6 @@ void Enemies::move() {
 void Enemies::killEnemies(bool humanKill) {
  	 m_isDead = true;
      m_humanKill = humanKill;
-     m_deathMusic.play();
 }
 
 bool Enemies::isDead() const {
@@ -75,12 +72,4 @@ void Enemies::setSpeed(float speed) {
 
 float Enemies::getSpeed() const {
     return m_speed;
-}
-
-void Enemies::setDeathMusic() {
-    if (!m_deathMusic.openFromFile("snd/" + m_name + ".mp3")) {
-        std::cout << "Sorry, the music can't be loaded for " << m_name << std::endl;
-    } else {
-        std::cout << "The music has been loaded" << std::endl;
-    }
 }
