@@ -206,40 +206,43 @@ void Game::start() {
 
         m_window->draw(*m_tank);
 
-		for (int j(0); j < m_enemiesNumber; j++) {
-	        if (!m_enemiesArray[j].isDead()) {
-                m_enemiesArray[j].setWindowSize(m_window->getSize());
-        	    m_window->draw(m_enemiesArray[j]);
-        	    m_enemiesArray[j].move();
-                if (
-                    m_tank->ifBullet()
-                    &&
-                    m_enemiesArray[j].getPosition().x + 100.f >= m_tank->getBullet().getPosition().x 
-                    && 
-                    m_enemiesArray[j].getPosition().x <= m_tank->getBullet().getPosition().x 
-                    &&
-                    m_tank->getBullet().getPosition().y + m_tank->getBullet().getSize().y >= m_enemiesArray[j].getPosition().y 
-                    &&
-                    m_tank->getBullet().getPosition().y <= m_enemiesArray[j].getPosition().y + 100.f
-                    ) {
+        if (!m_gameover) {
+    		for (int j(0); j < m_enemiesNumber; j++) {
+    	        if (!m_enemiesArray[j].isDead()) {
+                    m_enemiesArray[j].setWindowSize(m_window->getSize());
+            	    m_window->draw(m_enemiesArray[j]);
+            	    m_enemiesArray[j].move();
+                    if (
+                        m_tank->ifBullet()
+                        &&
+                        m_enemiesArray[j].getPosition().x + 100.f >= m_tank->getBullet().getPosition().x 
+                        && 
+                        m_enemiesArray[j].getPosition().x <= m_tank->getBullet().getPosition().x 
+                        &&
+                        m_tank->getBullet().getPosition().y + m_tank->getBullet().getSize().y >= m_enemiesArray[j].getPosition().y 
+                        &&
+                        m_tank->getBullet().getPosition().y <= m_enemiesArray[j].getPosition().y + 100.f
+                        ) {
 
-                    std::cout << m_enemiesArray[j].getName() << " Killed" << std::endl;
+                        std::cout << m_enemiesArray[j].getName() << " Killed" << std::endl;
 
-                    m_enemiesArray[j].killEnemies(true);
-                    m_deadMusic.play();
-                }
-	    	} else {
-                if (m_enemiesArray[j].isHumanKill()) {
-                    m_tank->setAmmo(m_tank->getAmmo() + std::rand() % 2 + 1);
-                    m_score -= m_enemiesArray[j].getScore();
-                    m_scoreText.setString((m_score >= 25) ? "HITLEERRR !!! : " + std::to_string(m_score) : (m_score >= 10) ? "Pinochet : " + std::to_string(m_score) : (m_score > 0) ? "Facho : " + std::to_string(m_score) : (m_score == 0) ? "Gros con sans avis : " + std::to_string(m_score) : (m_score <= -25) ? "Che che che : " + std::to_string(m_score) : (m_score <= -10) ? "Une vraie gauchiasse : " + std::to_string(m_score) : "Gaucho : " + std::to_string(m_score));
-                    m_tank->killBullet();
-                } else {
-                    m_killer = m_enemiesArray[j].getName();
-                    m_enemiesScore++;
-                }
-                randomEnemie(j);
-		  	}
+                        m_enemiesArray[j].killEnemies(true);
+                        m_deadMusic.play();
+                    }
+    	    	} else {
+                    if (m_enemiesArray[j].isHumanKill()) {
+                        m_tank->setAmmo(m_tank->getAmmo() + std::rand() % 2 + 1);
+                        m_score -= m_enemiesArray[j].getScore();
+                        m_scoreText.setString((m_score >= 25) ? "HITLEERRR !!! : " + std::to_string(m_score) : (m_score >= 10) ? "Pinochet : " + std::to_string(m_score) : (m_score > 0) ? "Facho : " + std::to_string(m_score) : (m_score == 0) ? "Gros con sans avis : " + std::to_string(m_score) : (m_score <= -25) ? "Che che che : " + std::to_string(m_score) : (m_score <= -10) ? "Une vraie gauchiasse : " + std::to_string(m_score) : "Gaucho : " + std::to_string(m_score));
+                        m_killedEnemies.push_back(m_enemiesArray[j]);
+                        m_tank->killBullet();
+                    } else {
+                        m_killer = m_enemiesArray[j].getName();
+                        m_enemiesScore++;
+                    }
+                    randomEnemie(j);
+    		  	}
+            }
         }
         
         if (m_tank->ifBullet()) {
@@ -304,6 +307,12 @@ void Game::gameover() {
     m_gameoverText.setPosition(30, m_window->getSize().y/2 - 200.f);
     m_gameoverText.setString("Haaa you loser\nyou were killed by " + m_killer + "!\nyou survived " + std::to_string(m_gameClock.getElapsedTime().asSeconds()) + " seconds.\nPress 'O' to continue...");
     m_gameoverText.setFont(m_font);
+    std::cout << m_killedEnemies.size() << " politicals were killed :" << std::endl;
+
+    for (int i(0); i < m_killedEnemies.size(); i++) {
+        std::cout << m_killedEnemies[i].getName() << std::endl;
+    }
+
     m_gameover = true;
 }
 

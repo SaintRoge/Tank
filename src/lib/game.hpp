@@ -67,6 +67,7 @@ private:
 
 	Enemies m_enemiesArray[6];
 	sf::Texture m_textureArray[6];
+	std::vector<Enemies> m_killedEnemies;
 
 	sf::FloatRect m_visibleArea;
 
