@@ -95,6 +95,13 @@ public:
 	 * Returns nothing 
 	 */ 
 
+  	void setDeathMusic();
+  	/*
+  	 * Needs nothing
+  	 * Says to the enemie that he can load the music
+  	 * Returns nothing
+  	 */
+
   
   
 private:
@@ -109,6 +116,8 @@ private:
 	std::string m_name;
 
 	sf::Vector2u m_windowSize;
+
+	sf::Music m_deathMusic;
 };
 
 #endif //ENNEMIES_HPP

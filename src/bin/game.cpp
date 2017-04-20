@@ -226,7 +226,6 @@ void Game::start() {
                     std::cout << m_enemiesArray[j].getName() << " Killed" << std::endl;
 
                     m_enemiesArray[j].killEnemies(true);
-                    m_deadMusic.play();
                 }
 	    	} else {
                 if (m_enemiesArray[j].isHumanKill()) {
@@ -332,6 +331,7 @@ void Game::randomEnemie(int id) {
     m_enemiesArray[id].setScore(scoreArray[enemieNumber]);
     m_enemiesArray[id].setPosition(-(std::rand() % (int)m_window->getSize().x + 1), std::rand() % (m_windowSize.y - 100) + 1);
     m_enemiesArray[id].setSpeed((float)(std::rand() % 1500 + 100) / 100.f);
+    m_enemiesArray[id].setDeathMusic();
     texture.loadFromFile("img/" + m_enemiesArray[id].getName() + ".png", sf::IntRect(0, 0, 100, 100));
     m_textureArray[id] = texture;
     m_enemiesArray[id].setTexture(m_textureArray[id]);
