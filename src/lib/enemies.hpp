@@ -5,9 +5,11 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <stdio.h>      
 #include <stdlib.h>     
 #include <time.h>
+#include <vector>
 #include <fstream>
 
 class Enemies : public sf::Sprite {
@@ -94,7 +96,6 @@ public:
 	 * Set it
 	 * Returns nothing 
 	 */ 
-
   
   
 private:
