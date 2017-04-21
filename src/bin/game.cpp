@@ -3,11 +3,14 @@
 Game::Game(sf::RenderWindow *window) {
 	m_window = window;
 
-    srand(time(NULL));
-    std::cout << "Srand generated at: " << time(NULL) << std::endl;
+    int timeSrand(time(NULL));
+
+    srand(timeSrand);
+    std::cout << "Srand generated at: " << timeSrand << std::endl;
 
     m_fullScreenClock.restart();
 
+    std::cout << "Trying to open speedCoef.txt file" << std::endl;
     std::ifstream file("speedCoef.txt");
 
     if (file) {
@@ -17,6 +20,21 @@ Game::Game(sf::RenderWindow *window) {
         std::cout << "speedCoef file oppened" << std::endl;
     } else {
         std::cout << "Oh shit, you can't open the file !" << std::endl;
+    }
+
+    std::cout << "Trying to open politicals.txt file" << std::endl;
+    std::ifstream politicalsFile("politicals.txt");
+
+    std::string line;
+
+    if (politicalsFile) {
+        std::cout << "politicals file oppened" << std::endl;
+        for (int li(0); std::getline(politicalsFile, line); li++) {
+            m_nameArray.push_back(line.substr(0, line.find(" ")));
+            m_scoreArray.push_back(std::stoi(line.substr(line.find(" ") + 1, line.size() - line.find(" ") + 1)));
+        }
+    } else {
+        std::cout << "Oh shit, you can't open the politicals file !" << std::endl;
     }
 
 	m_windowSize = m_window->getSize();
@@ -58,6 +76,14 @@ Game::Game(sf::RenderWindow *window) {
         m_outOfAmmoText.setFont(m_font);
         m_scoreText.setFont(m_font);
         m_normalViewText.setFont(m_font);
+    }
+
+    for (int k(0); k < m_politicalsNumber; k++) {
+        if (!m_deathMusic[k].openFromFile("snd/" + m_nameArray[m_enemiesArray[k].getNumber()] + ".mp3")) {
+            std::cout << "Sorry, the music snd/" << m_nameArray[m_enemiesArray[k].getNumber()] << ".mp3 can't be loaded" << std::endl;
+        } else {
+            std::cout << "The music snd/" << m_nameArray[m_enemiesArray[k].getNumber()] << ".mp3 has been loaded" << std::endl;
+        } 
     }
 
     m_scoreText.setCharacterSize(30);
@@ -331,20 +357,15 @@ void Game::resize() {
 
 void Game::randomEnemie(int id) {
     sf::Texture texture;
-    std::string imgArray[] = {"boutin", "fillon", "macron", "valls", "juppe", "marine", "melenchon", "sarkozy", "cope", "hollande", "filoche", "cazeneuve", "martine", "dupont-aignan", 
-    "asselineau", "lassalle", "poutou", "arthaud", "hamon", "cheminade", "jean-marie", "collard", "lemaire", "montebourg", "jadot", "bayrou", "poisson", "morano", "benhamias", "lesquen",
-    "kosciusko-morizet", "strauss-kahn", "rugy", "zemmour", "ciotti", "estrosi", "place", "sapin", "el-khomri", "st-josse", "royal", "le-roux", "taubira", "besancenot", "mamere",
-    "jospin", "BHL", "longuet"};
-    int scoreArray[] = {7, 5, -5, 1, 2, 8, -7, 5, 3, -4, -8, -4, -6, 6, 7, 0, -8, -9, -3, -2, 10, 9, 3, -4, -3, 0, 8, 8, -6, 9, 1, -4, -1, 9, 5, 8, -5, -4, -3, 0, -4, -3, -8, -8, -3,  
-    -3, -4, 5};
-    int enemieNumber(std::rand() % sizeof(imgArray)/sizeof(*imgArray));
+    int enemieNumber(std::rand() % m_nameArray.size());
     m_enemiesArray[id] = Enemies();
-    m_enemiesArray[id].setName(imgArray[enemieNumber]);
-    m_enemiesArray[id].setScore(scoreArray[enemieNumber]);
+    m_enemiesArray[id].setName(m_nameArray[enemieNumber]);
+    m_enemiesArray[id].setScore(m_scoreArray[enemieNumber]);
+    m_enemiesArray[id].setNumber(enemieNumber);
     m_enemiesArray[id].setPosition(-(std::rand() % (int)m_window->getSize().x + 1), std::rand() % (m_windowSize.y - 100) + 1);
     m_enemiesArray[id].setSpeed((float)(std::rand() % 1500 + 100) / 100.f);
     texture.loadFromFile("img/" + m_enemiesArray[id].getName() + ".png", sf::IntRect(0, 0, 100, 100));
     m_textureArray[id] = texture;
     m_enemiesArray[id].setTexture(m_textureArray[id]);
-    std::cout << enemieNumber << ": " << imgArray[enemieNumber] <<  " with the speed of " << m_enemiesArray[id].getSpeed() << " and score of " << m_enemiesArray[id].getScore() << " was generated in x: " << m_enemiesArray[id].getPosition().x << " y: " << m_enemiesArray[id].getPosition().y << std::endl;
+    std::cout << m_enemiesArray[id].getNumber() << ": " << m_enemiesArray[id].getName() <<  " with the speed of " << m_enemiesArray[id].getSpeed() << " and score of " << m_enemiesArray[id].getScore() << " was generated in x: " << m_enemiesArray[id].getPosition().x << " y: " << m_enemiesArray[id].getPosition().y << std::endl;
 }

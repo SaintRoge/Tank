@@ -61,7 +61,7 @@ Tank::~Tank() {
 
 }	
 
-void Tank::setTankTexture(sf::Texture const& texture) {
+void Tank::setTankTexture(sf::Texture const& texture) { 
 	setTexture(texture);
 }
 

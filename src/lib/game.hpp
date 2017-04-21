@@ -54,6 +54,7 @@ private:
 	int m_enemiesScore;
 	int m_score;
 	int m_maximumEnemiesScore;
+	int m_politicalsNumber;
 
 	float m_viewSpeed;
 	float m_speedCoef;
@@ -67,6 +68,9 @@ private:
 
 	Enemies m_enemiesArray[6];
 	sf::Texture m_textureArray[6];
+	std::vector<sf::Music> m_deathMusic;
+	std::vector<std::string> m_nameArray;
+	std::vector<int> m_scoreArray;
 	std::vector<Enemies> m_killedEnemies;
 
 	sf::FloatRect m_visibleArea;

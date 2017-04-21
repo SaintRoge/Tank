@@ -17,6 +17,7 @@ Enemies::Enemies() {
 	m_score = 0;
 	m_windowSize.x = 1200;
 	m_windowSize.y = 800;
+    m_number = 0;
 }
 
 Enemies::~Enemies() {
@@ -70,6 +71,14 @@ void Enemies::setSpeed(float speed) {
     m_speed = speed * m_speedCoef;
 }
 
+void Enemies::setNumber(int number) {
+    m_number = number;
+}
+
 float Enemies::getSpeed() const {
     return m_speed;
+}
+
+int Enemies::getNumber() const {
+    return m_number;
 }
