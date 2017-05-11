@@ -68,6 +68,9 @@ private:
 	Enemies m_enemiesArray[6];
 	sf::Texture m_textureArray[6];
 	std::vector<Enemies> m_killedEnemies;
+	std::vector<std::string> m_nameArray;
+	std::vector<int> m_scoreArray;
+	std::vector<sf::Music> m_musicArray;
 
 	sf::FloatRect m_visibleArea;
 

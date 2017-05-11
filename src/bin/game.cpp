@@ -8,6 +8,7 @@ Game::Game(sf::RenderWindow *window) {
 
     m_fullScreenClock.restart();
 
+    std::cout << "Trying to open speedCoef.txt file" << std::endl;
     std::ifstream file("speedCoef.txt");
 
     if (file) {
@@ -17,6 +18,29 @@ Game::Game(sf::RenderWindow *window) {
         std::cout << "speedCoef file oppened" << std::endl;
     } else {
         std::cout << "Oh shit, you can't open the file !" << std::endl;
+    }
+
+    std::cout << "Trying to open politicals.txt file" << std::endl;
+    std::ifstream politiciansFile("politicians.txt");
+
+    std::string line;
+
+    if (politiciansFile) {
+        std::cout << "politicians file oppened" << std::endl;
+        for (int li(0); std::getline(politiciansFile, line); li++) {
+            m_nameArray.push_back(line.substr(0, line.find(" ")));
+            m_scoreArray.push_back(std::stoi(line.substr(line.find(" ") + 1, line.size() - line.find(" ") + 1)));
+        }
+    } else {
+        std::cout << "Oh shit, you can't open the politicians file !" << std::endl;
+    }
+
+    for (int o(0); o < m_nameArray.size() && m_nameArray.size() == m_scoreArray.size(); o++) {
+        std::cout << m_nameArray[o] << ": " << m_scoreArray[o] << std::endl;
+        /*m_musicArray.push_back(sf::Music()); 
+        if (!m_musicArray[o].openFromFile("deathmusic/" + m_nameArray[o] + ".mp3")) {
+            std::cout << "The death music for " << m_nameArray[o] << " is not oppened";
+        }*/
     }
 
 	m_windowSize = m_window->getSize();
@@ -178,6 +202,7 @@ void Game::start() {
             m_life2.setPosition(m_life2.getPosition().x - m_viewSpeed, m_life2.getPosition().y);
             m_life3.setPosition(m_life3.getPosition().x - m_viewSpeed, m_life3.getPosition().y); 
             m_normalViewText.setPosition(m_normalViewText.getPosition().x - m_viewSpeed, m_normalViewText.getPosition().y);
+            //m_music.setVolume((float)100 / m_window->getSize().y * (view.getCenter().y - m_window->getSize().y/2));
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && m_window->getView().getCenter().x + m_viewSpeed <= (float)m_window->getSize().x/2) {
@@ -190,7 +215,8 @@ void Game::start() {
             m_life1.setPosition(m_life1.getPosition().x + m_viewSpeed, m_life1.getPosition().y);
             m_life2.setPosition(m_life2.getPosition().x + m_viewSpeed, m_life2.getPosition().y);
             m_life3.setPosition(m_life3.getPosition().x + m_viewSpeed, m_life3.getPosition().y);        
-            m_normalViewText.setPosition(m_normalViewText.getPosition().x + m_viewSpeed, m_normalViewText.getPosition().y);     
+            m_normalViewText.setPosition(m_normalViewText.getPosition().x + m_viewSpeed, m_normalViewText.getPosition().y);
+            //m_music.setVolume((float)100 / m_window->getSize().y * (view.getCenter().y - m_window->getSize().y/2));  
         }
 
         if (m_tank->isOverEnabled()) {
@@ -331,20 +357,14 @@ void Game::resize() {
 
 void Game::randomEnemie(int id) {
     sf::Texture texture;
-    std::string imgArray[] = {"boutin", "fillon", "macron", "valls", "juppe", "marine", "melenchon", "sarkozy", "cope", "hollande", "filoche", "cazeneuve", "martine", "dupont-aignan", 
-    "asselineau", "lassalle", "poutou", "arthaud", "hamon", "cheminade", "jean-marie", "collard", "lemaire", "montebourg", "jadot", "bayrou", "poisson", "morano", "benhamias", "lesquen",
-    "kosciusko-morizet", "strauss-kahn", "rugy", "zemmour", "ciotti", "estrosi", "place", "sapin", "el-khomri", "st-josse", "royal", "le-roux", "taubira", "besancenot", "mamere",
-    "jospin", "BHL", "longuet"};
-    int scoreArray[] = {7, 5, -5, 1, 2, 8, -7, 5, 3, -4, -8, -4, -6, 6, 7, 0, -8, -9, -3, -2, 10, 9, 3, -4, -3, 0, 8, 8, -6, 9, 1, -4, -1, 9, 5, 8, -5, -4, -3, 0, -4, -3, -8, -8, -3,  
-    -3, -4, 5};
-    int enemieNumber(std::rand() % sizeof(imgArray)/sizeof(*imgArray));
+    int enemieNumber(std::rand() % m_nameArray.size());
     m_enemiesArray[id] = Enemies();
-    m_enemiesArray[id].setName(imgArray[enemieNumber]);
-    m_enemiesArray[id].setScore(scoreArray[enemieNumber]);
+    m_enemiesArray[id].setName(m_nameArray[enemieNumber]);
+    m_enemiesArray[id].setScore(m_scoreArray[enemieNumber]);
     m_enemiesArray[id].setPosition(-(std::rand() % (int)m_window->getSize().x + 1), std::rand() % (m_windowSize.y - 100) + 1);
     m_enemiesArray[id].setSpeed((float)(std::rand() % 1500 + 100) / 100.f);
     texture.loadFromFile("img/" + m_enemiesArray[id].getName() + ".png", sf::IntRect(0, 0, 100, 100));
     m_textureArray[id] = texture;
     m_enemiesArray[id].setTexture(m_textureArray[id]);
-    std::cout << enemieNumber << ": " << imgArray[enemieNumber] <<  " with the speed of " << m_enemiesArray[id].getSpeed() << " and score of " << m_enemiesArray[id].getScore() << " was generated in x: " << m_enemiesArray[id].getPosition().x << " y: " << m_enemiesArray[id].getPosition().y << std::endl;
+    std::cout << enemieNumber << ": " << m_nameArray[enemieNumber] <<  " with the speed of " << m_enemiesArray[id].getSpeed() << " and score of " << m_enemiesArray[id].getScore() << " was generated in x: " << m_enemiesArray[id].getPosition().x << " y: " << m_enemiesArray[id].getPosition().y << std::endl;
 }
