@@ -70,7 +70,7 @@ private:
 	std::vector<Enemies> m_killedEnemies;
 	std::vector<std::string> m_nameArray;
 	std::vector<int> m_scoreArray;
-	std::vector<sf::Music> m_musicArray;
+	std::vector<sf::Music*> m_musicArray;
 
 	sf::FloatRect m_visibleArea;
 

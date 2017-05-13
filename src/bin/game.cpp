@@ -20,27 +20,37 @@ Game::Game(sf::RenderWindow *window) {
         std::cout << "Oh shit, you can't open the file !" << std::endl;
     }
 
-    std::cout << "Trying to open politicals.txt file" << std::endl;
+    std::cout << "Trying to open politicians.txt file" << std::endl;
     std::ifstream politiciansFile("politicians.txt");
 
     std::string line;
+
+    if (!m_deadMusic.openFromFile("snd/dead.wav")) {
+        std::cout << "Sorry, the music can't be loaded" << std::endl;
+    } else {
+        std::cout << "The music has been loaded" << std::endl;
+    }
 
     if (politiciansFile) {
         std::cout << "politicians file oppened" << std::endl;
         for (int li(0); std::getline(politiciansFile, line); li++) {
             m_nameArray.push_back(line.substr(0, line.find(" ")));
             m_scoreArray.push_back(std::stoi(line.substr(line.find(" ") + 1, line.size() - line.find(" ") + 1)));
+            std::cout << li << std::endl;
+            m_musicArray.push_back(new sf::Music);
+            if (!m_musicArray[li]->openFromFile("deathMusic/" + m_nameArray[li] + ".mp3")) {
+                std::cout << "The music deathMusic/" + m_nameArray[li] + ".mp3 has not been opened";
+                delete m_musicArray[li];
+                m_musicArray[li] = &m_deadMusic;
+            } 
+            
         }
     } else {
         std::cout << "Oh shit, you can't open the politicians file !" << std::endl;
     }
 
-    for (int o(0); o < m_nameArray.size() && m_nameArray.size() == m_scoreArray.size(); o++) {
-        std::cout << m_nameArray[o] << ": " << m_scoreArray[o] << std::endl;
-        /*m_musicArray.push_back(sf::Music()); 
-        if (!m_musicArray[o].openFromFile("deathmusic/" + m_nameArray[o] + ".mp3")) {
-            std::cout << "The death music for " << m_nameArray[o] << " is not oppened";
-        }*/
+    for (int uj(0); uj < m_musicArray.size(); uj++) {
+        std::cout << m_musicArray[uj] << std::endl;
     }
 
 	m_windowSize = m_window->getSize();
@@ -63,12 +73,6 @@ Game::Game(sf::RenderWindow *window) {
     }
 
     if (!m_music.openFromFile("snd/Red.wav")) {
-        std::cout << "Sorry, the music can't be loaded" << std::endl;
-    } else {
-        std::cout << "The music has been loaded" << std::endl;
-    }
-
-    if (!m_deadMusic.openFromFile("snd/dead.wav")) {
         std::cout << "Sorry, the music can't be loaded" << std::endl;
     } else {
         std::cout << "The music has been loaded" << std::endl;
@@ -253,7 +257,7 @@ void Game::start() {
                         std::cout << m_enemiesArray[j].getName() << " Killed" << std::endl;
 
                         m_enemiesArray[j].killEnemies(true);
-                        m_deadMusic.play();
+                        m_musicArray[m_enemiesArray[j].getNumber()]->play();
                     }
     	    	} else {
                     if (m_enemiesArray[j].isHumanKill()) {
@@ -357,12 +361,14 @@ void Game::resize() {
 
 void Game::randomEnemie(int id) {
     sf::Texture texture;
+    sf::Music music;
     int enemieNumber(std::rand() % m_nameArray.size());
     m_enemiesArray[id] = Enemies();
     m_enemiesArray[id].setName(m_nameArray[enemieNumber]);
     m_enemiesArray[id].setScore(m_scoreArray[enemieNumber]);
     m_enemiesArray[id].setPosition(-(std::rand() % (int)m_window->getSize().x + 1), std::rand() % (m_windowSize.y - 100) + 1);
     m_enemiesArray[id].setSpeed((float)(std::rand() % 1500 + 100) / 100.f);
+    m_enemiesArray[id].setNumber(enemieNumber);
     texture.loadFromFile("img/" + m_enemiesArray[id].getName() + ".png", sf::IntRect(0, 0, 100, 100));
     m_textureArray[id] = texture;
     m_enemiesArray[id].setTexture(m_textureArray[id]);

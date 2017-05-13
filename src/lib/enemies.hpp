@@ -68,6 +68,12 @@ public:
 	 * Returns that
 	 */
 
+	int getNumber() const;
+	/*
+	 * Needs nothing
+	 * Returns the political number
+	 */
+
   /////////////////////////////////////////////////
 
   	void setWindowSize(sf::Vector2u size);
@@ -96,10 +102,18 @@ public:
 	 * Set it
 	 * Returns nothing 
 	 */ 
+
+  	void setNumber(int number);
+  	/*
+  	 * Needs the political number
+  	 * Set it
+  	 * Returns it
+  	 */
   
   
 private:
 	int m_score;
+	int m_number;
 
 	float m_speedCoef;
 	float m_speed;

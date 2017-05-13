@@ -73,3 +73,12 @@ void Enemies::setSpeed(float speed) {
 float Enemies::getSpeed() const {
     return m_speed;
 }
+
+int Enemies::getNumber() const {
+  return m_number;
+}
+
+void Enemies::setNumber(int number) {
+  m_number = number;
+}
+
