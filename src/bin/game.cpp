@@ -29,6 +29,7 @@ Game::Game(sf::RenderWindow *window) {
         std::cout << "Sorry, the music can't be loaded" << std::endl;
     } else {
         std::cout << "The music has been loaded" << std::endl;
+        m_deadMusic.setVolume(30);
     }
 
     if (politiciansFile) {
@@ -36,13 +37,14 @@ Game::Game(sf::RenderWindow *window) {
         for (int li(0); std::getline(politiciansFile, line); li++) {
             m_nameArray.push_back(line.substr(0, line.find(" ")));
             m_scoreArray.push_back(std::stoi(line.substr(line.find(" ") + 1, line.size() - line.find(" ") + 1)));
-            std::cout << li << std::endl;
             m_musicArray.push_back(new sf::Music);
-            if (!m_musicArray[li]->openFromFile("deathMusic/" + m_nameArray[li] + ".mp3")) {
-                std::cout << "The music deathMusic/" + m_nameArray[li] + ".mp3 has not been opened";
+            if (!m_musicArray[li]->openFromFile("msc/" + m_nameArray[li] + ".wav")) {
+                std::cout << li << " : [NOT OPPENED] msc/" + m_nameArray[li] + ".wav" << std::endl;
                 delete m_musicArray[li];
                 m_musicArray[li] = &m_deadMusic;
-            } 
+            } else {
+                std::cout << li << " : [OPPENED] msc/" + m_nameArray[li] + ".wav" << std::endl;
+            }
             
         }
     } else {
@@ -73,9 +75,10 @@ Game::Game(sf::RenderWindow *window) {
     }
 
     if (!m_music.openFromFile("snd/Red.wav")) {
-        std::cout << "Sorry, the music can't be loaded" << std::endl;
+        std::cout << "Sorry, the main music can't be loaded" << std::endl;
     } else {
-        std::cout << "The music has been loaded" << std::endl;
+        std::cout << "The main music has been loaded" << std::endl;
+        m_music.setVolume(40);
     }
 
     if (!m_font.loadFromFile("font/joystix.ttf")) {
