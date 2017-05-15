@@ -25,10 +25,11 @@ Game::Game(sf::RenderWindow *window) {
 
     std::string line;
 
-    if (!m_deadMusic.openFromFile("snd/dead.wav")) {
+    if (!m_deadMusicBuffer.loadFromFile("snd/dead.wav")) {
         std::cout << "Sorry, the music can't be loaded" << std::endl;
     } else {
         std::cout << "The music has been loaded" << std::endl;
+        m_deadMusic.setBuffer(m_deadMusicBuffer);
         m_deadMusic.setVolume(30);
     }
 
@@ -37,14 +38,17 @@ Game::Game(sf::RenderWindow *window) {
         for (int li(0); std::getline(politiciansFile, line); li++) {
             m_nameArray.push_back(line.substr(0, line.find(" ")));
             m_scoreArray.push_back(std::stoi(line.substr(line.find(" ") + 1, line.size() - line.find(" ") + 1)));
-            m_musicArray.push_back(new sf::Music);
-            if (!m_musicArray[li]->openFromFile("msc/" + m_nameArray[li] + ".wav")) {
+            m_musicArray.push_back(new sf::Sound);
+            m_bufferArray.push_back(new sf::SoundBuffer);
+            if (!m_bufferArray[li]->loadFromFile("msc/" + m_nameArray[li] + ".wav")) {
                 std::cout << li << " : [NOT OPPENED] msc/" + m_nameArray[li] + ".wav" << std::endl;
-                delete m_musicArray[li];
-                m_musicArray[li] = &m_deadMusic;
+                delete m_bufferArray[li];
+                m_bufferArray[li] = &m_deadMusicBuffer;
             } else {
                 std::cout << li << " : [OPPENED] msc/" + m_nameArray[li] + ".wav" << std::endl;
             }
+
+            m_musicArray[li]->setBuffer(*m_bufferArray[li]);
             
         }
     } else {

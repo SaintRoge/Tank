@@ -70,7 +70,8 @@ private:
 	std::vector<Enemies> m_killedEnemies;
 	std::vector<std::string> m_nameArray;
 	std::vector<int> m_scoreArray;
-	std::vector<sf::Music*> m_musicArray;
+	std::vector<sf::Sound*> m_musicArray;
+	std::vector<sf::SoundBuffer*> m_bufferArray;
 
 	sf::FloatRect m_visibleArea;
 
@@ -100,7 +101,8 @@ private:
 	sf::Texture m_deadHeart;
 
 	sf::Music m_music;
-	sf::Music m_deadMusic;
+	sf::Sound m_deadMusic;
+	sf::SoundBuffer m_deadMusicBuffer;
 
 	sf::View m_view;
 

@@ -38,9 +38,11 @@ int main(int argc, char const *argv[]) {
     choiceClock.restart();
     fullScreenClock.restart();
 
-    Music buttonMusic;
+    SoundBuffer buttonMusicBuffer;
+    Sound buttonMusic;
 
-    buttonMusic.openFromFile("snd/jeanne.wav");
+    buttonMusicBuffer.loadFromFile("snd/jeanne.wav");
+    buttonMusic.setBuffer(buttonMusicBuffer);
 
     playButton.setString("  Play");
     playButton.setFont(font);
