@@ -38,9 +38,11 @@ int main(int argc, char const *argv[]) {
     choiceClock.restart();
     fullScreenClock.restart();
 
-    Music buttonMusic;
+    SoundBuffer buttonMusicBuffer;
+    Sound buttonMusic;
 
-    buttonMusic.openFromFile("snd/jeanne.wav");
+    buttonMusicBuffer.loadFromFile("snd/jeanne.wav");
+    buttonMusic.setBuffer(buttonMusicBuffer);
 
     playButton.setString("  Play");
     playButton.setFont(font);
@@ -73,17 +75,15 @@ int main(int argc, char const *argv[]) {
         if (Keyboard::isKeyPressed(Keyboard::F11) && fullScreenClock.getElapsedTime() >= seconds(2.f)) {
             if (fullScreen) {
                 fullScreenClock.restart();
-                window.create(VideoMode(1200, 800), "Tank", Style::Close | Style::Resize);
-		window.setMouseCursorVisible(false);
-		game->resize();
-                fullScreen = false;       
-            } else {
+                window.create(sf::VideoMode(1200, 800), "Tank", sf::Style::Close | sf::Style::Resize);
+                window.setMouseCursorVisible(false);
+                fullScreen = false;
+            } else { 
                 fullScreenClock.restart();
-                window.create(VideoMode(1200, 800), "Tank", Style::Close | Style::Resize | Style::Fullscreen);
-		window.setMouseCursorVisible(false);
-		game->resize();
-                fullScreen = true;                
-            }     
+                window.create(sf::VideoMode(1200, 800), "Tank", sf::Style::Close | sf::Style::Resize | sf::Style::Fullscreen);
+                window.setMouseCursorVisible(false);
+                fullScreen = true;
+            }              
         }
 
         if (playSelect) {

@@ -22,7 +22,7 @@ Tank::Tank(int ammo) {
 	m_TankYSize = 160;
 	m_distance = 300;
 
-	m_fireTime = sf::seconds(0.6);
+	m_fireTime = sf::seconds(0.69);
 	m_rechargeTime = sf::seconds(0.15);
 
 	m_overTankEnabled = false;
@@ -43,6 +43,9 @@ Tank::Tank(int ammo) {
         std::cout << "Sorry, sounds can't be loaded" << std::endl;
     } else {
         std::cout << "Sounds have been loaded" << std::endl;
+        m_fireMusic.setVolume(25);
+        m_outOfAmmoMusic.setVolume(75);
+        m_rechargeMusic.setVolume(25);
     }
 	  
 	if (!m_texture.loadFromFile(m_img, sf::IntRect(0, 0, m_TankXSize, m_TankXSize)) || !m_textureFire.loadFromFile(m_imgFire, sf::IntRect(0, 0, m_TankXSize, m_TankXSize))) {

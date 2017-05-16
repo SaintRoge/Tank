@@ -82,3 +82,4 @@ float Enemies::getSpeed() const {
 int Enemies::getNumber() const {
     return m_number;
 }
+
