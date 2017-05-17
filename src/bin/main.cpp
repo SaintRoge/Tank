@@ -81,6 +81,7 @@ int main(int argc, char const *argv[]) {
             } else { 
                 fullScreenClock.restart();
                 window.create(sf::VideoMode(1200, 800), "Tank", sf::Style::Close | sf::Style::Resize | sf::Style::Fullscreen);
+                
                 window.setMouseCursorVisible(false);
                 fullScreen = true;
             }              

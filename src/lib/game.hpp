@@ -67,12 +67,11 @@ private:
 	std::string m_killer;
 
 	Enemies m_enemiesArray[6];
-	sf::Texture m_textureArray[6];
-	std::vector<Enemies> m_killedEnemies;
 	std::vector<std::string> m_nameArray;
 	std::vector<int> m_scoreArray;
 	std::vector<sf::Sound*> m_musicArray;
 	std::vector<sf::SoundBuffer*> m_bufferArray;
+	std::vector<sf::Texture*> m_textureArray;
 
 	sf::FloatRect m_visibleArea;
 
@@ -100,6 +99,7 @@ private:
 
 	sf::Texture m_aliveHeart;
 	sf::Texture m_deadHeart;
+	sf::Texture m_defaultTexture;
 
 	sf::Music m_music;
 	sf::Sound m_deadMusic;

@@ -35,6 +35,10 @@ Game::Game(sf::RenderWindow *window) {
         m_deadMusic.setVolume(30);
     }
 
+    if (!m_defaultTexture.loadFromFile("img/statue.png", sf::IntRect(0, 0, 100, 100))) {
+        std::cout << "The default texture can't be loaded" << std::endl;
+    }
+
     if (politiciansFile) {
         std::cout << "politicians file oppened" << std::endl;
         for (int li(0); std::getline(politiciansFile, line); li++) {
@@ -42,6 +46,7 @@ Game::Game(sf::RenderWindow *window) {
             m_scoreArray.push_back(std::stoi(line.substr(line.find(" ") + 1, line.size() - line.find(" ") + 1)));
             m_musicArray.push_back(new sf::Sound);
             m_bufferArray.push_back(new sf::SoundBuffer);
+            m_textureArray.push_back(new sf::Texture);
             if (!m_bufferArray[li]->loadFromFile("msc/" + m_nameArray[li] + ".wav")) {
                 std::cout << li << " : [NOT OPPENED] msc/" + m_nameArray[li] + ".wav" << std::endl;
                 delete m_bufferArray[li];
@@ -49,6 +54,14 @@ Game::Game(sf::RenderWindow *window) {
                 m_musicArray[li]->setVolume(30);
             } else {
                 std::cout << li << " : [OPPENED] msc/" + m_nameArray[li] + ".wav" << std::endl;
+            }
+
+            if (!m_textureArray[li]->loadFromFile("img/" + m_nameArray[li] + ".png", sf::IntRect(0, 0, 100, 100))) {
+                std::cout << li << " : [NOT OPPENED]  img/" + m_nameArray[li] + ".png" << std::endl;
+                delete m_textureArray[li];
+                m_textureArray[li] = &m_defaultTexture;
+            } else {
+                std::cout << li << " : [OPPENED] img/" + m_nameArray[li] + ".png" << std::endl;
             }
 
             m_musicArray[li]->setBuffer(*m_bufferArray[li]);
@@ -267,14 +280,13 @@ void Game::start() {
 
                         m_enemiesArray[j].killEnemies(true);
                         m_musicArray[m_enemiesArray[j].getNumber()]->play();
+                        m_tank->killBullet();
                     }
     	    	} else {
                     if (m_enemiesArray[j].isHumanKill()) {
-                        m_tank->setAmmo(m_tank->getAmmo() + std::rand() % 2 + 1);
+                        m_tank->setAmmo(m_tank->getAmmo() + 1);
                         m_score -= m_enemiesArray[j].getScore();
                         m_scoreText.setString((m_score >= 25) ? "HITLEERRR !!! : " + std::to_string(m_score) : (m_score >= 10) ? "Pinochet : " + std::to_string(m_score) : (m_score > 0) ? "Facho : " + std::to_string(m_score) : (m_score == 0) ? "Gros con sans avis : " + std::to_string(m_score) : (m_score <= -25) ? "Che che che : " + std::to_string(m_score) : (m_score <= -10) ? "Une vraie gauchiasse : " + std::to_string(m_score) : "Gaucho : " + std::to_string(m_score));
-                        m_killedEnemies.push_back(m_enemiesArray[j]);
-                        m_tank->killBullet();
                     } else {
                         m_killer = m_enemiesArray[j].getName();
                         m_enemiesScore++;
@@ -346,11 +358,6 @@ void Game::gameover() {
     m_gameoverText.setPosition(30, m_window->getSize().y/2 - 200.f);
     m_gameoverText.setString("Haaa you loser\nyou were killed by " + m_killer + "!\nyou survived " + std::to_string(m_gameClock.getElapsedTime().asSeconds()) + " seconds.\nPress 'O' to continue...");
     m_gameoverText.setFont(m_font);
-    std::cout << m_killedEnemies.size() << " politicals were killed :" << std::endl;
-
-    for (int i(0); i < m_killedEnemies.size(); i++) {
-        std::cout << m_killedEnemies[i].getName() << std::endl;
-    }
 
     m_gameover = true;
 }
@@ -377,8 +384,6 @@ void Game::randomEnemie(int id) {
     m_enemiesArray[id].setPosition(-(std::rand() % (int)m_window->getSize().x + 1), std::rand() % (m_windowSize.y - 100) + 1);
     m_enemiesArray[id].setSpeed((float)(std::rand() % 1500 + 100) / 100.f);
     m_enemiesArray[id].setNumber(enemieNumber);
-    texture.loadFromFile("img/" + m_enemiesArray[id].getName() + ".png", sf::IntRect(0, 0, 100, 100));
-    m_textureArray[id] = texture;
-    m_enemiesArray[id].setTexture(m_textureArray[id]);
+    m_enemiesArray[id].setTexture(*m_textureArray[enemieNumber]);
     std::cout << m_enemiesArray[id].getNumber() << ": " << m_enemiesArray[id].getName() <<  " with the speed of " << m_enemiesArray[id].getSpeed() << " and score of " << m_enemiesArray[id].getScore() << " was generated in x: " << m_enemiesArray[id].getPosition().x << " y: " << m_enemiesArray[id].getPosition().y << std::endl;
 }
