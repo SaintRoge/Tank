@@ -136,12 +136,12 @@ void Tank::overMove(bool up) {
 }
 
 
-bool Tank::ifFire() {
-	if (ifAmmo()) {
+bool Tank::ifFire(bool superBullet) {
+	if (ifAmmo() && (superBullet) ? m_ammo >= 4 : true) {
 		if (m_fireClock.getElapsedTime() >= m_fireTime && m_recharge) {
 			m_fireClock.restart();
 			m_rechargeClock.restart();
-			fire();
+			fire(superBullet);
 			m_recharge = false;
 			return true;
 		} else {
@@ -171,7 +171,7 @@ bool Tank::isOverEnabled() const {
 	return m_overTankEnabled;
 }
 
-void Tank::fire() {
+void Tank::fire(bool superBullet) {
 
 	if (getPosition().y + (float)m_TankYSize/2 < 0.f) {
 		m_bullet = new Bullet(sf::Vector2f(m_windowResolutionX - m_distance + 20.f, m_windowResolutionY + (getPosition().y + (float)m_TankYSize/2)));
@@ -180,11 +180,18 @@ void Tank::fire() {
 	} else {
 		m_bullet = new Bullet(sf::Vector2f(m_windowResolutionX - m_distance + 20.f, getPosition().y + (float)m_TankYSize/2));
 	}
+
+	m_bullet->setFillColor((superBullet) ? sf::Color::Blue : sf::Color::Red);
+
 	setTankTexture(m_textureFire);
 	m_overTankSprite->setTexture(m_textureFire);
 	m_ifBullet = true;
 	m_fireMusic.play();
-	m_ammo--;
+	if (superBullet) {
+		m_ammo -= 4;
+	} else {
+		m_ammo--;
+	}
 }
 
 void Tank::BulletMove() {

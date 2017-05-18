@@ -5,6 +5,8 @@ Game::Game(sf::RenderWindow *window) {
 
     int timeSrand(time(NULL));
 
+    m_superBullet = false;
+
     srand(timeSrand);
     std::cout << "Srand generated at: " << timeSrand << std::endl;
 
@@ -140,6 +142,9 @@ Game::Game(sf::RenderWindow *window) {
     m_life2.setPosition(m_window->getSize().x - 185.f, 10.f);
     m_life3.setPosition(m_window->getSize().x - 120.f, 10.f);
 
+    m_gameClock.restart();
+    m_superBulletClock.restart();
+
 }
 
 Game::~Game() {
@@ -147,7 +152,6 @@ Game::~Game() {
 }
 
 void Game::start() {
-    m_gameClock.restart();
 	m_music.play();
     sf::View minimap;
     minimap.setSize(sf::Vector2f(m_windowSize.x, m_windowSize.y));
@@ -164,6 +168,8 @@ void Game::start() {
                 resize();
             }
         }
+
+        m_window->clear(sf::Color(244, 85, 220));
 
         if (m_enemiesScore >= m_maximumEnemiesScore && !m_gameover) {
             gameover();
@@ -245,12 +251,15 @@ void Game::start() {
             //m_music.setVolume((float)100 / m_window->getSize().y * (view.getCenter().y - m_window->getSize().y/2));  
         }
 
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::V) && m_superBulletClock.getElapsedTime() >= sf::seconds(0.2)) {
+            m_superBullet = !m_superBullet;
+            m_superBulletClock.restart();
+        }
+
         if (m_tank->isOverEnabled()) {
             m_overSprite = m_tank->getOverSprite();
         }
         m_text.setString(std::to_string(m_tank->getAmmo()));
-
-        m_window->clear(sf::Color(244, 85, 220));
 
         if (m_tank->isOverEnabled()) {
             m_window->draw(m_overSprite);
@@ -280,13 +289,16 @@ void Game::start() {
 
                         m_enemiesArray[j].killEnemies(true);
                         m_musicArray[m_enemiesArray[j].getNumber()]->play();
-                        m_tank->killBullet();
+                        if (!m_superBullet) {
+                            m_tank->killBullet();
+                        }
                     }
     	    	} else {
                     if (m_enemiesArray[j].isHumanKill()) {
                         m_tank->setAmmo(m_tank->getAmmo() + 1);
                         m_score -= m_enemiesArray[j].getScore();
                         m_scoreText.setString((m_score >= 25) ? "HITLEERRR !!! : " + std::to_string(m_score) : (m_score >= 10) ? "Pinochet : " + std::to_string(m_score) : (m_score > 0) ? "Facho : " + std::to_string(m_score) : (m_score == 0) ? "Gros con sans avis : " + std::to_string(m_score) : (m_score <= -25) ? "Che che che : " + std::to_string(m_score) : (m_score <= -10) ? "Une vraie gauchiasse : " + std::to_string(m_score) : "Gaucho : " + std::to_string(m_score));
+                        m_killedEnemies.push_back(m_enemiesArray[j].getNumber());
                     } else {
                         m_killer = m_enemiesArray[j].getName();
                         m_enemiesScore++;
@@ -315,7 +327,7 @@ void Game::start() {
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && m_tank->getElapsedFireClockTime() >= m_fireTime && m_tank->ifReloaded()) { // Space bar pressed
-            if (m_tank->ifFire()) { // Shoots
+            if (m_tank->ifFire((m_superBullet) ? true : false)) { // Shoots
                 std::cout << "Fire !" << std::endl;
             } else if (m_tank->getAmmo() == 0) { 
                 m_window->draw(m_outOfAmmoText);
@@ -353,10 +365,28 @@ void Game::start() {
 }
 
 void Game::gameover() {
+    std::string opinion = (m_score > 0) ? "Nazi" : (m_score < 0) ? "Communiste" : "Con";
+
+    int max(0);
+    int mostvalue;
+    int co(0);
+
+    if (m_killedEnemies.size() != 0) {
+        mostvalue = m_killedEnemies[0];
+        for(int i(0); i < m_killedEnemies.size(); i++)
+        {
+            co = (int)count(m_killedEnemies.begin(), m_killedEnemies.end(), m_killedEnemies[i]);
+            if(co > max)
+            {       max = co;
+                    mostvalue = m_killedEnemies[i];
+            }
+        }
+    } 
+
     m_music.stop();
     m_gameoverText.setCharacterSize(50);
     m_gameoverText.setPosition(30, m_window->getSize().y/2 - 200.f);
-    m_gameoverText.setString("Haaa you loser\nyou were killed by " + m_killer + "!\nyou survived " + std::to_string(m_gameClock.getElapsedTime().asSeconds()) + " seconds.\nPress 'O' to continue...");
+    m_gameoverText.setString("Sale " + opinion + "\nT'as ete tue comme une merde par " + m_killer + "!\nMais t'as reussi a massacrer " + std::to_string(m_killedEnemies.size()) + " encules.\net t'as survecu " + std::to_string(m_gameClock.getElapsedTime().asSeconds()) + " secondes.\n" + m_nameArray[mostvalue] + " (" + std::to_string(max) + " morts) est ta cible favorie.\nAppuye sur 'O' pour continuer...");
     m_gameoverText.setFont(m_font);
 
     m_gameover = true;

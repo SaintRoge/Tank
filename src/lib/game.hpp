@@ -61,6 +61,7 @@ private:
 
 	bool m_gameover;
 	bool m_fullScreen;
+	bool m_superBullet;
 
 	Tank *m_tank;
 
@@ -72,6 +73,7 @@ private:
 	std::vector<sf::Sound*> m_musicArray;
 	std::vector<sf::SoundBuffer*> m_bufferArray;
 	std::vector<sf::Texture*> m_textureArray;
+	std::vector<int> m_killedEnemies;
 
 	sf::FloatRect m_visibleArea;
 
@@ -81,6 +83,7 @@ private:
 
 	sf::Clock m_gameClock;
 	sf::Clock m_fullScreenClock;
+	sf::Clock m_superBulletClock;
 
 	sf::Time m_fireTime;
 	sf::Time m_reloadTime;

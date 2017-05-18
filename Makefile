@@ -7,7 +7,7 @@ lib = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 CXX = g++
 RM = rm -rf
 SRC = src/bin/
-FLAGS = -std=c++11
+FLAGS = -std=c++11 
 ROOTMESSAGE = "ACHTUNG ! You must be root to do it !"
 
 all: main.o functions.o tank.o bullet.o enemies.o game.o
@@ -45,9 +45,9 @@ remove:
 
 reinstall: remove install
 
-
 pro: all clean run
 
 zpro: install clean run
 
 one: all run mrproper
+

@@ -44,9 +44,9 @@ public:
 
 ///////////////////////////////////////////////////////////////////////
 
-	bool ifFire();
+	bool ifFire(bool superBullet);
 	/*
-	 * Needs nothing
+	 * Needs the super bullet
 	 * Call fire
 	 * Returns if he can fire
 	 */
@@ -147,7 +147,7 @@ public:
 	 */
 
 protected:
-	void fire();
+	void fire(bool superBullet);
 	/*
 	 * Needs nothig
 	 * The tank shoot
